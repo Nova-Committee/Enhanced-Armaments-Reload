@@ -2,14 +2,17 @@ buildscript {
     repositories {
         // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
         maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://maven.parchmentmc.org' }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.parchmentmc:librarian:1.+'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
 group = 'nova.committee'
 version = '1.18.2-1.0.0'
@@ -23,8 +26,8 @@ tasks.withType(JavaCompile) {
 }
 minecraft {
 
-    mappings channel: 'official', version: '1.18.2'
-
+    //mappings channel: 'official', version: '1.18.2'
+    mappings channel: 'parchment', version: '2022.03.13-1.18.2'
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
