@@ -245,15 +245,15 @@ public class AbilitySelectionGui extends Screen {
 
                         if (!(Ability.FIRE.hasAbility(nbt))) {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %0" + ChatFormatting.GREEN + " + %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": 0%" + ChatFormatting.GREEN + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": 0 " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + nextlevelduration);
                             }
                         } else {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + (nextlevelduration - currentduration));
                             } else {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds"));
                                 if (!(Ability.FIRE.canUpgradeLevel(nbt)))
                                     list.add(ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max") + " " + I18n.get("enhancedarmaments.misc.level"));
@@ -270,15 +270,15 @@ public class AbilitySelectionGui extends Screen {
 
                         if (!(Ability.FROST.hasAbility(nbt))) {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %0" + ChatFormatting.GREEN + " + %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": 0%" + ChatFormatting.GREEN + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": 0 " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + nextlevelduration);
                             }
                         } else {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + (nextlevelduration - currentduration));
                             } else {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds"));
                                 if (!(Ability.FROST.canUpgradeLevel(nbt)))
                                     list.add(ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max") + " " + I18n.get("enhancedarmaments.misc.level"));
@@ -295,15 +295,15 @@ public class AbilitySelectionGui extends Screen {
 
                         if (!(Ability.POISON.hasAbility(nbt))) {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %0" + ChatFormatting.GREEN + " + %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": 0%" + ChatFormatting.GREEN + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": 0 " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + nextlevelduration);
                             }
                         } else {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + (nextlevelduration - currentduration));
                             } else {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds"));
                                 if (!(Ability.POISON.canUpgradeLevel(nbt)))
                                     list.add(ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max") + " " + I18n.get("enhancedarmaments.misc.level"));
@@ -322,17 +322,17 @@ public class AbilitySelectionGui extends Screen {
 
                         if (!(Ability.INNATE.hasAbility(nbt))) {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %0" + ChatFormatting.GREEN + " + %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": 0%" + ChatFormatting.GREEN + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": 0 " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + nextlevelduration);
                                 list.add(I18n.get("enhancedarmaments.abilities.info.bleedingspeed") + ": 0 " + ChatFormatting.GREEN + "+" + nextlevelbleedingspeed);
                             }
                         } else {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + (nextlevelduration - currentduration));
                                 list.add(I18n.get("enhancedarmaments.abilities.info.bleedingspeed") + ": " + currentbleedingspeed + " " + ChatFormatting.GREEN + "+" + (nextlevelbleedingspeed - currentbleedingspeed));
                             } else {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds"));
                                 list.add(I18n.get("enhancedarmaments.abilities.info.bleedingspeed") + ": " + currentbleedingspeed);
                                 if (!(Ability.INNATE.canUpgradeLevel(nbt)))
@@ -350,15 +350,15 @@ public class AbilitySelectionGui extends Screen {
 
                         if (!(Ability.BOMBASTIC.hasAbility(nbt))) {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %0" + ChatFormatting.GREEN + " + %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": 0%" + ChatFormatting.GREEN + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.explosionintensity") + ": 0 " + ChatFormatting.GREEN + "+" + nextlevelexplosionintensity);
                             }
                         } else {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.explosionintensity") + ": " + currentexplosionintensity + " " + ChatFormatting.GREEN + "+" + (nextlevelexplosionintensity - currentexplosionintensity));
                             } else {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.explosionintensity") + ": " + currentexplosionintensity);
                                 if (!(Ability.BOMBASTIC.canUpgradeLevel(nbt)))
                                     list.add(ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max") + " " + I18n.get("enhancedarmaments.misc.level"));
@@ -375,16 +375,16 @@ public class AbilitySelectionGui extends Screen {
 
                         if (!(Ability.CRITICAL_POINT.hasAbility(nbt))) {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %0" + ChatFormatting.GREEN + " + %" + c);
-                                list.add(I18n.get("enhancedarmaments.abilities.info.healthpercentage") + ": %0" + ChatFormatting.GREEN + " + %" + nextleveldamage);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": 0%" + ChatFormatting.GREEN + " + " + c + "%");
+                                list.add(I18n.get("enhancedarmaments.abilities.info.healthpercentage") + ": 0%" + ChatFormatting.GREEN + " + " + nextleveldamage + "%");
                             }
                         } else {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
-                                list.add(I18n.get("enhancedarmaments.abilities.info.healthpercentage") + ": %" + currentdamage + " " + ChatFormatting.GREEN + "+ %" + (nextleveldamage - currentdamage));
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
+                                list.add(I18n.get("enhancedarmaments.abilities.info.healthpercentage") + " + " + currentdamage + "%" + " " + ChatFormatting.GREEN + "+" + (nextleveldamage - currentdamage) + "%");
                             } else {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
-                                list.add(I18n.get("enhancedarmaments.abilities.info.healthpercentage") + ": %" + currentdamage);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
+                                list.add(I18n.get("enhancedarmaments.abilities.info.healthpercentage") + " + " + currentdamage + "%");
                                 if (!(Ability.CRITICAL_POINT.canUpgradeLevel(nbt)))
                                     list.add(ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max") + " " + I18n.get("enhancedarmaments.misc.level"));
                             }
@@ -431,13 +431,13 @@ public class AbilitySelectionGui extends Screen {
 
                         if (!(Ability.BLOODTHIRST.hasAbility(nbt))) {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.damagepercentage") + ": %0" + ChatFormatting.GREEN + " + %" + nextlevelpercentage);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.damagepercentage") + ": 0%" + ChatFormatting.GREEN + " + " + nextlevelpercentage + "%");
                             }
                         } else {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.damagepercentage") + ": %" + currentpercentage + " " + ChatFormatting.GREEN + "+ %" + (nextlevelpercentage - currentpercentage));
+                                list.add(I18n.get("enhancedarmaments.abilities.info.damagepercentage") + " + " + currentpercentage + "%" + " " + ChatFormatting.GREEN + "+ %" + (nextlevelpercentage - currentpercentage));
                             } else {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.damagepercentage") + ": %" + currentpercentage);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.damagepercentage") + " + " + currentpercentage + "%");
                                 if (!(Ability.BLOODTHIRST.canUpgradeLevel(nbt)))
                                     list.add(ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max") + " " + I18n.get("enhancedarmaments.misc.level"));
                             }
@@ -454,15 +454,15 @@ public class AbilitySelectionGui extends Screen {
 
                         if (!(Ability.MOLTEN.hasAbility(nbt))) {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %0" + ChatFormatting.GREEN + " + %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": 0%" + ChatFormatting.GREEN + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": 0 " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + nextlevelduration);
                             }
                         } else {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + (nextlevelduration - currentduration));
                             } else {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds"));
                                 if (!(Ability.MOLTEN.canUpgradeLevel(nbt)))
                                     list.add(ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max") + " " + I18n.get("enhancedarmaments.misc.level"));
@@ -479,15 +479,15 @@ public class AbilitySelectionGui extends Screen {
 
                         if (!(Ability.FROZEN.hasAbility(nbt))) {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %0" + ChatFormatting.GREEN + " + %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": 0%" + ChatFormatting.GREEN + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": 0 " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + nextlevelduration);
                             }
                         } else {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + (nextlevelduration - currentduration));
                             } else {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds"));
                                 if (!(Ability.FROZEN.canUpgradeLevel(nbt)))
                                     list.add(ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max") + " " + I18n.get("enhancedarmaments.misc.level"));
@@ -504,15 +504,15 @@ public class AbilitySelectionGui extends Screen {
 
                         if (!(Ability.TOXIC.hasAbility(nbt))) {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %0" + ChatFormatting.GREEN + " + %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": 0%" + ChatFormatting.GREEN + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": 0 " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + nextlevelduration);
                             }
                         } else {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + (nextlevelduration - currentduration));
                             } else {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds"));
                                 if (!(Ability.TOXIC.canUpgradeLevel(nbt)))
                                     list.add(ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max") + " " + I18n.get("enhancedarmaments.misc.level"));
@@ -557,10 +557,10 @@ public class AbilitySelectionGui extends Screen {
 
                         if (!(Ability.HARDENED.hasAbility(nbt))) {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %0" + ChatFormatting.GREEN + " + %" + chance);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": 0%" + ChatFormatting.GREEN + " + " + chance + "%");
                             }
                         } else {
-                            list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + chance);
+                            list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + chance + "%");
                         }
                         if (!(Ability.HARDENED.canUpgradeLevel(nbt)) && (!(buttons[i].active)))
                             list.add(ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max") + " " + I18n.get("enhancedarmaments.misc.level"));
@@ -575,15 +575,15 @@ public class AbilitySelectionGui extends Screen {
 
                         if (!(Ability.ADRENALINE.hasAbility(nbt))) {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %0" + ChatFormatting.GREEN + " + %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": 0%" + ChatFormatting.GREEN + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": 0 " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + nextlevelduration);
                             }
                         } else {
                             if (buttons[i].isActive()) {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds") + ChatFormatting.GREEN + " +" + (nextlevelduration - currentduration));
                             } else {
-                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + ": %" + c);
+                                list.add(I18n.get("enhancedarmaments.abilities.info.chance") + " + " + c + "%");
                                 list.add(I18n.get("enhancedarmaments.abilities.info.duration") + ": " + currentduration + " " + I18n.get("enhancedarmaments.abilities.info.seconds"));
                                 if (!(Ability.ADRENALINE.canUpgradeLevel(nbt)))
                                     list.add(ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max") + " " + I18n.get("enhancedarmaments.misc.level"));
