@@ -35,6 +35,7 @@ public class Config {
     public static boolean frozenAbility;
     public static boolean toxicAbility;
     public static boolean adrenalineAbility;
+    public static boolean frostwalkerAbility;
     public static boolean beastialAbility;
     public static boolean remedialAbility;
     public static boolean hardenedAbility;
@@ -45,6 +46,7 @@ public class Config {
     public static double bombasticchance;
     public static double criticalpointchance;
     public static double moltenchance;
+    public static double frostwalkerchance;
     public static double frozenchance;
     public static double toxicchance;
     public static double adrenalinechance;
@@ -92,6 +94,7 @@ public class Config {
         frozenAbility = CONFIG.frozenAbility.get();
         toxicAbility = CONFIG.toxicAbility.get();
         adrenalineAbility = CONFIG.adrenalineAbility.get();
+        frostwalkerAbility = CONFIG.frostwalkerAbility.get();
         beastialAbility = CONFIG.beastialAbility.get();
         remedialAbility = CONFIG.remedialAbility.get();
         hardenedAbility = CONFIG.hardenedAbility.get();
@@ -104,6 +107,7 @@ public class Config {
         bombasticchance = CONFIG.bombasticchance.get();
         criticalpointchance = CONFIG.criticalpointchance.get();
         moltenchance = CONFIG.moltenchance.get();
+        frostwalkerchance = CONFIG.frostwalkerchance.get();
         frozenchance = CONFIG.frozenchance.get();
         toxicchance = CONFIG.toxicchance.get();
         adrenalinechance = CONFIG.adrenalinechance.get();
@@ -148,6 +152,7 @@ public class Config {
         public ForgeConfigSpec.ConfigValue<List<String>> extraItems;
         public ForgeConfigSpec.BooleanValue onlyModdedItems;
 
+        //weapon
         public ForgeConfigSpec.BooleanValue fireAbility;
         public ForgeConfigSpec.BooleanValue frostAbility;
         public ForgeConfigSpec.BooleanValue poisonAbility;
@@ -158,10 +163,12 @@ public class Config {
         public ForgeConfigSpec.BooleanValue etherealAbility;
         public ForgeConfigSpec.BooleanValue bloodthirstAbility;
 
+        //armor
         public ForgeConfigSpec.BooleanValue moltenAbility;
         public ForgeConfigSpec.BooleanValue frozenAbility;
         public ForgeConfigSpec.BooleanValue toxicAbility;
         public ForgeConfigSpec.BooleanValue adrenalineAbility;
+        public ForgeConfigSpec.BooleanValue frostwalkerAbility;
         public ForgeConfigSpec.BooleanValue beastialAbility;
         public ForgeConfigSpec.BooleanValue remedialAbility;
         public ForgeConfigSpec.BooleanValue hardenedAbility;
@@ -173,6 +180,7 @@ public class Config {
         public ForgeConfigSpec.ConfigValue<Double> bombasticchance;
         public ForgeConfigSpec.ConfigValue<Double> criticalpointchance;
         public ForgeConfigSpec.ConfigValue<Double> moltenchance;
+        public ForgeConfigSpec.ConfigValue<Double> frostwalkerchance;
         public ForgeConfigSpec.ConfigValue<Double> frozenchance;
         public ForgeConfigSpec.ConfigValue<Double> toxicchance;
         public ForgeConfigSpec.ConfigValue<Double> adrenalinechance;
@@ -298,6 +306,10 @@ public class Config {
                     .comment("Determines whether or not the specific ability will be present in-game. Default: true")
                     .define("moltenAbility", true);
 
+            frostwalkerAbility = builder
+                    .comment("Determines whether or not the specific ability will be present in-game. Default: true")
+                    .define("frostwalkerAbility", true);
+
             toxicAbility = builder
                     .comment("Determines whether or not the specific ability will be present in-game. Default: true")
                     .define("toxicAbility", true);
@@ -349,6 +361,10 @@ public class Config {
                     .define("criticalpointchance", 4d);
 
             moltenchance = builder
+                    .comment("Determines how rare the Molten ability will occur. (Higher values=lower occurance) Default: 4")
+                    .define("moltenchance", 4d);
+
+            frostwalkerchance = builder
                     .comment("Determines how rare the Molten ability will occur. (Higher values=lower occurance) Default: 4")
                     .define("moltenchance", 4d);
 

@@ -3,7 +3,7 @@ package nova.committee.enhancedarmaments.client.widgets;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import nova.committee.enhancedarmaments.util.ScreenHelper;
@@ -20,7 +20,7 @@ public class ButtonRect extends Button {
      * @param pressable 按下时的动作
      */
     public ButtonRect(int x, int y, int width, String text, OnPress pressable) {
-        super(width, 16, x, y, new TextComponent(text), pressable);
+        super(width, 16, x, y, Component.literal(text), pressable);
 
         this.x = x;
         this.y = y;

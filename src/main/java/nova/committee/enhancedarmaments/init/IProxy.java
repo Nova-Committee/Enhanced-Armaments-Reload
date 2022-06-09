@@ -1,6 +1,6 @@
 package nova.committee.enhancedarmaments.init;
 
-public interface ISidedProxy {
+public interface IProxy {
     default void init() {
     }
 }

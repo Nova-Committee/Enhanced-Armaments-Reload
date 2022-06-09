@@ -18,11 +18,11 @@ import nova.committee.enhancedarmaments.util.EAUtil;
 /**
  * Opens the weapon ability selection gui on key press.
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class InputEventHandler {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
-    public void onKeyPress(InputEvent.KeyInputEvent event) {
+    public static void onKeyPress(InputEvent.KeyInputEvent event) {
         KeyMapping key = ((ClientProxy) EnhancedArmaments.proxy).abilityKey;
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;

@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import nova.committee.enhancedarmaments.util.ScreenHelper;
 
@@ -21,7 +21,7 @@ public class SkillButton extends Button {
     private String[] tooltip;
 
     public SkillButton(int marketListIndex, int x, int y, ResourceLocation img, OnPress press) {
-        super(x, y, 16, 16, new TextComponent(""), press);
+        super(x, y, 16, 16, Component.literal(""), press);
         this.rect = new ScreenRect(this.x, this.y, width, height);
         this.res = img;
         this.marketListIndex = marketListIndex;

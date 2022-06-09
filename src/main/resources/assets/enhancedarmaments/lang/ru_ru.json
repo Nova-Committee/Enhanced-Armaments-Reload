@@ -72,5 +72,7 @@
   "enhancedarmaments.misc.pos.body": "В теле",
   "enhancedarmaments.misc.pos.legs": "В ногу:",
   "enhancedarmaments.misc.pos.feet": "На ногах:",
-  "enhancedarmaments.misc.pos.mainHand": "В главной руке:"
+  "enhancedarmaments.misc.pos.mainHand": "В главной руке:",
+  "enhancedarmaments.command.success": "Success run command",
+  "enhancedarmaments.command.failed": "Failed run command"
 }

@@ -72,5 +72,7 @@
   "enhancedarmaments.misc.pos.body": "When on body:",
   "enhancedarmaments.misc.pos.legs": "When on legs:",
   "enhancedarmaments.misc.pos.feet": "When on feet:",
-  "enhancedarmaments.misc.pos.mainHand": "When in Main Hand:"
+  "enhancedarmaments.misc.pos.mainHand": "When in Main Hand:",
+  "enhancedarmaments.command.success": "Success run command",
+  "enhancedarmaments.command.failed": "Failed run command"
 }

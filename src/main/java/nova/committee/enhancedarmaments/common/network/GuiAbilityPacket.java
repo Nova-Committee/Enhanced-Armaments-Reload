@@ -12,24 +12,24 @@ import nova.committee.enhancedarmaments.util.NBTUtil;
 
 import java.util.function.Supplier;
 
-public class GuiAbilityPacket {
-    private int index;
+public class GuiAbilityPacket extends IPacket {
+    private final int index;
 
     public GuiAbilityPacket(int index) {
         this.index = index;
     }
 
-    public static void encode(GuiAbilityPacket msg, FriendlyByteBuf buffer) {
-        buffer.writeInt(msg.index);
+    public GuiAbilityPacket(FriendlyByteBuf buf) {
+        this.index = buf.readInt();
     }
 
-    public static GuiAbilityPacket decode(FriendlyByteBuf buf) {
-        return new GuiAbilityPacket(
-                buf.readInt()
-        );
+    @Override
+    public void toBytes(FriendlyByteBuf buffer) {
+        buffer.writeInt(index);
     }
 
-    public static void handle(GuiAbilityPacket msg, Supplier<NetworkEvent.Context> ctx) {
+    @Override
+    public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork
                 (() -> {
                     Player player = ctx.get().getSender();
@@ -41,22 +41,22 @@ public class GuiAbilityPacket {
                             CompoundTag nbt = NBTUtil.loadStackNBT(stack);
 
                             if (EAUtil.canEnhanceWeapon(stack.getItem())) {
-                                if (Ability.WEAPON_ABILITIES.get(msg.index).hasAbility(nbt)) {
-                                    Ability.WEAPON_ABILITIES.get(msg.index).setLevel(nbt, Ability.WEAPON_ABILITIES.get(msg.index).getLevel(nbt) + 1);
-                                    Experience.setAbilityTokens(nbt, Experience.getAbilityTokens(nbt) - Ability.WEAPON_ABILITIES.get(msg.index).getTier());
+                                if (Ability.WEAPON_ABILITIES.get(index).hasAbility(nbt)) {
+                                    Ability.WEAPON_ABILITIES.get(index).setLevel(nbt, Ability.WEAPON_ABILITIES.get(index).getLevel(nbt) + 1);
+                                    Experience.setAbilityTokens(nbt, Experience.getAbilityTokens(nbt) - Ability.WEAPON_ABILITIES.get(index).getTier());
                                 } else {
-                                    Ability.WEAPON_ABILITIES.get(msg.index).addAbility(nbt);
+                                    Ability.WEAPON_ABILITIES.get(index).addAbility(nbt);
                                     if (!player.isCreative())
-                                        player.giveExperienceLevels(-Ability.WEAPON_ABILITIES.get(msg.index).getExpLevel(nbt) + 1);
+                                        player.giveExperienceLevels(-Ability.WEAPON_ABILITIES.get(index).getExpLevel(nbt) + 1);
                                 }
                             } else if (EAUtil.canEnhanceArmor(stack.getItem())) {
-                                if (Ability.ARMOR_ABILITIES.get(msg.index).hasAbility(nbt)) {
-                                    Ability.ARMOR_ABILITIES.get(msg.index).setLevel(nbt, Ability.ARMOR_ABILITIES.get(msg.index).getLevel(nbt) + 1);
-                                    Experience.setAbilityTokens(nbt, Experience.getAbilityTokens(nbt) - Ability.ARMOR_ABILITIES.get(msg.index).getTier());
+                                if (Ability.ARMOR_ABILITIES.get(index).hasAbility(nbt)) {
+                                    Ability.ARMOR_ABILITIES.get(index).setLevel(nbt, Ability.ARMOR_ABILITIES.get(index).getLevel(nbt) + 1);
+                                    Experience.setAbilityTokens(nbt, Experience.getAbilityTokens(nbt) - Ability.ARMOR_ABILITIES.get(index).getTier());
                                 } else {
-                                    Ability.ARMOR_ABILITIES.get(msg.index).addAbility(nbt);
+                                    Ability.ARMOR_ABILITIES.get(index).addAbility(nbt);
                                     if (!player.isCreative())
-                                        player.giveExperienceLevels(-Ability.ARMOR_ABILITIES.get(msg.index).getExpLevel(nbt) + 1);
+                                        player.giveExperienceLevels(-Ability.ARMOR_ABILITIES.get(index).getExpLevel(nbt) + 1);
                                 }
                             }
                         }

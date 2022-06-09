@@ -2,7 +2,7 @@ package nova.committee.enhancedarmaments.core;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import nova.committee.enhancedarmaments.common.config.Config;
 
@@ -31,7 +31,10 @@ public enum Ability {
     BEASTIAL("armor", "passive", Config.beastialAbility, ChatFormatting.DARK_RED, 0xAA0000, 2, 1),
     REMEDIAL("armor", "passive", Config.remedialAbility, ChatFormatting.LIGHT_PURPLE, 0xFF55FF, 2, 2),
     HARDENED("armor", "passive", Config.hardenedAbility, ChatFormatting.GRAY, 0xAAAAAA, 3, 1),
-    ADRENALINE("armor", "passive", Config.adrenalineAbility, ChatFormatting.GREEN, 0x55FF55, 3, 1);
+    ADRENALINE("armor", "passive", Config.adrenalineAbility, ChatFormatting.GREEN, 0x55FF55, 3, 1),
+    FROSTWALKER("armor", "passive", Config.frostwalkerAbility, ChatFormatting.DARK_BLUE, 0x55FF55, 3, 2),
+    GALLOP("armor", "passive", true, ChatFormatting.BLUE, 0xFF5555, 3, 2);
+
 
     public static final ArrayList<Ability> WEAPON_ABILITIES = new ArrayList<Ability>();
     public static final ArrayList<Ability> ARMOR_ABILITIES = new ArrayList<Ability>();
@@ -52,13 +55,13 @@ public enum Ability {
         }
     }
 
-    private String category;
-    private String type;
-    private boolean enabled;
-    private String color;
-    private int hex;
-    private int tier;
-    private int maxlevel;
+    private final String category;
+    private final String type;
+    private final boolean enabled;
+    private final String color;
+    private final int hex;
+    private final int tier;
+    private final int maxlevel;
 
     Ability(String category, String type, boolean enabled, Object color, int hex, int tier, int maxlevel) {
         this.category = category;
@@ -181,11 +184,11 @@ public enum Ability {
 
     public String getName(CompoundTag nbt) {
         if (getLevel(nbt) == 2)
-            return new TranslatableComponent("enhancedarmaments.ability." + this.toString()).getString() + " II";
+            return Component.translatable("enhancedarmaments.ability." + this.toString()).getString() + " II";
         else if (getLevel(nbt) == 3)
-            return new TranslatableComponent("enhancedarmaments.ability." + this.toString()).getString() + " III";
+            return Component.translatable("enhancedarmaments.ability." + this.toString()).getString() + " III";
         else
-            return new TranslatableComponent("enhancedarmaments.ability." + this.toString()).getString();
+            return Component.translatable("enhancedarmaments.ability." + this.toString()).getString();
     }
 
     public String getType() {
@@ -193,7 +196,7 @@ public enum Ability {
     }
 
     public String getTypeName() {
-        return new TranslatableComponent("enhancedarmaments.ability.type." + type.toString()).getString();
+        return Component.translatable("enhancedarmaments.ability.type." + type.toString()).getString();
     }
 
     public String getCategory() {

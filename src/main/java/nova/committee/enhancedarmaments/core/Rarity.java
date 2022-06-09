@@ -2,10 +2,9 @@ package nova.committee.enhancedarmaments.core;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import nova.committee.enhancedarmaments.common.config.Config;
 import nova.committee.enhancedarmaments.util.RandomCollection;
-
-import java.util.Random;
 
 public enum Rarity {
     DEFAULT("", 0, 0.0, 0.0),
@@ -27,10 +26,10 @@ public enum Rarity {
         }
     }
 
-    private String color;
-    private int hex;
-    private double weight;
-    private double effect;
+    private final String color;
+    private final int hex;
+    private final double weight;
+    private final double effect;
 
     Rarity(Object color, int hex, double weight, double effect) {
         this.color = color.toString();
@@ -45,7 +44,7 @@ public enum Rarity {
      * @param random
      * @return
      */
-    public static Rarity getRandomRarity(Random random) {
+    public static Rarity getRandomRarity(RandomSource random) {
         return RANDOM_RARITIES.next(random);
     }
 

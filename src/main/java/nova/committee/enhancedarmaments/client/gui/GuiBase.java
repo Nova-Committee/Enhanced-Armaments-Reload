@@ -2,7 +2,7 @@ package nova.committee.enhancedarmaments.client.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import nova.committee.enhancedarmaments.util.ScreenHelper;
 
 /**
@@ -15,7 +15,7 @@ public abstract class GuiBase extends Screen {
 
     protected GuiBase() {
 
-        super(new TextComponent(""));
+        super(Component.literal(""));
 
     }
 

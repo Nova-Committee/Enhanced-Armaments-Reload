@@ -12,7 +12,7 @@ import nova.committee.enhancedarmaments.common.commands.RarityCommand;
  * Date: 2022/3/25 14:19
  * Version: 1.0
  */
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CommandEventHandler {
 
     @SubscribeEvent

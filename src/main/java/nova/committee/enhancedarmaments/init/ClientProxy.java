@@ -3,7 +3,7 @@ package nova.committee.enhancedarmaments.init;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.ClientRegistry;
 
-public class ClientProxy implements ISidedProxy {
+public class ClientProxy implements IProxy {
     public KeyMapping abilityKey;
 
     @Override
