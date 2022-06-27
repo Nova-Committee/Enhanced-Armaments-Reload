@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "enhancedarmaments",
+  "version": "${version}",
+  "name": "Enhanced-Armaments-fabric",
+  "description": "",
+  "authors": [
+    "cnlimiter"
+  ],
+  "contact": {},
+  "license": "AGPL-3.0",
+  "icon": "assets/enhancedarmaments/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "nova.committee.enhancedarmaments.client.EnhancedarmamentsClient"
+    ],
+    "main": [
+      "nova.committee.enhancedarmaments.Enhancedarmaments"
+    ]
+  },
+  "mixins": [
+    "enhancedarmaments.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.8",
+    "fabric": "*",
+    "minecraft": "1.19"
+  }
+}
