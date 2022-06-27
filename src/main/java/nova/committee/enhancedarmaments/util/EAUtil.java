@@ -1,19 +1,14 @@
 package nova.committee.enhancedarmaments.util;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.entity.TransientEntitySectionManager;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import nova.committee.enhancedarmaments.common.config.Config;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 
 public class EAUtil {
@@ -24,7 +19,8 @@ public class EAUtil {
                     || item == Items.GOLDEN_AXE || item == Items.GOLDEN_HOE || item == Items.GOLDEN_SWORD || item == Items.GOLDEN_BOOTS || item == Items.GOLDEN_CHESTPLATE || item == Items.GOLDEN_HELMET || item == Items.GOLDEN_LEGGINGS
                     || item == Items.STONE_AXE || item == Items.STONE_HOE || item == Items.STONE_SWORD
                     || item == Items.WOODEN_AXE || item == Items.WOODEN_HOE || item == Items.WOODEN_SWORD
-                    || item == Items.BOW
+                    || item == Items.BOW || item == Items.CROSSBOW
+                    || item == Items.TRIDENT
                     || item == Items.NETHERITE_AXE || item == Items.NETHERITE_HOE || item == Items.NETHERITE_SWORD || item == Items.NETHERITE_BOOTS || item == Items.NETHERITE_CHESTPLATE || item == Items.NETHERITE_HELMET || item == Items.NETHERITE_LEGGINGS
                     || item == Items.CHAINMAIL_BOOTS || item == Items.CHAINMAIL_CHESTPLATE || item == Items.CHAINMAIL_HELMET || item == Items.CHAINMAIL_LEGGINGS)
                 return false;
@@ -32,24 +28,31 @@ public class EAUtil {
         if (Config.extraItems.size() != 0) {
             boolean allowed = false;
             for (int k = 0; k < Config.extraItems.size(); k++)
-                if (Objects.equals(Config.extraItems.get(k).getRegistryName(), item.getRegistryName()))
+                if (Objects.equals(ForgeRegistries.ITEMS.getKey(Config.extraItems.get(k)), ForgeRegistries.ITEMS.getKey(item)))
                     allowed = true;
-            return allowed || item instanceof SwordItem || item instanceof AxeItem || item instanceof HoeItem || item instanceof BowItem || item instanceof ArmorItem;
+            return allowed || item instanceof SwordItem || item instanceof AxeItem || item instanceof HoeItem || item instanceof BowItem || item instanceof ArmorItem || item instanceof CrossbowItem || item instanceof TridentItem;
         } else
-            return item instanceof SwordItem || item instanceof AxeItem || item instanceof HoeItem || item instanceof BowItem || item instanceof ArmorItem;
+            return item instanceof SwordItem || item instanceof AxeItem || item instanceof HoeItem || item instanceof BowItem || item instanceof ArmorItem || item instanceof CrossbowItem || item instanceof TridentItem;
     }
 
     public static boolean canEnhanceWeapon(Item item) {
         return canEnhance(item) && !(item instanceof ArmorItem);
     }
 
+    /**
+     * 近战
+     */
     public static boolean canEnhanceMelee(Item item) {
-        return canEnhance(item) && !(item instanceof ArmorItem) && !(item instanceof BowItem);
+        return canEnhance(item) && !(item instanceof ArmorItem) && !(item instanceof BowItem) && !(item instanceof CrossbowItem);
     }
 
+    /**
+     * 远程
+     */
     public static boolean canEnhanceRanged(Item item) {
-        return canEnhance(item) && item instanceof BowItem;
+        return canEnhance(item) && (item instanceof BowItem || item instanceof CrossbowItem || item instanceof TridentItem);
     }
+
 
     public static boolean canEnhanceArmor(Item item) {
         return canEnhance(item) && item instanceof ArmorItem;
@@ -63,16 +66,6 @@ public class EAUtil {
                 damageSource == DamageSource.IN_WALL ||
                 damageSource == DamageSource.IN_FIRE ||
                 damageSource == DamageSource.OUT_OF_WORLD) || damageSource.getEntity() instanceof LivingEntity;
-    }
-
-    public static Entity getEntityByUniqueId(UUID uniqueId) {
-        final TransientEntitySectionManager<Entity> entityStorage = ObfuscationReflectionHelper.getPrivateValue(ClientLevel.class, Minecraft.getInstance().level, "f_157637_");
-        for (Entity entity : entityStorage.getEntityGetter().getAll()) {
-            if (entity.getUUID().equals(uniqueId))
-                return entity;
-        }
-
-        return null;
     }
 
     public static boolean containsString(List<Component> tooltip, String string) {

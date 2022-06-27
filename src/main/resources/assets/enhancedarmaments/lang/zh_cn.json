@@ -72,5 +72,7 @@
   "enhancedarmaments.misc.pos.body": "当在身体上时：",
   "enhancedarmaments.misc.pos.legs": "当在护腿上时：",
   "enhancedarmaments.misc.pos.feet": "当在靴子上时：",
-  "enhancedarmaments.misc.pos.mainHand": "当在主手时："
+  "enhancedarmaments.misc.pos.mainHand": "当在主手时：",
+  "enhancedarmaments.command.success": "执行指令成功",
+  "enhancedarmaments.command.failed": "执行指令失败"
 }
