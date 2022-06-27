@@ -609,7 +609,7 @@ public class AbilitySelectionGui extends Screen {
                         list.add(ChatFormatting.DARK_RED + I18n.get("enhancedarmaments.abilities.info.required_token") + ": " + abilities.get(i).getTier());
 
                 }
-                System.out.println(list);
+                //System.out.println(list);
                 this.renderComponentTooltip(poseStack, ComponentUtil.stringToComponent(list), mouseX + 3, mouseY + 3);
             }
         }
