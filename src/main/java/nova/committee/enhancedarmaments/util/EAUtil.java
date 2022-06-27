@@ -38,12 +38,18 @@ public class EAUtil {
         return canEnhance(item) && !(item instanceof ArmorItem);
     }
 
+    /**
+     * 近战
+     */
     public static boolean canEnhanceMelee(Item item) {
         return canEnhance(item) && !(item instanceof ArmorItem) && !(item instanceof BowItem) && !(item instanceof CrossbowItem);
     }
 
+    /**
+     * 远程
+     */
     public static boolean canEnhanceRanged(Item item) {
-        return canEnhance(item) && (item instanceof BowItem || item instanceof CrossbowItem);
+        return canEnhance(item) && (item instanceof BowItem || item instanceof CrossbowItem || item instanceof TridentItem);
     }
     public static boolean canEnhanceArmor(Item item) {
         return canEnhance(item) && item instanceof ArmorItem;

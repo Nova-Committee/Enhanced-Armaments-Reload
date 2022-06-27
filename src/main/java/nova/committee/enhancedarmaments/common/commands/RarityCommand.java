@@ -48,6 +48,6 @@ public class RarityCommand {
                 cmd.getSource().sendSuccess(new TranslationTextComponent("enhancedarmaments.command.success"), true);
             }
         }
-        return 1;
+        return 0;
     }
 }

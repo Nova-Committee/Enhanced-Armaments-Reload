@@ -21,7 +21,6 @@ import java.util.Random;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class LivingUpdateEventHandler {
-    //this needs to be a player capability or this will be really random in Multiplayer!
     private static int count = 0;
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

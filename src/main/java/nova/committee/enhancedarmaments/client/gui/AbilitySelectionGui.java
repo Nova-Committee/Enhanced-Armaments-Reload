@@ -13,10 +13,9 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
-import nova.committee.enhancedarmaments.EnhancedArmaments;
 import nova.committee.enhancedarmaments.common.config.Config;
 import nova.committee.enhancedarmaments.common.network.GuiAbilityPacket;
-import nova.committee.enhancedarmaments.common.network.PacketHandler;
+import nova.committee.enhancedarmaments.init.handler.PacketHandler;
 import nova.committee.enhancedarmaments.core.Ability;
 import nova.committee.enhancedarmaments.core.Experience;
 import nova.committee.enhancedarmaments.core.Rarity;
@@ -610,7 +609,7 @@ public class AbilitySelectionGui extends Screen {
                         list.add(TextFormatting.DARK_RED + I18n.get("enhancedarmaments.abilities.info.required_token") + ": " + abilities.get(i).getTier());
 
                 }
-                System.out.println(list);
+                //System.out.println(list);
                 this.renderComponentTooltip(poseStack, ComponentUtil.stringToComponent(list), mouseX + 3, mouseY + 3);
             }
         }
