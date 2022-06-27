@@ -35,7 +35,7 @@ public class RarityCommand {
                 Rarity.setRarity(nbt, String.valueOf(rarityid));
                 NBTUtil.saveStackNBT(item, nbt);
                 player.setItemInHand(InteractionHand.MAIN_HAND, item);
-                src.sendSuccess(Component.literal("enhancedarmaments.command.success"), true);
+                src.sendSuccess(Component.translatable("enhancedarmaments.command.success"), true);
             }
         }
         return 0;

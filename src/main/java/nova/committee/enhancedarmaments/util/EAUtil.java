@@ -57,7 +57,7 @@ public class EAUtil {
      * @return
      */
     public static boolean canEnhanceRanged(Item item) {
-        return canEnhance(item) && (item instanceof BowItem || item instanceof CrossbowItem);
+        return canEnhance(item) && (item instanceof BowItem || item instanceof CrossbowItem || item instanceof TridentItem);
     }
 
     public static boolean canEnhanceArmor(Item item) {
