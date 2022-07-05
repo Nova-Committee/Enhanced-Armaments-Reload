@@ -16,6 +16,7 @@ import nova.committee.enhancedarmaments.common.config.Config;
 import nova.committee.enhancedarmaments.common.network.GuiAbilityPacket;
 import nova.committee.enhancedarmaments.init.ClientProxy;
 import nova.committee.enhancedarmaments.init.ISidedProxy;
+import nova.committee.enhancedarmaments.init.ServerProxy;
 import nova.committee.enhancedarmaments.init.handler.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +27,7 @@ public class EnhancedArmaments {
 
     public static final String MODID = "enhancedarmaments";
     public static final Logger LOGGER = LogManager.getLogger(MODID);
-    public static final ISidedProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, null);
+    public static final ISidedProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
     private static final String PROTOCOL_VERSION = "1.0";
     public static SimpleChannel network = NetworkRegistry.ChannelBuilder
             .named(new ResourceLocation(MODID, "networking"))
