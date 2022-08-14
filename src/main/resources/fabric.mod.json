@@ -13,17 +13,17 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "nova.committee.enhancedarmaments.client.EnhancedarmamentsClient"
+      "nova.committee.enhancedarmaments.client.EnhancedArmamentsClient"
     ],
     "main": [
-      "nova.committee.enhancedarmaments.Enhancedarmaments"
+      "nova.committee.enhancedarmaments.EnhancedArmaments"
     ]
   },
   "mixins": [
     "enhancedarmaments.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.14.8",
+    "fabricloader": "*",
     "fabric": "*",
     "minecraft": "1.19"
   }

@@ -9,7 +9,7 @@ import nova.committee.enhancedarmaments.init.handler.*;
  * Date: 2022/6/27 21:57
  * Version: 1.0
  */
-public class Enhancedarmaments implements ModInitializer {
+public class EnhancedArmaments implements ModInitializer {
     @Override
     public void onInitialize() {
 

@@ -13,9 +13,9 @@ import net.minecraft.resources.ResourceLocation;
  * Version: 1.0
  */
 public class GuiUtils {
-    public static void drawContinuousTexturedBox(PoseStack poseStack, ResourceLocation res, int x, int y, int u, int v, int width, int height, int textureWidth, int textureHeight,
-                                                 int topBorder, int bottomBorder, int leftBorder, int rightBorder, float zLevel)
-    {
+    public static void drawContinuousTexturedBox(
+            PoseStack poseStack, ResourceLocation res, int x, int y, int u, int v, int width, int height, int textureWidth, int textureHeight,
+            int topBorder, int bottomBorder, int leftBorder, int rightBorder, float zLevel) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, res);
         drawContinuousTexturedBox(poseStack, x, y, u, v, width, height, textureWidth, textureHeight, topBorder, bottomBorder, leftBorder, rightBorder, zLevel);
@@ -41,9 +41,9 @@ public class GuiUtils {
      * @param rightBorder the size of the box's right border
      * @param zLevel the zLevel to draw at
      */
-    public static void drawContinuousTexturedBox(PoseStack poseStack, int x, int y, int u, int v, int width, int height, int textureWidth, int textureHeight,
-                                                 int topBorder, int bottomBorder, int leftBorder, int rightBorder, float zLevel)
-    {
+    public static void drawContinuousTexturedBox(
+            PoseStack poseStack, int x, int y, int u, int v, int width, int height, int textureWidth, int textureHeight,
+            int topBorder, int bottomBorder, int leftBorder, int rightBorder, float zLevel) {
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
