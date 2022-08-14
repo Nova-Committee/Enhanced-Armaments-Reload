@@ -26,8 +26,8 @@ public class LivingUpdateEventHandler {
     private static int count = 0;
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onUpdate(LivingEvent.LivingUpdateEvent event) {
-        if (event.getEntityLiving() instanceof Player player) {
+    public static void onUpdate(LivingEvent.LivingTickEvent event) {
+        if (event.getEntity() instanceof Player player) {
 
             NonNullList<ItemStack> main = player.getInventory().items;
 
