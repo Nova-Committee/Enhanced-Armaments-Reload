@@ -1,10 +1,9 @@
 package nova.committee.enhancedarmaments.init.handler;
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import nova.committee.enhancedarmaments.client.EnhancedarmamentsClient;
+import nova.committee.enhancedarmaments.client.EnhancedArmamentsClient;
 import nova.committee.enhancedarmaments.client.gui.AbilitySelectionGui;
 import nova.committee.enhancedarmaments.init.callback.KeyInputCallback;
 import nova.committee.enhancedarmaments.util.EAUtil;
@@ -17,7 +16,7 @@ public class InputEventHandler {
 
     public static void onKeyPress() {
         KeyInputCallback.EVENT.register((key, scancode, action, mods) -> {
-            while (EnhancedarmamentsClient.keyBinding.isDown()) {
+            while (EnhancedArmamentsClient.keyBinding.isDown()) {
                 Minecraft mc = Minecraft.getInstance();
                 Player player = mc.player;
 

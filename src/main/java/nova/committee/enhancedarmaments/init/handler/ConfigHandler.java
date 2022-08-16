@@ -1,6 +1,5 @@
 package nova.committee.enhancedarmaments.init.handler;
 
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
@@ -9,7 +8,9 @@ import nova.committee.enhancedarmaments.common.config.Config;
 import nova.committee.enhancedarmaments.util.JSONFormat;
 import org.apache.commons.io.FileUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -43,7 +44,7 @@ public class ConfigHandler {
             }
             if (file.exists()){
 
-                 config = GSON.fromJson(FileUtils.readFileToString(file, StandardCharsets.UTF_8),
+                config = GSON.fromJson(FileUtils.readFileToString(file, StandardCharsets.UTF_8),
                         Config.class);
 
             }

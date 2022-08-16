@@ -15,7 +15,7 @@ import org.lwjgl.glfw.GLFW;
  * Version: 1.0
  */
 @Environment(EnvType.CLIENT)
-public class EnhancedarmamentsClient implements ClientModInitializer {
+public class EnhancedArmamentsClient implements ClientModInitializer {
 
     public static KeyMapping keyBinding;
 
