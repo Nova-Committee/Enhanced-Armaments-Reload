@@ -9,9 +9,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import nova.committee.enhancedarmaments.EnhancedArmaments;
 import nova.committee.enhancedarmaments.client.gui.AbilitySelectionGui;
-import nova.committee.enhancedarmaments.init.ClientProxy;
+import nova.committee.enhancedarmaments.init.KeyInit;
 import nova.committee.enhancedarmaments.util.EAUtil;
 
 
@@ -22,8 +21,8 @@ import nova.committee.enhancedarmaments.util.EAUtil;
 public class InputEventHandler {
     @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
-    public static void onKeyPress(InputEvent.KeyInputEvent event) {
-        KeyMapping key = ((ClientProxy) EnhancedArmaments.proxy).abilityKey;
+    public static void onKeyPress(InputEvent.Key event) {
+        KeyMapping key = KeyInit.abilityKey;
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
 
@@ -33,7 +32,7 @@ public class InputEventHandler {
             if (stack != ItemStack.EMPTY) {
                 if (EAUtil.canEnhance(stack.getItem())) {
                     if (key.isDown() && stack.hasTag())
-                        if (stack.getTag().contains("EA_ENABLED"))
+                        if (stack.getOrCreateTag().contains("EA_ENABLED"))
                             mc.setScreen(new AbilitySelectionGui());
                 }
             }

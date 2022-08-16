@@ -39,17 +39,14 @@ public class LivingHurtEventHandler {
 
     @SubscribeEvent
     public static void onArrowHit(ProjectileImpactEvent event) {
-        if (event.getProjectile() instanceof Arrow) {
-            if (event.getEntity() instanceof Player player && event.getEntity() != null) {
-                if (event.getRayTraceResult() == null)
-                    bowfriendlyhand = player.getUsedItemHand();
-            }
-        }
+        if (!(event.getProjectile() instanceof Arrow)) return;
+        if (!(event.getEntity() instanceof Player player)) return;
+        if (event.getRayTraceResult() == null) bowfriendlyhand = player.getUsedItemHand();
     }
 
     @SubscribeEvent
     public static void onArrowShoot(ArrowLooseEvent event) {
-        bowfriendlyhand = event.getPlayer().getUsedItemHand();
+        bowfriendlyhand = event.getEntity().getUsedItemHand();
     }
 
     @SubscribeEvent
@@ -57,7 +54,7 @@ public class LivingHurtEventHandler {
         if (event.getSource().getDirectEntity() instanceof Player player && !(event.getSource().getDirectEntity() instanceof FakePlayer))
         //PLAYER IS ATTACKER
         {
-            LivingEntity target = event.getEntityLiving();
+            LivingEntity target = event.getEntity();
             ItemStack stack;
             if (bowfriendlyhand == null)
                 stack = player.getItemInHand(player.getUsedItemHand());
@@ -75,7 +72,7 @@ public class LivingHurtEventHandler {
                     updateLevel(player, stack, nbt);
                 }
             }
-        } else if (event.getEntityLiving() instanceof Player player) {//PLAYER IS GETTING HURT
+        } else if (event.getEntity() instanceof Player player) {//PLAYER IS GETTING HURT
             Entity target = event.getSource().getEntity();
 
             for (ItemStack stack : player.getInventory().armor) {
