@@ -24,10 +24,10 @@ public class RarityCommand {
 
     public static int changeRarity(CommandSourceStack src, Player player, int rarityid) {
         if ((rarityid < 1) || (rarityid > 6))
-            src.sendSuccess(Component.literal("Rarity ID must be 1, 2, 3, 4, 5 or 6!"), true);
+            src.sendSuccess(Component.literal("enhancedarmaments.misc.info.rarity_bigger"), true);
         else {
             if (!EAUtil.canEnhance(player.getMainHandItem().getItem()))
-                src.sendSuccess(Component.literal("Hold a weapon or an armor in your mainhand!"), true);
+                src.sendSuccess(Component.literal("enhancedarmaments.misc.info.mainhand"), true);
             else {
                 ItemStack item = player.getMainHandItem();
                 CompoundTag nbt = NBTUtil.loadStackNBT(item);
