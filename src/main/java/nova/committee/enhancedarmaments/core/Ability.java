@@ -80,7 +80,7 @@ public enum Ability {
      * @return
      */
     public boolean hasAbility(CompoundTag nbt) {
-        return nbt != null && nbt.getInt(toString()) > 0;
+        return nbt != null && nbt.contains("ABILITIES") && nbt.getCompound("ABILITIES").getInt(toString()) > 0;
     }
 
     /**
