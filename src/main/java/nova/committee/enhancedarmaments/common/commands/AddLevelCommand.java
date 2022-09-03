@@ -23,10 +23,10 @@ public class AddLevelCommand {
     }
 
     private static int addLevel(CommandSourceStack cmd, Player player, int count) {
-        if (count < 1) cmd.sendSuccess(new TextComponent("Level count must be bigger than 0!"), true);
+        if (count < 1) cmd.sendSuccess(new TranslatableComponent("enhancedarmaments.misc.info.level_bigger"), true);
         else {
             if (!EAUtil.canEnhance(player.getMainHandItem().getItem()))
-                cmd.sendSuccess(new TextComponent("Hold a weapon or an armor in your mainhand!"), true);
+                cmd.sendSuccess(new TranslatableComponent("enhancedarmaments.misc.info.mainhand"), true);
             else {
                 ItemStack item = player.getMainHandItem();
                 CompoundTag nbt = NBTUtil.loadStackNBT(item);
