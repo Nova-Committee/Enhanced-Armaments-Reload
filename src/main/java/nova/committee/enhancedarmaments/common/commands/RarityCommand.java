@@ -31,7 +31,7 @@ public class RarityCommand {
 
     public static int changeRarity(CommandContext<CommandSource> cmd) throws CommandSyntaxException {
         PlayerEntity player = cmd.getSource().getPlayerOrException();
-        int rarityid = IntegerArgumentType.getInteger(cmd, "level");
+        int rarityid = IntegerArgumentType.getInteger(cmd, "rarityid");
         EnhancedArmaments.LOGGER.info(rarityid);
         System.out.println(rarityid);
         if ((rarityid < 1) || (rarityid > 6))

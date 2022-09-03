@@ -33,7 +33,7 @@ public class InputEventHandler {
             if (stack != ItemStack.EMPTY) {
                 if (EAUtil.canEnhance(stack.getItem())) {
                     if (key.isDown() && stack.hasTag())
-                        if (stack.getTag().contains("EA_ENABLED"))
+                        if (stack.getOrCreateTag().contains("EA_ENABLED"))
                             mc.setScreen(new AbilitySelectionGui());
                 }
             }

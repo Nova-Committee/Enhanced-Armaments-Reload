@@ -15,7 +15,7 @@ import nova.committee.enhancedarmaments.init.ServerProxy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod("enhancedarmaments")
+@Mod(EnhancedArmaments.MODID)
 public class EnhancedArmaments {
 
     public static final String MODID = "enhancedarmaments";
