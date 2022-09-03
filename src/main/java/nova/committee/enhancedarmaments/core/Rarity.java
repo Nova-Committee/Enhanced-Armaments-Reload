@@ -63,8 +63,7 @@ public class Rarity {
     }
 
     public static void setRarity(CompoundTag nbt, String rarityName) {
-        int rarity = Integer.parseInt(rarityName);
-        nbt.putInt("RARITY", rarity);
+        nbt.putString("RARITY", rarityName);
     }
 
     public void setRarity(CompoundTag nbt) {
