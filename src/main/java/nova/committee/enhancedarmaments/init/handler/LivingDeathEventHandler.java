@@ -9,7 +9,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import nova.committee.enhancedarmaments.common.config.Config;
+import nova.committee.enhancedarmaments.common.config.EAConfig;
 import nova.committee.enhancedarmaments.core.Ability;
 import nova.committee.enhancedarmaments.core.Experience;
 import nova.committee.enhancedarmaments.util.EAUtil;
@@ -73,7 +73,7 @@ public class LivingDeathEventHandler {
      * @param nbt
      */
     private static void addBonusExperience(LivingDeathEvent event, CompoundTag nbt) {
-        if (Experience.getLevel(nbt) < Config.maxLevel) {
+        if (Experience.getLevel(nbt) < EAConfig.maxLevel) {
             if (event.getEntity() != null) {
                 LivingEntity target = event.getEntity();
                 int bonusExperience = 0;

@@ -5,13 +5,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import nova.committee.enhancedarmaments.common.config.Config;
+import nova.committee.enhancedarmaments.common.config.EAConfig;
 
 public class Experience {
     public static int getNextLevel(Player player, ItemStack stack, CompoundTag nbt, int currentLevel, int experience) {
         int newLevel = currentLevel;
 
-        while (currentLevel < Config.CONFIG.maxLevel.get() && experience >= Experience.getMaxLevelExp(currentLevel)) {
+        while (currentLevel < EAConfig.CONFIG.maxLevel.get() && experience >= Experience.getMaxLevelExp(currentLevel)) {
             newLevel = currentLevel + 1;
             currentLevel++;
             Experience.setAbilityTokens(nbt, Experience.getAbilityTokens(nbt) + 1);
@@ -26,7 +26,7 @@ public class Experience {
     }
 
     public static boolean canLevelUp(CompoundTag nbt) {
-        return getLevel(nbt) < Config.CONFIG.maxLevel.get();
+        return getLevel(nbt) < EAConfig.CONFIG.maxLevel.get();
     }
 
     public static void setLevel(CompoundTag nbt, int level) {
@@ -56,9 +56,9 @@ public class Experience {
     }
 
     public static int getMaxLevelExp(int level) {
-        int maxLevelExp = Config.CONFIG.level1Experience.get();
+        int maxLevelExp = EAConfig.CONFIG.level1Experience.get();
         for (int i = 1; i < level; i++)
-            maxLevelExp *= Config.CONFIG.experienceMultiplier.get();
+            maxLevelExp *= EAConfig.CONFIG.experienceMultiplier.get();
         return maxLevelExp;
     }
 

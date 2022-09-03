@@ -1,4 +1,4 @@
-package nova.committee.enhancedarmaments.init.handler;
+package nova.committee.enhancedarmaments.init;
 
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,7 +13,7 @@ import nova.committee.enhancedarmaments.common.commands.RarityCommand;
  * Version: 1.0
  */
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class CommandEventHandler {
+public class CmdInit {
 
     @SubscribeEvent
     public static void registry(RegisterCommandsEvent event) {

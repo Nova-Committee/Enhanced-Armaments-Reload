@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import nova.committee.enhancedarmaments.EnhancedArmaments;
+import nova.committee.enhancedarmaments.Static;
 
 /**
  * Description:
@@ -22,7 +23,7 @@ public class PacketHandler {
 
     public static void registerMessage() {
         INSTANCE = NetworkRegistry.newSimpleChannel(
-                new ResourceLocation(EnhancedArmaments.MODID, "network"),
+                new ResourceLocation(Static.MODID, "network"),
                 () -> VERSION,
                 (version) -> version.equals(VERSION),
                 (version) -> version.equals(VERSION)

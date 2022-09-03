@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class KeyInit {
     public static final KeyMapping abilityKey = new KeyMapping("key.gui.weapon_interface", 75, "key.enhancedarmaments");
-    ;
 
     @SubscribeEvent
     public static void onKeyRegistry(RegisterKeyMappingsEvent event) {
