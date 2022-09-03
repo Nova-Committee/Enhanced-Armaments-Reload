@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[41,)"
+loaderVersion = "[43,)"
 license = "GNU AGPL 3.0"
 [[mods]]
 modId = "enhancedarmaments"
@@ -10,6 +10,6 @@ description = ""
 [[dependencies.enhancedarmaments]]
 modId = "forge"
 mandatory = true
-versionRange = "[41.1.0,)"
+versionRange = "[43,)"
 ordering = "NONE"
 side = "BOTH"
