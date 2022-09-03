@@ -18,9 +18,10 @@ public class RarityCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("changerarity")
-                .requires(cmd -> cmd.hasPermission(3))
-                .then(Commands.argument("rarityid", IntegerArgumentType.integer()))
-                .executes(cmd -> changeRarity(cmd.getSource(), cmd.getSource().getPlayerOrException(), IntegerArgumentType.getInteger(cmd, "rarityid"))));
+                .requires(cmd -> cmd.hasPermission(2))
+                .then(Commands.argument("rarityid", IntegerArgumentType.integer())
+                        .executes(cmd -> changeRarity(cmd.getSource(), cmd.getSource().getPlayerOrException(), cmd.getArgument("rarityid", Integer.class))))
+        );
     }
 
     public static int changeRarity(CommandSourceStack src, Player player, int rarityid) {

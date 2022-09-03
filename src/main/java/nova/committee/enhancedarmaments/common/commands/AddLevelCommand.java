@@ -18,8 +18,9 @@ public class AddLevelCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("addlevel")
                 .requires(cmd -> cmd.hasPermission(3))
-                .then(Commands.argument("level", IntegerArgumentType.integer()))
-                .executes(cmd -> addLevel(cmd.getSource(), cmd.getSource().getPlayerOrException(), IntegerArgumentType.getInteger(cmd, "level"))));
+                .then(Commands.argument("level", IntegerArgumentType.integer())
+                        .executes(cmd -> addLevel(cmd.getSource(), cmd.getSource().getPlayerOrException(), IntegerArgumentType.getInteger(cmd, "level"))))
+                );
     }
 
     private static int addLevel(CommandSourceStack cmd, Player player, int count) {
