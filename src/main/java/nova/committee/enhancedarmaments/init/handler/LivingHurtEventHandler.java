@@ -55,10 +55,9 @@ public class LivingHurtEventHandler {
 
     @SubscribeEvent
     public void onHurt(LivingHurtEvent event) {
-        if (event.getSource().getDirectEntity() instanceof Player && !(event.getSource().getDirectEntity() instanceof FakePlayer))
+        if (event.getSource().getDirectEntity() instanceof Player player && !(event.getSource().getDirectEntity() instanceof FakePlayer))
         //PLAYER IS ATTACKER
         {
-            Player player = (Player) event.getSource().getDirectEntity();
             LivingEntity target = event.getEntityLiving();
             ItemStack stack;
             if (bowfriendlyhand == null)
@@ -77,8 +76,7 @@ public class LivingHurtEventHandler {
                     updateLevel(player, stack, nbt);
                 }
             }
-        } else if (event.getEntityLiving() instanceof Player) {//PLAYER IS GETTING HURT
-            Player player = (Player) event.getEntityLiving();
+        } else if (event.getEntityLiving() instanceof Player player) {//PLAYER IS GETTING HURT
             Entity target = event.getSource().getEntity();
 
             for (ItemStack stack : player.getInventory().armor) {
@@ -148,27 +146,27 @@ public class LivingHurtEventHandler {
         if (target != null) {
             // active
             if (Ability.FIRE.hasAbility(nbt) && (int) (Math.random() * Config.firechance) == 0) {
-                double multiplier = (Ability.FIRE.getLevel(nbt) + Ability.FIRE.getLevel(nbt) * 4) / 4;
+                double multiplier = (Ability.FIRE.getLevel(nbt) + Ability.FIRE.getLevel(nbt) * 4) / 4D;
                 target.setSecondsOnFire((int) (multiplier));
             }
 
             if (Ability.FROST.hasAbility(nbt) && (int) (Math.random() * Config.frostchance) == 0) {
-                double multiplier = (Ability.FROST.getLevel(nbt) + Ability.FROST.getLevel(nbt) * 4) / 3;
+                double multiplier = (Ability.FROST.getLevel(nbt) + Ability.FROST.getLevel(nbt) * 4) / 3D;
                 target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (20 * multiplier), 10));
             }
 
             if (Ability.POISON.hasAbility(nbt) && (int) (Math.random() * Config.poisonchance) == 0) {
-                double multiplier = (Ability.POISON.getLevel(nbt) + Ability.POISON.getLevel(nbt) * 4) / 2;
+                double multiplier = (Ability.POISON.getLevel(nbt) + Ability.POISON.getLevel(nbt) * 4) / 2D;
                 target.addEffect(new MobEffectInstance(MobEffects.POISON, (int) (20 * multiplier), Ability.POISON.getLevel(nbt)));
             }
 
             if (Ability.INNATE.hasAbility(nbt) && (int) (Math.random() * Config.innatechance) == 0) {
-                double multiplier = (Ability.INNATE.getLevel(nbt) + Ability.INNATE.getLevel(nbt) * 4) / 3;
+                double multiplier = (Ability.INNATE.getLevel(nbt) + Ability.INNATE.getLevel(nbt) * 4) / 3D;
                 target.addEffect(new MobEffectInstance(MobEffects.WITHER, (int) (20 * multiplier), Ability.INNATE.getLevel(nbt)));
             }
 
             if (Ability.BOMBASTIC.hasAbility(nbt) && (int) (Math.random() * Config.bombasticchance) == 0) {
-                double multiplierD = (Ability.BOMBASTIC.getLevel(nbt) + Ability.BOMBASTIC.getLevel(nbt) * 4) / 4;
+                double multiplierD = (Ability.BOMBASTIC.getLevel(nbt) + Ability.BOMBASTIC.getLevel(nbt) * 4) / 4D;
                 float multiplier = (float) multiplierD;
                 Level world = target.getLevel();
 
@@ -203,26 +201,23 @@ public class LivingHurtEventHandler {
     private void useArmorAbilities(LivingHurtEvent event, Player player, Entity target, CompoundTag nbt) {
         if (target != null) {
             // active
-            if (Ability.MOLTEN.hasAbility(nbt) && (int) (Math.random() * Config.moltenchance) == 0 && target instanceof LivingEntity) {
-                LivingEntity realTarget = (LivingEntity) target;
-                double multiplier = (Ability.MOLTEN.getLevel(nbt) + Ability.MOLTEN.getLevel(nbt) * 5) / 4;
+            if (Ability.MOLTEN.hasAbility(nbt) && (int) (Math.random() * Config.moltenchance) == 0 && target instanceof LivingEntity realTarget) {
+                double multiplier = (Ability.MOLTEN.getLevel(nbt) + Ability.MOLTEN.getLevel(nbt) * 5) / 4D;
                 realTarget.setSecondsOnFire((int) (multiplier));
             }
 
-            if (Ability.FROZEN.hasAbility(nbt) && (int) (Math.random() * Config.frozenchance) == 0 && target instanceof LivingEntity) {
-                LivingEntity realTarget = (LivingEntity) target;
-                double multiplier = (Ability.FROZEN.getLevel(nbt) + Ability.FROZEN.getLevel(nbt) * 5) / 6;
+            if (Ability.FROZEN.hasAbility(nbt) && (int) (Math.random() * Config.frozenchance) == 0 && target instanceof LivingEntity realTarget) {
+                double multiplier = (Ability.FROZEN.getLevel(nbt) + Ability.FROZEN.getLevel(nbt) * 5) / 6D;
                 realTarget.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (20 * multiplier), 10));
             }
 
-            if (Ability.TOXIC.hasAbility(nbt) && (int) (Math.random() * Config.toxicchance) == 0 && target instanceof LivingEntity) {
-                LivingEntity realTarget = (LivingEntity) target;
-                double multiplier = (Ability.TOXIC.getLevel(nbt) + Ability.TOXIC.getLevel(nbt) * 4) / 4;
+            if (Ability.TOXIC.hasAbility(nbt) && (int) (Math.random() * Config.toxicchance) == 0 && target instanceof LivingEntity realTarget) {
+                double multiplier = (Ability.TOXIC.getLevel(nbt) + Ability.TOXIC.getLevel(nbt) * 4) / 4D;
                 realTarget.addEffect(new MobEffectInstance(MobEffects.POISON, (int) (20 * multiplier), Ability.TOXIC.getLevel(nbt)));
             }
 
             if (Ability.ADRENALINE.hasAbility(nbt) && (int) (Math.random() * Config.adrenalinechance) == 0) {
-                double multiplier = (Ability.ADRENALINE.getLevel(nbt) + Ability.ADRENALINE.getLevel(nbt) * 5) / 3;
+                double multiplier = (Ability.ADRENALINE.getLevel(nbt) + Ability.ADRENALINE.getLevel(nbt) * 5) / 3D;
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, (int) (20 * (multiplier)), Ability.ADRENALINE.getLevel(nbt)));
             }
 
