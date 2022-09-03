@@ -6,6 +6,7 @@ import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.Connection;
+import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.PacketFlow;
@@ -216,7 +217,7 @@ public class FakePlayer extends ServerPlayer {
         }
 
         @Override
-        public void send(Packet<?> packet, @Nullable GenericFutureListener<? extends Future<? super Void>> listener) {
+        public void send(Packet<?> packet, @Nullable PacketSendListener packetSendListener) {
         }
 
         @Override
