@@ -23,7 +23,7 @@
     "enhancedarmaments.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.14.8",
+    "fabricloader": "*",
     "fabric": "*",
     "minecraft": "1.19"
   }

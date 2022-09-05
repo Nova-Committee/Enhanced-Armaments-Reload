@@ -37,13 +37,10 @@ public class LivingHurtEventHandler {
 
     public static void onArrowHit() {
         ProjectileImpactCallback.EVENT.register((proj, hit) -> {
-            if (proj instanceof Arrow arrow) {
-                if(EAUtil.getEntityByUniqueId(Objects.requireNonNull(arrow.getOwner()).getUUID()) instanceof Player player && EAUtil.getEntityByUniqueId(arrow.getOwner().getUUID()) != null)
-                {
-                    if (hit == null)
-                        bowfriendlyhand = player.getUsedItemHand();
-                }
-            }
+            if (!(proj instanceof Arrow arrow)) return false;
+            final var owner = arrow.getOwner();
+            if (!(owner instanceof Player player)) return false;
+            if (hit == null) bowfriendlyhand = player.getUsedItemHand();
             return true;
         });
 
@@ -154,27 +151,27 @@ public class LivingHurtEventHandler {
         if (target != null) {
             // active
             if (Ability.FIRE.hasAbility(nbt) && (int) (Math.random() * Static.config.firechance) == 0) {
-                double multiplier = (Ability.FIRE.getLevel(nbt) + Ability.FIRE.getLevel(nbt) * 4) / 4;
+                double multiplier = (Ability.FIRE.getLevel(nbt) + Ability.FIRE.getLevel(nbt) * 4) / 4D;
                 target.setSecondsOnFire((int) (multiplier));
             }
 
             if (Ability.FROST.hasAbility(nbt) && (int) (Math.random() * Static.config.frostchance) == 0) {
-                double multiplier = (Ability.FROST.getLevel(nbt) + Ability.FROST.getLevel(nbt) * 4) / 3;
+                double multiplier = (Ability.FROST.getLevel(nbt) + Ability.FROST.getLevel(nbt) * 4) / 3D;
                 target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (20 * multiplier), 10));
             }
 
             if (Ability.POISON.hasAbility(nbt) && (int) (Math.random() * Static.config.poisonchance) == 0) {
-                double multiplier = (Ability.POISON.getLevel(nbt) + Ability.POISON.getLevel(nbt) * 4) / 2;
+                double multiplier = (Ability.POISON.getLevel(nbt) + Ability.POISON.getLevel(nbt) * 4) / 2D;
                 target.addEffect(new MobEffectInstance(MobEffects.POISON, (int) (20 * multiplier), Ability.POISON.getLevel(nbt)));
             }
 
             if (Ability.INNATE.hasAbility(nbt) && (int) (Math.random() * Static.config.innatechance) == 0) {
-                double multiplier = (Ability.INNATE.getLevel(nbt) + Ability.INNATE.getLevel(nbt) * 4) / 3;
+                double multiplier = (Ability.INNATE.getLevel(nbt) + Ability.INNATE.getLevel(nbt) * 4) / 3D;
                 target.addEffect(new MobEffectInstance(MobEffects.WITHER, (int) (20 * multiplier), Ability.INNATE.getLevel(nbt)));
             }
 
             if (Ability.BOMBASTIC.hasAbility(nbt) && (int) (Math.random() * Static.config.bombasticchance) == 0) {
-                double multiplierD = (Ability.BOMBASTIC.getLevel(nbt) + Ability.BOMBASTIC.getLevel(nbt) * 4) / 4;
+                double multiplierD = (Ability.BOMBASTIC.getLevel(nbt) + Ability.BOMBASTIC.getLevel(nbt) * 4) / 4D;
                 float multiplier = (float) multiplierD;
                 Level world = target.getLevel();
 
@@ -212,24 +209,24 @@ public class LivingHurtEventHandler {
             // active
             if (Ability.MOLTEN.hasAbility(nbt) && (int) (Math.random() * Static.config.moltenchance) == 0 && target instanceof LivingEntity) {
                 LivingEntity realTarget = (LivingEntity) target;
-                double multiplier = (Ability.MOLTEN.getLevel(nbt) + Ability.MOLTEN.getLevel(nbt) * 5) / 4;
+                double multiplier = (Ability.MOLTEN.getLevel(nbt) + Ability.MOLTEN.getLevel(nbt) * 5) / 4D;
                 realTarget.setSecondsOnFire((int) (multiplier));
             }
 
             if (Ability.FROZEN.hasAbility(nbt) && (int) (Math.random() * Static.config.frozenchance) == 0 && target instanceof LivingEntity) {
                 LivingEntity realTarget = (LivingEntity) target;
-                double multiplier = (Ability.FROZEN.getLevel(nbt) + Ability.FROZEN.getLevel(nbt) * 5) / 6;
+                double multiplier = (Ability.FROZEN.getLevel(nbt) + Ability.FROZEN.getLevel(nbt) * 5) / 6D;
                 realTarget.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (20 * multiplier), 10));
             }
 
             if (Ability.TOXIC.hasAbility(nbt) && (int) (Math.random() * Static.config.toxicchance) == 0 && target instanceof LivingEntity) {
                 LivingEntity realTarget = (LivingEntity) target;
-                double multiplier = (Ability.TOXIC.getLevel(nbt) + Ability.TOXIC.getLevel(nbt) * 4) / 4;
+                double multiplier = (Ability.TOXIC.getLevel(nbt) + Ability.TOXIC.getLevel(nbt) * 4) / 4D;
                 realTarget.addEffect(new MobEffectInstance(MobEffects.POISON, (int) (20 * multiplier), Ability.TOXIC.getLevel(nbt)));
             }
 
             if (Ability.ADRENALINE.hasAbility(nbt) && (int) (Math.random() * Static.config.adrenalinechance) == 0) {
-                double multiplier = (Ability.ADRENALINE.getLevel(nbt) + Ability.ADRENALINE.getLevel(nbt) * 5) / 3;
+                double multiplier = (Ability.ADRENALINE.getLevel(nbt) + Ability.ADRENALINE.getLevel(nbt) * 5) / 3D;
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, (int) (20 * (multiplier)), Ability.ADRENALINE.getLevel(nbt)));
             }
 
