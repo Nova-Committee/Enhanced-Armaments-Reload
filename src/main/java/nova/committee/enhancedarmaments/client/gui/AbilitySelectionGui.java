@@ -12,6 +12,8 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -43,7 +45,7 @@ public class AbilitySelectionGui extends Screen {
     private Button[] armorAbilities;
 
     public AbilitySelectionGui() {
-        super(Component.literal(""));
+        super(new TextComponent(""));
         this.leftPos = (this.width) / 2;
         this.topPos = (this.height) / 2;
     }
@@ -66,11 +68,11 @@ public class AbilitySelectionGui extends Screen {
                         for (int i = 0; i < weaponAbilities.length; i++) {
                             if (Ability.WEAPON_ABILITIES.get(i).getType().equals("active")) {
                                 weaponAbilities[i] = new ExtendedButton(width / 2 - 215, 100 + (i * 21), 110, 20,
-                                        Component.translatable("enhancedarmaments.ability." + Ability.WEAPON_ABILITIES.get(i).getName()), this::actionPerformed);
+                                        new TranslatableComponent("enhancedarmaments.ability." + Ability.WEAPON_ABILITIES.get(i).getName()), this::actionPerformed);
                                 j++;
                             } else
                                 weaponAbilities[i] = new ExtendedButton(width / 2 - 100, 100 + ((i - j) * 21), 110, 20,
-                                        Component.translatable("enhancedarmaments.ability." + Ability.WEAPON_ABILITIES.get(i).getName()), this::actionPerformed);
+                                        new TranslatableComponent("enhancedarmaments.ability." + Ability.WEAPON_ABILITIES.get(i).getName()), this::actionPerformed);
 
                             this.addRenderableWidget(weaponAbilities[i]);
                             weaponAbilities[i].active = false;
@@ -86,12 +88,12 @@ public class AbilitySelectionGui extends Screen {
                         for (int i = 0; i < armorAbilities.length; i++) {
                             if (Ability.ARMOR_ABILITIES.get(i).getType().equals("active")) {
                                 armorAbilities[i] = new ExtendedButton(width / 2 - 215, 100 + (i * 21), 100, 20,
-                                        Component.translatable("enhancedarmaments.ability." + Ability.ARMOR_ABILITIES.get(i).getName()), this::actionPerformed);
+                                        new TranslatableComponent("enhancedarmaments.ability." + Ability.ARMOR_ABILITIES.get(i).getName()), this::actionPerformed);
 
                                 j++;
                             } else
                                 armorAbilities[i] = new ExtendedButton(width / 2 - 100, 100 + ((i - j) * 21), 105, 20,
-                                        Component.translatable("enhancedarmaments.ability." + Ability.ARMOR_ABILITIES.get(i).getName()), this::actionPerformed);
+                                        new TranslatableComponent("enhancedarmaments.ability." + Ability.ARMOR_ABILITIES.get(i).getName()), this::actionPerformed);
 
                             this.addRenderableWidget(armorAbilities[i]);
                             armorAbilities[i].active = false;

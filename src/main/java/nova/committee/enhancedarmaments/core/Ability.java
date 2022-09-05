@@ -3,6 +3,7 @@ package nova.committee.enhancedarmaments.core;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import nova.committee.enhancedarmaments.Static;
 
@@ -181,11 +182,11 @@ public enum Ability {
 
     public String getName(CompoundTag nbt) {
         if (getLevel(nbt) == 2)
-            return Component.translatable("enhancedarmaments.ability." + this.toString()).getString() + " II";
+            return new TranslatableComponent("enhancedarmaments.ability." + this.toString()).getString() + " II";
         else if (getLevel(nbt) == 3)
-            return Component.translatable("enhancedarmaments.ability." + this.toString()).getString() + " III";
+            return new TranslatableComponent("enhancedarmaments.ability." + this.toString()).getString() + " III";
         else
-            return Component.translatable("enhancedarmaments.ability." + this.toString()).getString();
+            return new TranslatableComponent("enhancedarmaments.ability." + this.toString()).getString();
     }
 
     public String getType() {
@@ -193,7 +194,7 @@ public enum Ability {
     }
 
     public String getTypeName() {
-        return Component.translatable("enhancedarmaments.ability.type." + type.toString()).getString();
+        return new TranslatableComponent("enhancedarmaments.ability.type." + type.toString()).getString();
     }
 
     public String getCategory() {

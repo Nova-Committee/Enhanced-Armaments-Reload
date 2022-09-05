@@ -6,6 +6,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -50,42 +52,42 @@ public class ItemTooltipEventHandler {
 
                     // level
                     if (level >= Static.config.maxLevel)
-                        list.add(Component.literal(I18n.get("enhancedarmaments.misc.level") + ": " + ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max")));
+                        list.add(new TextComponent(I18n.get("enhancedarmaments.misc.level") + ": " + ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max")));
                     else
-                        list.add(Component.literal(I18n.get("enhancedarmaments.misc.level") + ": " + ChatFormatting.WHITE + level));
+                        list.add(new TextComponent(I18n.get("enhancedarmaments.misc.level") + ": " + ChatFormatting.WHITE + level));
 
                     // experience
                     if (level >= Static.config.maxLevel)
-                        list.add(Component.literal(I18n.get("enhancedarmaments.misc.experience") + ": " + I18n.get("enhancedarmaments.misc.max")));
+                        list.add(new TextComponent(I18n.get("enhancedarmaments.misc.experience") + ": " + I18n.get("enhancedarmaments.misc.max")));
                     else
-                        list.add(Component.literal(I18n.get("enhancedarmaments.misc.experience") + ": " + experience + " / " + maxExperience));
+                        list.add(new TextComponent(I18n.get("enhancedarmaments.misc.experience") + ": " + experience + " / " + maxExperience));
 
                     // durability
                     if (Static.config.showDurabilityInTooltip) {
-                        list.add(Component.literal(I18n.get("enhancedarmaments.misc.durability") + ": " + (itemStack.getMaxDamage() - itemStack.getDamageValue()) + " / " + itemStack.getMaxDamage()));
+                        list.add(new TextComponent(I18n.get("enhancedarmaments.misc.durability") + ": " + (itemStack.getMaxDamage() - itemStack.getDamageValue()) + " / " + itemStack.getMaxDamage()));
                     }
 
                     // abilities
-                    list.add(Component.literal(""));
+                    list.add(new TextComponent(""));
                     if (Screen.hasShiftDown()) {
-                        list.add(Component.literal(rarity.getColor() + "" + ChatFormatting.ITALIC + I18n.get("enhancedarmaments.misc.abilities")));
-                        list.add(Component.literal(""));
+                        list.add(new TextComponent(rarity.getColor() + "" + ChatFormatting.ITALIC + I18n.get("enhancedarmaments.misc.abilities")));
+                        list.add(new TextComponent(""));
 
                         if (EAUtil.canEnhanceWeapon(item)) {
                             for (Ability ability : Ability.WEAPON_ABILITIES) {
                                 if (ability.hasAbility(nbt)) {
-                                    list.add(Component.translatable("-" + ability.getColor() + ability.getName(nbt)));
+                                    list.add(new TranslatableComponent("-" + ability.getColor() + ability.getName(nbt)));
                                 }
                             }
                         } else if (EAUtil.canEnhanceArmor(item)) {
                             for (Ability ability : Ability.ARMOR_ABILITIES) {
                                 if (ability.hasAbility(nbt)) {
-                                    list.add(Component.translatable("-" + ability.getColor() + ability.getName(nbt)));
+                                    list.add(new TranslatableComponent("-" + ability.getColor() + ability.getName(nbt)));
                                 }
                             }
                         }
                     } else
-                        list.add(Component.literal(rarity.getColor() + "" + ChatFormatting.ITALIC + I18n.get("enhancedarmaments.misc.abilities.shift")));
+                        list.add(new TextComponent(rarity.getColor() + "" + ChatFormatting.ITALIC + I18n.get("enhancedarmaments.misc.abilities.shift")));
                 }
             }
         });
@@ -94,17 +96,17 @@ public class ItemTooltipEventHandler {
 
     private static void changeTooltips(List<Component> tooltip, ItemStack stack, Rarity rarity) {
         // rarity after the name
-        tooltip.set(0, Component.literal(stack.getDisplayName().getString() + rarity.getColor() + " (" + ChatFormatting.ITALIC + I18n.get("enhancedarmaments.rarity." + rarity.getName()) + ")"));
+        tooltip.set(0, new TextComponent(stack.getDisplayName().getString() + rarity.getColor() + " (" + ChatFormatting.ITALIC + I18n.get("enhancedarmaments.rarity." + rarity.getName()) + ")"));
 
         if (EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.mainHand")) && !(stack.getItem() instanceof BowItem)) {
-            Multimap<Attribute, AttributeModifier> map = stack.getItem().getAttributeModifiers(stack, EquipmentSlot.MAINHAND);
+            Multimap<Attribute, AttributeModifier> map = stack.getItem().getDefaultAttributeModifiers(EquipmentSlot.MAINHAND);
             Collection<AttributeModifier> damageCollection = map.get(Attributes.ATTACK_DAMAGE);
             AttributeModifier damageModifier = (AttributeModifier) damageCollection.toArray()[0];
             double damage = ((damageModifier.getAmount() + 1) * rarity.getEffect()) + damageModifier.getAmount() + 1;
             String d = String.format("%.1f", damage);
 
             if (rarity.getEffect() != 0)
-                tooltip.set(EAUtil.lineContainsString(tooltip, I18n.get("enhancedarmaments.misc.pos.mainHand")) + 2, Component.literal(rarity.getColor() + " " + d + ChatFormatting.GRAY + " " + I18n.get("enhancedarmaments.misc.tooltip.attackdamage")));
+                tooltip.set(EAUtil.lineContainsString(tooltip, I18n.get("enhancedarmaments.misc.pos.mainHand")) + 2, new TextComponent(rarity.getColor() + " " + d + ChatFormatting.GRAY + " " + I18n.get("enhancedarmaments.misc.tooltip.attackdamage")));
         }
 
         if (EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.head")) || EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.body")) || EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.legs")) || EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.feet"))) {
@@ -120,12 +122,12 @@ public class ItemTooltipEventHandler {
             if (EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.feet")))
                 line = EAUtil.lineContainsString(tooltip, I18n.get("enhancedarmaments.misc.pos.feet"));
             if (percentage != 0)
-                tooltip.add(line + 1, Component.literal(" " + ChatFormatting.BLUE + "+" + rarity.getColor() + percentage + ChatFormatting.BLUE + "% " + I18n.get("enhancedarmaments.misc.rarity.armorreduction")));
+                tooltip.add(line + 1, new TextComponent(" " + ChatFormatting.BLUE + "+" + rarity.getColor() + percentage + ChatFormatting.BLUE + "% " + I18n.get("enhancedarmaments.misc.rarity.armorreduction")));
         }
 
         if (EAUtil.canEnhanceRanged(stack.getItem()) && rarity.getEffect() != 0) {
             String b = String.format("%.1f", rarity.getEffect() / 3 * 100);
-            tooltip.add(1, Component.literal(I18n.get("enhancedarmaments.misc.rarity.arrowpercentage") + " " + rarity.getColor() + "+" + b + "%"));
+            tooltip.add(1, new TextComponent(I18n.get("enhancedarmaments.misc.rarity.arrowpercentage") + " " + rarity.getColor() + "+" + b + "%"));
         }
     }
 }

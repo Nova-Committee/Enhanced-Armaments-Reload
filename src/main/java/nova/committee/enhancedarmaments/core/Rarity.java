@@ -2,7 +2,6 @@ package nova.committee.enhancedarmaments.core;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.RandomSource;
 import nova.committee.enhancedarmaments.Static;
 import nova.committee.enhancedarmaments.util.RandomCollection;
 
@@ -48,7 +47,7 @@ public enum Rarity {
      * @param random
      * @return
      */
-    public static Rarity getRandomRarity(RandomSource random) {
+    public static Rarity getRandomRarity(Random random) {
         return RANDOM_RARITIES.next(random);
     }
 

@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import nova.committee.enhancedarmaments.util.GuiUtils;
 
 /**
@@ -34,7 +35,7 @@ public class ExtendedButton extends Button {
         int ellipsisWidth = mc.font.width("...");
 
         if (strWidth > width - 6 && strWidth > ellipsisWidth)
-            buttonText = Component.literal(mc.font.substrByWidth(buttonText, width - 6 - ellipsisWidth).getString() + "...");
+            buttonText = new TextComponent(mc.font.substrByWidth(buttonText, width - 6 - ellipsisWidth).getString() + "...");
 
         drawCenteredString(poseStack, mc.font, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, 16777215);
     }

@@ -1,6 +1,6 @@
 package nova.committee.enhancedarmaments.init.handler;
 
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import nova.committee.enhancedarmaments.common.commands.AddLevelCommand;
 import nova.committee.enhancedarmaments.common.commands.RarityCommand;
 
@@ -14,7 +14,7 @@ public class CommandEventHandler {
 
 
     public static void init() {
-        CommandRegistrationCallback.EVENT.register((dispatcher, commandBuildContext, commandSelection) -> {
+        CommandRegistrationCallback.EVENT.register((dispatcher, e) -> {
             RarityCommand.register(dispatcher);
             AddLevelCommand.register(dispatcher);
         });

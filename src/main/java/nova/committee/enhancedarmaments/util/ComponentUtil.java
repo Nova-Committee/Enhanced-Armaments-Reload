@@ -1,6 +1,7 @@
 package nova.committee.enhancedarmaments.util;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class ComponentUtil {
         List<Component> text = new ArrayList<>();
 
         for (String s : list) {
-            text.add(Component.literal(s));
+            text.add(new TextComponent(s));
         }
 
         return text;

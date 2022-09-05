@@ -126,7 +126,7 @@ public class LivingHurtEventHandler {
         if (rarity != Rarity.DEFAULT)
 
             if (EAUtil.canEnhanceMelee(stack.getItem())) {
-                Multimap<Attribute, AttributeModifier> map = stack.getItem().getAttributeModifiers(stack, EquipmentSlot.MAINHAND);
+                Multimap<Attribute, AttributeModifier> map = stack.getItem().getDefaultAttributeModifiers(EquipmentSlot.MAINHAND);
                 Collection<AttributeModifier> damageCollection = map.get(Attributes.ATTACK_DAMAGE);
                 AttributeModifier damageModifier = (AttributeModifier) damageCollection.toArray()[0];
                 double damage = damageModifier.getAmount();

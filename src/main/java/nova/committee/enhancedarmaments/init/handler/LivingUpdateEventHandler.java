@@ -3,7 +3,6 @@ package nova.committee.enhancedarmaments.init.handler;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -65,7 +64,7 @@ public class LivingUpdateEventHandler {
                                         if (okay) {
                                             Experience.enable(nbt, true);
                                             Rarity rarity = Rarity.getRarity(nbt);
-                                            RandomSource rand = player.level.random;
+                                            var rand = player.level.random;
 
                                             if (rarity == Rarity.DEFAULT) {
                                                 rarity = Rarity.getRandomRarity(rand);

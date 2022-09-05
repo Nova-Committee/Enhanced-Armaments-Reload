@@ -1,6 +1,5 @@
 package nova.committee.enhancedarmaments.util;
 
-import net.minecraft.util.RandomSource;
 
 import java.util.NavigableMap;
 import java.util.Random;
@@ -16,7 +15,7 @@ public class RandomCollection<E> {
         map.put(total, result);
     }
 
-    public E next(RandomSource random) {
+    public E next(Random random) {
         double value = random.nextDouble() * total;
         return map.ceilingEntry(value).getValue();
     }

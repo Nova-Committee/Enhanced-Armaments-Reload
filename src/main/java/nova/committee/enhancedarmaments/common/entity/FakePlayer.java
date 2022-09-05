@@ -31,7 +31,7 @@ import java.util.Set;
  */
 public class FakePlayer extends ServerPlayer {
     public FakePlayer(MinecraftServer minecraftServer, ServerLevel serverLevel, GameProfile gameProfile, ServerPlayerGameMode serverPlayerGameMode) {
-        super(minecraftServer, serverLevel, gameProfile, null);
+        super(minecraftServer, serverLevel, gameProfile);
     }
 
     @Override
