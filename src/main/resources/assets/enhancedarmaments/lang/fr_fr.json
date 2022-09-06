@@ -68,6 +68,7 @@
   "enhancedarmaments.misc.rarity.arrowpercentage": "Dégâts par flèche",
   "enhancedarmaments.misc.tooltip.attackdamage": "Dégâts d'attaque",
   "enhancedarmaments.misc.level.leveledup": "est monté au niveau",
+  "enhancedarmaments.misc.exp.get" : "+Exp",
   "enhancedarmaments.misc.pos.head": "Lorsqu’il est sur la tête:",
   "enhancedarmaments.misc.pos.body": "Lorsqu’il est sur le corps:",
   "enhancedarmaments.misc.pos.legs": "Lorsque vous êtes sur les jambes:",

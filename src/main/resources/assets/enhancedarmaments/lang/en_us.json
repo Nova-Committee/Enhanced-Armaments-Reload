@@ -68,6 +68,7 @@
   "enhancedarmaments.misc.rarity.arrowpercentage": "Arrow Shot Damage",
   "enhancedarmaments.misc.tooltip.attackdamage": "Attack Damage",
   "enhancedarmaments.misc.level.leveledup": "has leveled up to level",
+  "enhancedarmaments.misc.exp.get" : "+Exp",
   "enhancedarmaments.misc.pos.head": "When on head:",
   "enhancedarmaments.misc.pos.body": "When on body:",
   "enhancedarmaments.misc.pos.legs": "When on legs:",

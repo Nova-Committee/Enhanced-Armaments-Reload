@@ -1,11 +1,14 @@
 package nova.committee.enhancedarmaments.init.handler;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import nova.committee.enhancedarmaments.Static;
 import nova.committee.enhancedarmaments.common.entity.FakePlayer;
 import nova.committee.enhancedarmaments.core.Ability;
@@ -21,8 +24,7 @@ public class LivingDeathEventHandler {
 
     public static void init() {
         EntityEvents.LIVING_ENTITY_DEATH.register((world, entity, source) -> {
-            if (source.getDirectEntity() instanceof Player && !(source.getDirectEntity() instanceof FakePlayer)) {
-                Player player = (Player) source.getDirectEntity();
+            if (source.getDirectEntity() instanceof Player player && !(source.getDirectEntity() instanceof FakePlayer)) {
 
                 ItemStack stack;
                 if (LivingHurtEventHandler.bowfriendlyhand == null)
@@ -36,7 +38,7 @@ public class LivingDeathEventHandler {
                         if (Ability.ETHEREAL.hasAbility(nbt)) {
                             player.getInventory().getSelected().setDamageValue((player.getInventory().getSelected().getDamageValue() - (Ability.ETHEREAL.getLevel(nbt) * 2)));
                         }
-                        addBonusExperience(entity, nbt);
+                        addBonusExperience(player, stack, entity, nbt);
                         updateLevel(player, stack, nbt);
                         NBTUtil.saveStackNBT(stack, nbt);
                     }
@@ -47,22 +49,20 @@ public class LivingDeathEventHandler {
                         if (Ability.ETHEREAL.hasAbility(nbt)) {
                             player.getInventory().getSelected().setDamageValue((player.getInventory().getSelected().getDamageValue() - (Ability.ETHEREAL.getLevel(nbt) * 2 + 1)));
                         }
-                        addBonusExperience(entity, nbt);
+                        addBonusExperience(player, stack, entity, nbt);
                         updateLevel(player, stack, nbt);
                     }
                 }
             } else if (source.getDirectEntity() instanceof Arrow) {
 
                 if (source.getEntity() instanceof Player player && source.getEntity() != null) {
-                    if (player != null) {
-                        ItemStack stack = player.getInventory().getSelected();
+                    ItemStack stack = player.getInventory().getSelected();
 
-                        if (stack != ItemStack.EMPTY) {
-                            CompoundTag nbt = NBTUtil.loadStackNBT(stack);
-                            addBonusExperience(entity, nbt);
-                            updateLevel(player, stack, nbt);
+                    if (stack != ItemStack.EMPTY) {
+                        CompoundTag nbt = NBTUtil.loadStackNBT(stack);
+                        addBonusExperience(player, stack, entity, nbt);
+                        updateLevel(player, stack, nbt);
 
-                        }
                     }
                 }
             }
@@ -74,7 +74,7 @@ public class LivingDeathEventHandler {
      * 每次目标死亡时调用。根据目标的生命值增加额外经验。
      *
      */
-    private static void addBonusExperience(Entity target, CompoundTag nbt) {
+    private static void addBonusExperience(Player player, ItemStack stack, Entity target, CompoundTag nbt) {
         if (Experience.getLevel(nbt) < Static.configHandler.getConfig().getMaxLevel()) {
             if (target != null) {
                 int bonusExperience = 0;
@@ -87,6 +87,10 @@ public class LivingDeathEventHandler {
                 else if (entity.getMaxHealth() > 99) bonusExperience = 70;
 
                 Experience.setExperience(nbt, Experience.getExperience(nbt) + bonusExperience);
+                player.sendSystemMessage(Component.literal(stack.getDisplayName().getString() + ChatFormatting.GRAY + " " +
+                        Component.translatable("enhancedarmaments.misc.exp.get").getString() + " " +
+                        ChatFormatting.BLUE + "" + bonusExperience + ChatFormatting.GRAY + "!"));
+
             }
         }
     }

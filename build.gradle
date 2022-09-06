@@ -7,8 +7,6 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-    maven { url "https://maven.shedaniel.me/" }
-    maven { url "https://maven.terraformersmc.com/releases/" }
 
 }
 
@@ -20,9 +18,8 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modApi("me.shedaniel.cloth:cloth-config-fabric:8.1.77") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }}
+
+}
 
 processResources {
     inputs.property "version", project.version
