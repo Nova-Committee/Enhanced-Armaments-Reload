@@ -1,6 +1,8 @@
 package nova.committee.enhancedarmaments.init.handler;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
@@ -36,7 +38,7 @@ public class LivingDeathEventHandler {
                     if (Ability.ETHEREAL.hasAbility(nbt)) {
                         player.getInventory().getSelected().setDamageValue((player.getInventory().getSelected().getDamageValue() - (Ability.ETHEREAL.getLevel(nbt) * 2)));
                     }
-                    addBonusExperience(event, nbt);
+                    addBonusExperience(event, player, stack, nbt);
                     updateLevel(player, stack, nbt);
                     NBTUtil.saveStackNBT(stack, nbt);
                 }
@@ -47,7 +49,7 @@ public class LivingDeathEventHandler {
                     if (Ability.ETHEREAL.hasAbility(nbt)) {
                         player.getInventory().getSelected().setDamageValue((player.getInventory().getSelected().getDamageValue() - (Ability.ETHEREAL.getLevel(nbt) * 2 + 1)));
                     }
-                    addBonusExperience(event, nbt);
+                    addBonusExperience(event, player, stack, nbt);
                     updateLevel(player, stack, nbt);
                 }
             }
@@ -58,7 +60,7 @@ public class LivingDeathEventHandler {
 
                 if (stack != ItemStack.EMPTY) {
                     CompoundTag nbt = NBTUtil.loadStackNBT(stack);
-                    addBonusExperience(event, nbt);
+                    addBonusExperience(event, player, stack, nbt);
                     updateLevel(player, stack, nbt);
 
                 }
@@ -72,7 +74,7 @@ public class LivingDeathEventHandler {
      * @param event
      * @param nbt
      */
-    private static void addBonusExperience(LivingDeathEvent event, CompoundTag nbt) {
+    private static void addBonusExperience(LivingDeathEvent event, Player player, ItemStack stack, CompoundTag nbt) {
         if (Experience.getLevel(nbt) < EAConfig.maxLevel) {
             if (event.getEntity() != null) {
                 LivingEntity target = event.getEntity();
@@ -85,6 +87,9 @@ public class LivingDeathEventHandler {
                 else if (target.getMaxHealth() > 99) bonusExperience = 70;
 
                 Experience.setExperience(nbt, Experience.getExperience(nbt) + bonusExperience);
+                player.sendSystemMessage(Component.literal(stack.getDisplayName().getString() + ChatFormatting.GRAY + " " +
+                        Component.translatable("enhancedarmaments.misc.exp.get").getString() + " " +
+                        ChatFormatting.BLUE + "" + bonusExperience + ChatFormatting.GRAY + "!"));
             }
         }
     }
