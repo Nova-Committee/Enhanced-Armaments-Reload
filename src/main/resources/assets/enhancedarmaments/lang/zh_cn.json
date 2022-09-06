@@ -71,6 +71,7 @@
   "enhancedarmaments.misc.info.rarity_bigger" : "稀有度词条的ID为 1, 2, 3, 4, 5 或者 6!",
   "enhancedarmaments.misc.info.level_bigger": "等级设定必须比零大!",
   "enhancedarmaments.misc.info.mainhand": "请在你的主手上拿着盔甲或者武器!",
+  "enhancedarmaments.misc.exp.get" : "+Exp",
   "enhancedarmaments.misc.pos.head": "当在头盔上时：",
   "enhancedarmaments.misc.pos.body": "当在身体上时：",
   "enhancedarmaments.misc.pos.legs": "当在护腿上时：",
