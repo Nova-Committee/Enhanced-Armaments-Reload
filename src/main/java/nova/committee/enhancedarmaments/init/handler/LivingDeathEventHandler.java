@@ -75,7 +75,7 @@ public class LivingDeathEventHandler {
      *
      */
     private static void addBonusExperience(Entity target, CompoundTag nbt) {
-        if (Experience.getLevel(nbt) < Static.config.maxLevel) {
+        if (Experience.getLevel(nbt) < Static.configHandler.getConfig().getMaxLevel()) {
             if (target != null) {
                 int bonusExperience = 0;
                 LivingEntity entity = (LivingEntity) target;

@@ -6,6 +6,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.KeyMapping;
+import nova.committee.enhancedarmaments.init.handler.InputEventHandler;
 import org.lwjgl.glfw.GLFW;
 
 /**
@@ -27,5 +28,6 @@ public class EnhancedArmamentsClient implements ClientModInitializer {
                 GLFW.GLFW_KEY_Y, // The keycode of the key
                 "key.enhancedarmaments" // The translation key of the keybinding's category.
         ));
+        InputEventHandler.onKeyPress();
     }
 }

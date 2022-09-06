@@ -24,12 +24,12 @@ public class EAUtil {
             Items.CHAINMAIL_BOOTS, Items.CHAINMAIL_CHESTPLATE, Items.CHAINMAIL_HELMET, Items.CHAINMAIL_LEGGINGS);
 
     public static boolean canEnhance(Item item) {
-        if (Static.config.onlyModdedItems && vanillaItems.contains(item)) return false;
+        if (Static.configHandler.getConfig().isOnlyModdedItems() && vanillaItems.contains(item)) return false;
 
-        if (Static.config.extraItems.size() != 0) {
+        if (Static.configHandler.getConfig().getExtraItems().size() != 0) {
             boolean allowed = false;
-            for (int k = 0; k < Static.config.extraItems.size(); k++)
-                if (Objects.equals(Registry.ITEM.getKey(Static.config.extraItems.get(k)), Registry.ITEM.getKey(item)))
+            for (int k = 0; k < Static.configHandler.getConfig().getExtraItems().size(); k++)
+                if (Objects.equals(Registry.ITEM.getKey(Static.configHandler.getConfig().getExtraItems().get(k)), Registry.ITEM.getKey(item)))
                     allowed = true;
             return allowed || item instanceof SwordItem || item instanceof AxeItem || item instanceof HoeItem || item instanceof BowItem || item instanceof ArmorItem || item instanceof CrossbowItem || item instanceof TridentItem;
         } else

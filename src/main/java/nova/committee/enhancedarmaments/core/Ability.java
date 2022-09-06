@@ -11,27 +11,27 @@ import java.util.ArrayList;
 public enum Ability {
     // weapon
     // active
-    FIRE("weapon", "active", Static.config.fireAbility, ChatFormatting.RED, 0xFF5555, 1, 3),
-    FROST("weapon", "active", Static.config.frostAbility, ChatFormatting.AQUA, 0x55FFFF, 1, 3),
-    POISON("weapon", "active", Static.config.poisonAbility, ChatFormatting.DARK_GREEN, 0x00AA00, 1, 3),
-    INNATE("weapon", "active", Static.config.innateAbility, ChatFormatting.DARK_RED, 0xAA0000, 2, 3),
-    BOMBASTIC("weapon", "active", Static.config.bombasticAbility, ChatFormatting.GRAY, 0xAAAAAA, 3, 3),
-    CRITICAL_POINT("weapon", "active", Static.config.criticalpointAbility, ChatFormatting.DARK_GRAY, 0x555555, 3, 3),
+    FIRE("weapon", "active", Static.configHandler.getConfig().isFireAbility(), ChatFormatting.RED, 0xFF5555, 1, 3),
+    FROST("weapon", "active", Static.configHandler.getConfig().isFrostAbility(), ChatFormatting.AQUA, 0x55FFFF, 1, 3),
+    POISON("weapon", "active", Static.configHandler.getConfig().isPoisonAbility(), ChatFormatting.DARK_GREEN, 0x00AA00, 1, 3),
+    INNATE("weapon", "active", Static.configHandler.getConfig().isInnateAbility(), ChatFormatting.DARK_RED, 0xAA0000, 2, 3),
+    BOMBASTIC("weapon", "active", Static.configHandler.getConfig().isBombasticAbility(), ChatFormatting.GRAY, 0xAAAAAA, 3, 3),
+    CRITICAL_POINT("weapon", "active", Static.configHandler.getConfig().isCriticalpointAbility(), ChatFormatting.DARK_GRAY, 0x555555, 3, 3),
     // passive
-    ILLUMINATION("weapon", "passive", Static.config.illuminationAbility, ChatFormatting.YELLOW, 0xFFFF55, 2, 1),
-    ETHEREAL("weapon", "passive", Static.config.etherealAbility, ChatFormatting.GREEN, 0x55FF55, 2, 2),
-    BLOODTHIRST("weapon", "passive", Static.config.bloodthirstAbility, ChatFormatting.DARK_PURPLE, 0xAA00AA, 3, 2),
+    ILLUMINATION("weapon", "passive", Static.configHandler.getConfig().isIlluminationAbility(), ChatFormatting.YELLOW, 0xFFFF55, 2, 1),
+    ETHEREAL("weapon", "passive", Static.configHandler.getConfig().isEtherealAbility(), ChatFormatting.GREEN, 0x55FF55, 2, 2),
+    BLOODTHIRST("weapon", "passive", Static.configHandler.getConfig().isBloodthirstAbility(), ChatFormatting.DARK_PURPLE, 0xAA00AA, 3, 2),
 
     // armor
     // active
-    MOLTEN("armor", "active", Static.config.moltenAbility, ChatFormatting.RED, 0xFF5555, 2, 2),
-    FROZEN("armor", "active", Static.config.frozenAbility, ChatFormatting.AQUA, 0x55FFFF, 2, 2),
-    TOXIC("armor", "active", Static.config.toxicAbility, ChatFormatting.DARK_GREEN, 0x00AA00, 2, 2),
+    MOLTEN("armor", "active", Static.configHandler.getConfig().isMoltenAbility(), ChatFormatting.RED, 0xFF5555, 2, 2),
+    FROZEN("armor", "active", Static.configHandler.getConfig().isFrozenAbility(), ChatFormatting.AQUA, 0x55FFFF, 2, 2),
+    TOXIC("armor", "active", Static.configHandler.getConfig().isToxicAbility(), ChatFormatting.DARK_GREEN, 0x00AA00, 2, 2),
     // passive
-    BEASTIAL("armor", "passive", Static.config.beastialAbility, ChatFormatting.DARK_RED, 0xAA0000, 2, 1),
-    REMEDIAL("armor", "passive", Static.config.remedialAbility, ChatFormatting.LIGHT_PURPLE, 0xFF55FF, 2, 2),
-    HARDENED("armor", "passive", Static.config.hardenedAbility, ChatFormatting.GRAY, 0xAAAAAA, 3, 1),
-    ADRENALINE("armor", "passive", Static.config.adrenalineAbility, ChatFormatting.GREEN, 0x55FF55, 3, 1);
+    BEASTIAL("armor", "passive", Static.configHandler.getConfig().isBeastialAbility(), ChatFormatting.DARK_RED, 0xAA0000, 2, 1),
+    REMEDIAL("armor", "passive", Static.configHandler.getConfig().isRemedialAbility(), ChatFormatting.LIGHT_PURPLE, 0xFF55FF, 2, 2),
+    HARDENED("armor", "passive", Static.configHandler.getConfig().isHardenedAbility(), ChatFormatting.GRAY, 0xAAAAAA, 3, 1),
+    ADRENALINE("armor", "passive", Static.configHandler.getConfig().isAdrenalineAbility(), ChatFormatting.GREEN, 0x55FF55, 3, 1);
 
     public static final ArrayList<Ability> WEAPON_ABILITIES = new ArrayList<Ability>();
     public static final ArrayList<Ability> ARMOR_ABILITIES = new ArrayList<Ability>();

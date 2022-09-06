@@ -3,6 +3,10 @@ package nova.committee.enhancedarmaments.init.handler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import nova.committee.enhancedarmaments.Static;
 import nova.committee.enhancedarmaments.common.config.Config;
 import nova.committee.enhancedarmaments.util.JSONFormat;
@@ -11,7 +15,12 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Description:
@@ -20,52 +29,73 @@ import java.nio.charset.StandardCharsets;
  * Version: 1.0
  */
 public class ConfigHandler {
-    private static File file;
-
-    public static final Gson GSON = new GsonBuilder()
-            .setPrettyPrinting()
-            .create();
-    private static void prepareConfigFile() {
-        if (file != null) {
-            return;
-        }
-        file = FabricLoader.getInstance().getConfigDir().resolve(Static.MOD_ID + ".json").toFile();
-    }
-
-
-    public static Config load() {
-        prepareConfigFile();
-        Config config = new Config();
-
-
-        try {
-            if (!file.exists()) {
-                save(config);
-            }
-            if (file.exists()){
-
-                config = GSON.fromJson(FileUtils.readFileToString(file, StandardCharsets.UTF_8),
-                        Config.class);
-
-            }
-        } catch (FileNotFoundException e) {
-            System.err.println("Couldn't load Login Toast configuration file; reverting to defaults");
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private Config config;
+    public Config getConfig() {
         return config;
     }
+    private File file;
+    private final Executor executor = Executors.newSingleThreadExecutor();
 
-    public static void save(Config config) {
-        prepareConfigFile();
+    public Gson GSON;
 
-        try  {
-            FileUtils.write(file, JSONFormat.formatJson(GSON.toJson(config, Config.class)), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            System.err.println("Couldn't save Login Toast configuration file");
-            e.printStackTrace();
-        }
+    public ConfigHandler(){
+        this.file = new File(FabricLoader.getInstance().getConfigDir().toFile(), Static.MOD_ID + ".json");
+        this.GSON = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
+        load(false);
     }
 
+
+    public void load(boolean async) {
+        Runnable task = () -> {
+            try {
+                //read if exists
+                if (file.exists()) {
+                    String fileContents = FileUtils.readFileToString(file, Charset.defaultCharset());
+                    config = GSON.fromJson(fileContents, Config.class);
+
+                } else { //write new if no config file exists
+                    writeNewConfig();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                writeNewConfig();
+            }
+        };
+
+        if (async) executor.execute(task);
+        else task.run();
+    }
+    public void writeNewConfig() {
+        config = new Config();
+        save(false);
+    }
+    public void save(boolean async) {
+        Runnable task = () -> {
+            try {
+                if (config != null) {
+                    String serialized = GSON.toJson(config);
+                    FileUtils.writeStringToFile(file, serialized, Charset.defaultCharset());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        };
+
+        if (async) executor.execute(task);
+        else task.run();
+    }
+
+    private static List<Item> parseItemList(List<String> lst) {
+        List<Item> exp = new ArrayList<>(lst.size());
+        for (String s : lst) {
+            Item i = Registry.ITEM.get(new ResourceLocation(s));
+            if (i == Items.AIR) {
+                Static.LOGGER.error("Invalid config entry {} will be ignored from blacklist.", s);
+                continue;
+            }
+            exp.add(i);
+        }
+        return exp;
+    }
 }

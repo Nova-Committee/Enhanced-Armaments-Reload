@@ -19,7 +19,7 @@ import net.minecraft.world.phys.HitResult;
 @Mixin(Projectile.class)
 public abstract class ProjectileMixin {
     @Inject(method = "onHit", at = @At("HEAD"), cancellable = true)
-    private void port_lib$onProjectileHit(HitResult result, CallbackInfo ci) {
+    private void onProjectileHit(HitResult result, CallbackInfo ci) {
         if (ProjectileImpactCallback.EVENT.invoker().onImpact((Projectile) (Object) this, result)) {
             ci.cancel();
         }

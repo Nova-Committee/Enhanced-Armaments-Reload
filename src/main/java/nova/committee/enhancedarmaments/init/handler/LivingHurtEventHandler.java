@@ -110,7 +110,7 @@ public class LivingHurtEventHandler {
      * @param nbt 数据
      */
     private static void updateExperience(CompoundTag nbt, float dealedDamage) {
-        if (Experience.getLevel(nbt) < Static.config.maxLevel) {
+        if (Experience.getLevel(nbt) < Static.configHandler.getConfig().getMaxLevel()) {
             Experience.setExperience(nbt, Experience.getExperience(nbt) + 1 + (int) dealedDamage / 4);
         }
     }
@@ -149,27 +149,27 @@ public class LivingHurtEventHandler {
     private static float useWeaponAbilities(float amount, Player player, LivingEntity target, CompoundTag nbt) {
         if (target != null) {
             // active
-            if (Ability.FIRE.hasAbility(nbt) && (int) (Math.random() * Static.config.firechance) == 0) {
+            if (Ability.FIRE.hasAbility(nbt) && (int) (Math.random() * Static.configHandler.getConfig().getFirechance()) == 0) {
                 double multiplier = (Ability.FIRE.getLevel(nbt) + Ability.FIRE.getLevel(nbt) * 4) / 4D;
                 target.setSecondsOnFire((int) (multiplier));
             }
 
-            if (Ability.FROST.hasAbility(nbt) && (int) (Math.random() * Static.config.frostchance) == 0) {
+            if (Ability.FROST.hasAbility(nbt) && (int) (Math.random() * Static.configHandler.getConfig().getFrostchance()) == 0) {
                 double multiplier = (Ability.FROST.getLevel(nbt) + Ability.FROST.getLevel(nbt) * 4) / 3D;
                 target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (20 * multiplier), 10));
             }
 
-            if (Ability.POISON.hasAbility(nbt) && (int) (Math.random() * Static.config.poisonchance) == 0) {
+            if (Ability.POISON.hasAbility(nbt) && (int) (Math.random() * Static.configHandler.getConfig().getPoisonchance()) == 0) {
                 double multiplier = (Ability.POISON.getLevel(nbt) + Ability.POISON.getLevel(nbt) * 4) / 2D;
                 target.addEffect(new MobEffectInstance(MobEffects.POISON, (int) (20 * multiplier), Ability.POISON.getLevel(nbt)));
             }
 
-            if (Ability.INNATE.hasAbility(nbt) && (int) (Math.random() * Static.config.innatechance) == 0) {
+            if (Ability.INNATE.hasAbility(nbt) && (int) (Math.random() * Static.configHandler.getConfig().getInnatechance()) == 0) {
                 double multiplier = (Ability.INNATE.getLevel(nbt) + Ability.INNATE.getLevel(nbt) * 4) / 3D;
                 target.addEffect(new MobEffectInstance(MobEffects.WITHER, (int) (20 * multiplier), Ability.INNATE.getLevel(nbt)));
             }
 
-            if (Ability.BOMBASTIC.hasAbility(nbt) && (int) (Math.random() * Static.config.bombasticchance) == 0) {
+            if (Ability.BOMBASTIC.hasAbility(nbt) && (int) (Math.random() * Static.configHandler.getConfig().getBombasticchance()) == 0) {
                 double multiplierD = (Ability.BOMBASTIC.getLevel(nbt) + Ability.BOMBASTIC.getLevel(nbt) * 4) / 4D;
                 float multiplier = (float) multiplierD;
                 Level world = target.getLevel();
@@ -179,7 +179,7 @@ public class LivingHurtEventHandler {
                 }
             }
 
-            if (Ability.CRITICAL_POINT.hasAbility(nbt) && (int) (Math.random() * Static.config.criticalpointchance) == 0) {
+            if (Ability.CRITICAL_POINT.hasAbility(nbt) && (int) (Math.random() * Static.configHandler.getConfig().getCriticalpointchance()) == 0) {
                 float multiplier = 0F;
 
                 if (Ability.CRITICAL_POINT.getLevel(nbt) == 1) multiplier = 0.17F;
@@ -206,22 +206,22 @@ public class LivingHurtEventHandler {
     private static float useArmorAbilities(float amount, Player player, Entity target, CompoundTag nbt) {
         if (target != null) {
             // active
-            if (Ability.MOLTEN.hasAbility(nbt) && (int) (Math.random() * Static.config.moltenchance) == 0 && target instanceof LivingEntity realTarget) {
+            if (Ability.MOLTEN.hasAbility(nbt) && (int) (Math.random() * Static.configHandler.getConfig().getMoltenchance()) == 0 && target instanceof LivingEntity realTarget) {
                 double multiplier = (Ability.MOLTEN.getLevel(nbt) + Ability.MOLTEN.getLevel(nbt) * 5) / 4D;
                 realTarget.setSecondsOnFire((int) (multiplier));
             }
 
-            if (Ability.FROZEN.hasAbility(nbt) && (int) (Math.random() * Static.config.frozenchance) == 0 && target instanceof LivingEntity realTarget) {
+            if (Ability.FROZEN.hasAbility(nbt) && (int) (Math.random() * Static.configHandler.getConfig().getFrozenchance()) == 0 && target instanceof LivingEntity realTarget) {
                 double multiplier = (Ability.FROZEN.getLevel(nbt) + Ability.FROZEN.getLevel(nbt) * 5) / 6D;
                 realTarget.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (20 * multiplier), 10));
             }
 
-            if (Ability.TOXIC.hasAbility(nbt) && (int) (Math.random() * Static.config.toxicchance) == 0 && target instanceof LivingEntity realTarget) {
+            if (Ability.TOXIC.hasAbility(nbt) && (int) (Math.random() * Static.configHandler.getConfig().getToxicchance()) == 0 && target instanceof LivingEntity realTarget) {
                 double multiplier = (Ability.TOXIC.getLevel(nbt) + Ability.TOXIC.getLevel(nbt) * 4) / 4D;
                 realTarget.addEffect(new MobEffectInstance(MobEffects.POISON, (int) (20 * multiplier), Ability.TOXIC.getLevel(nbt)));
             }
 
-            if (Ability.ADRENALINE.hasAbility(nbt) && (int) (Math.random() * Static.config.adrenalinechance) == 0) {
+            if (Ability.ADRENALINE.hasAbility(nbt) && (int) (Math.random() * Static.configHandler.getConfig().getAdrenalinechance()) == 0) {
                 double multiplier = (Ability.ADRENALINE.getLevel(nbt) + Ability.ADRENALINE.getLevel(nbt) * 5) / 3D;
                 player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, (int) (20 * (multiplier)), Ability.ADRENALINE.getLevel(nbt)));
             }
@@ -232,7 +232,7 @@ public class LivingHurtEventHandler {
                     player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20 * 7, 0));
             }
 
-            if (Ability.HARDENED.hasAbility(nbt) && (int) (Math.random() * Static.config.hardenedchance) == 0) {
+            if (Ability.HARDENED.hasAbility(nbt) && (int) (Math.random() * Static.configHandler.getConfig().getHardenedchance()) == 0) {
                 return 0;
             }
         }

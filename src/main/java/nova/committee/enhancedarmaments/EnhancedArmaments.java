@@ -12,8 +12,7 @@ import nova.committee.enhancedarmaments.init.handler.*;
 public class EnhancedArmaments implements ModInitializer {
     @Override
     public void onInitialize() {
-
-        Static.config = ConfigHandler.load();
+        Static.configHandler = new ConfigHandler();
         CommandEventHandler.init();
         ItemTooltipEventHandler.addInformation();
         LivingDeathEventHandler.init();
@@ -22,4 +21,5 @@ public class EnhancedArmaments implements ModInitializer {
         LivingHurtEventHandler.onArrowHit();
         LivingUpdateEventHandler.onUpdate();
     }
+
 }
