@@ -20,6 +20,7 @@ public class EnhancedArmaments implements ModInitializer {
         LivingHurtEventHandler.onArrowShoot();
         LivingHurtEventHandler.onArrowHit();
         LivingUpdateEventHandler.onUpdate();
+        NetWorkHandler.onRun();
     }
 
 }

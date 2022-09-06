@@ -3,6 +3,7 @@ package nova.committee.enhancedarmaments.client.gui;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.ChatFormatting;
@@ -147,9 +148,9 @@ public class AbilitySelectionGui extends Screen {
                 {
                     if (Experience.getAbilityTokens(nbt) > 0 || player.experienceLevel > 1 || player.isCreative()) {
                         if (EAUtil.canEnhanceWeapon(stack.getItem())) {
-                            sendPacket(button, player, weaponAbilities);
+                            sendPacket(button, weaponAbilities);
                         } else if (EAUtil.canEnhanceArmor(stack.getItem())) {
-                            sendPacket(button, player, armorAbilities);
+                            sendPacket(button, armorAbilities);
                         }
                     }
                 }
@@ -157,12 +158,12 @@ public class AbilitySelectionGui extends Screen {
         }
     }
 
-    private void sendPacket(Button button, Player player, Button[] armorAbilities) {
-        for (int i = 0; i < armorAbilities.length; i++) {
-            if (button == armorAbilities[i]) {
+    private void sendPacket(Button button, Button[] abilities) {
+        for (int i = 0; i < abilities.length; i++) {
+            if (button == abilities[i]) {
                 FriendlyByteBuf buf = PacketByteBufs.create();
                 buf.writeInt(i);
-                ServerPlayNetworking.send((ServerPlayer) player, new ResourceLocation(Static.MOD_ID, "main"), buf);
+                ClientPlayNetworking.send(new ResourceLocation(Static.MOD_ID, "main"), buf);
             }
         }
     }
