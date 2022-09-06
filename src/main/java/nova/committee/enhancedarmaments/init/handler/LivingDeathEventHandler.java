@@ -34,7 +34,7 @@ public class LivingDeathEventHandler {
                     CompoundTag nbt = NBTUtil.loadStackNBT(stack);
                     if (nbt.contains("EA_ENABLED")) {
                         if (Ability.ETHEREAL.hasAbility(nbt)) {
-                            player.getInventory().getSelected().setDamageValue((player.getInventory().getSelected().getDamageValue() - (Ability.ETHEREAL.getLevel(nbt) * 2)));
+                            player.inventory.getSelected().setDamageValue((player.inventory.getSelected().getDamageValue() - (Ability.ETHEREAL.getLevel(nbt) * 2)));
                         }
                         addBonusExperience(entity, nbt);
                         updateLevel(player, stack, nbt);
@@ -45,7 +45,7 @@ public class LivingDeathEventHandler {
 
                     if (nbt.contains("EA_ENABLED")) {
                         if (Ability.ETHEREAL.hasAbility(nbt)) {
-                            player.getInventory().getSelected().setDamageValue((player.getInventory().getSelected().getDamageValue() - (Ability.ETHEREAL.getLevel(nbt) * 2 + 1)));
+                            player.inventory.getSelected().setDamageValue((player.inventory.getSelected().getDamageValue() - (Ability.ETHEREAL.getLevel(nbt) * 2 + 1)));
                         }
                         addBonusExperience(entity, nbt);
                         updateLevel(player, stack, nbt);
@@ -55,7 +55,7 @@ public class LivingDeathEventHandler {
 
                 if (source.getEntity() instanceof Player player && source.getEntity() != null) {
                     if (player != null) {
-                        ItemStack stack = player.getInventory().getSelected();
+                        ItemStack stack = player.inventory.getSelected();
 
                         if (stack != ItemStack.EMPTY) {
                             CompoundTag nbt = NBTUtil.loadStackNBT(stack);

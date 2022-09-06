@@ -22,7 +22,7 @@ public class InputEventHandler {
                 Player player = mc.player;
 
                 if (player != null) {
-                    ItemStack stack = player.getInventory().getSelected();
+                    ItemStack stack = player.inventory.getSelected();
 
                     if (stack != ItemStack.EMPTY) {
                         if (EAUtil.canEnhance(stack.getItem())) {

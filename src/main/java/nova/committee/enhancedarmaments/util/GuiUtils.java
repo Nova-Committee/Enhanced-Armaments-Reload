@@ -3,8 +3,10 @@ package nova.committee.enhancedarmaments.util;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 /**
  * Description:
@@ -16,8 +18,9 @@ public class GuiUtils {
     public static void drawContinuousTexturedBox(PoseStack poseStack, ResourceLocation res, int x, int y, int u, int v, int width, int height, int textureWidth, int textureHeight,
                                                  int topBorder, int bottomBorder, int leftBorder, int rightBorder, float zLevel)
     {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, res);
+
+
+        Minecraft.getInstance().getTextureManager().bind(res);
         drawContinuousTexturedBox(poseStack, x, y, u, v, width, height, textureWidth, textureHeight, topBorder, bottomBorder, leftBorder, rightBorder, zLevel);
     }
 
@@ -44,7 +47,7 @@ public class GuiUtils {
     public static void drawContinuousTexturedBox(PoseStack poseStack, int x, int y, int u, int v, int width, int height, int textureWidth, int textureHeight,
                                                  int topBorder, int bottomBorder, int leftBorder, int rightBorder, float zLevel)
     {
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
 
@@ -96,7 +99,7 @@ public class GuiUtils {
 
         Tesselator tessellator = Tesselator.getInstance();
         BufferBuilder wr = tessellator.getBuilder();
-        wr.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        wr.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION_TEX);
         Matrix4f matrix = poseStack.last().pose();
         wr.vertex(matrix, x        , y + height, zLevel).uv( u          * uScale, ((v + height) * vScale)).endVertex();
         wr.vertex(matrix, x + width, y + height, zLevel).uv((u + width) * uScale, ((v + height) * vScale)).endVertex();

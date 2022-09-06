@@ -29,7 +29,7 @@ public abstract class BowMixin {
     public void Bow_Loose(ItemStack pStack, Level level, LivingEntity pEntityLiving, int pTimeLeft, CallbackInfo ci){
 
             Player player = (Player) pEntityLiving;
-            boolean flag = player.getAbilities().instabuild || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, pStack) > 0;
+            boolean flag = player.abilities.instabuild || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, pStack) > 0;
             ItemStack itemstack = player.getProjectile(pStack);
             int i = getUseDuration(pStack) - pTimeLeft;
             i = PlayerEvents.ON_ARROW_LOOSE.invoker().onArrowLoose(player, pStack, level, i, !itemstack.isEmpty() || flag);

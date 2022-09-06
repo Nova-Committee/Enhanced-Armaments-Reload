@@ -79,7 +79,7 @@ public class LivingHurtEventHandler {
             } else if (entity instanceof Player player) {//PLAYER IS GETTING HURT
                 Entity target = damageSource.getEntity();
 
-                for (ItemStack stack : player.getInventory().armor) {
+                for (ItemStack stack : player.inventory.armor) {
                     if (stack != null) {
                         if (EAUtil.canEnhanceArmor(stack.getItem())) {
                             CompoundTag nbt = NBTUtil.loadStackNBT(stack);
@@ -173,7 +173,7 @@ public class LivingHurtEventHandler {
             if (Ability.BOMBASTIC.hasAbility(nbt) && (int) (Math.random() * Static.config.bombasticchance) == 0) {
                 double multiplierD = (Ability.BOMBASTIC.getLevel(nbt) + Ability.BOMBASTIC.getLevel(nbt) * 4) / 4D;
                 float multiplier = (float) multiplierD;
-                Level world = target.getLevel();
+                Level world = target.level;
 
                 if (!(target instanceof Animal)) {
                     world.explode(target, target.getX(), target.getY(), target.getZ(), multiplier, Explosion.BlockInteraction.NONE);

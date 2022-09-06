@@ -24,10 +24,10 @@ public class LivingUpdateEventHandler {
         EntityEvents.LIVING_TICK.register((world, entity) ->{
             if (entity instanceof Player player) {
                 if (player != null) {
-                    NonNullList<ItemStack> main = player.getInventory().items;
+                    NonNullList<ItemStack> main = player.inventory.items;
 
                     if (!player.level.isClientSide) {
-                        for (ItemStack stack : player.getInventory().armor) {
+                        for (ItemStack stack : player.inventory.armor) {
                             if (stack != null && EAUtil.canEnhanceArmor(stack.getItem())) {
                                 CompoundTag nbt = NBTUtil.loadStackNBT(stack);
                                 float heal = Ability.REMEDIAL.getLevel(nbt);
