@@ -1,14 +1,19 @@
 package nova.committee.enhancedarmaments.init.mixin;
 
+import com.mojang.authlib.minecraft.client.MinecraftClient;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.KeyboardHandler;
+import net.minecraft.client.Minecraft;
 import nova.committee.enhancedarmaments.init.callback.KeyInputCallback;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static nova.committee.enhancedarmaments.client.EnhancedArmamentsClient.keyBinding;
 
 /**
  * Description:
@@ -31,7 +36,7 @@ public abstract class KeyboardHandlerMixin {
             ),
             at = @At(value = "RETURN")
     )
-    public void port_lib$onHandleKeyInput(long window, int key, int scancode, int action, int mods, CallbackInfo ci) {
+    public void onHandleKeyInput(long window, int key, int scancode, int action, int mods, CallbackInfo ci) {
         KeyInputCallback.EVENT.invoker().onKeyInput(key, scancode, action, mods);
     }
 }
