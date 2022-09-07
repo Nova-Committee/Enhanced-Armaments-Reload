@@ -10,12 +10,12 @@ import java.util.Random;
 public enum Rarity {
 
     DEFAULT("", 0, 0.0, 0.0),
-    BASIC(ChatFormatting.WHITE, 0xFFFFFF, Static.config.basicChance, Static.config.basicDamage),
-    UNCOMMON(ChatFormatting.DARK_GREEN, 0x00AA00, Static.config.uncommonChance, Static.config.uncommonDamage),
-    RARE(ChatFormatting.AQUA, 0x55FFFF, Static.config.rareChance, Static.config.rareDamage),
-    ULTRA_RARE(ChatFormatting.DARK_PURPLE, 0xAA00AA, Static.config.ultraRareChance, Static.config.ultraRareDamage),
-    LEGENDARY(ChatFormatting.GOLD, 0xFFAA00, Static.config.legendaryChance, Static.config.legendaryDamage),
-    ARCHAIC(ChatFormatting.LIGHT_PURPLE, 0xFF55FF, Static.config.archaicChance, Static.config.archaicDamage);
+    BASIC(ChatFormatting.WHITE, 0xFFFFFF, Static.configHandler.getConfig().getBasicChance(), Static.configHandler.getConfig().getBasicDamage()),
+    UNCOMMON(ChatFormatting.DARK_GREEN, 0x00AA00, Static.configHandler.getConfig().getUncommonChance(), Static.configHandler.getConfig().getUncommonDamage()),
+    RARE(ChatFormatting.AQUA, 0x55FFFF, Static.configHandler.getConfig().getRareChance(), Static.configHandler.getConfig().getRareDamage()),
+    ULTRA_RARE(ChatFormatting.DARK_PURPLE, 0xAA00AA, Static.configHandler.getConfig().getUltraRareChance(), Static.configHandler.getConfig().getUltraRareDamage()),
+    LEGENDARY(ChatFormatting.GOLD, 0xFFAA00, Static.configHandler.getConfig().getLegendaryChance(), Static.configHandler.getConfig().getLegendaryDamage()),
+    ARCHAIC(ChatFormatting.LIGHT_PURPLE, 0xFF55FF, Static.configHandler.getConfig().getArchaicChance(), Static.configHandler.getConfig().getArchaicDamage());
 
     private static final Rarity[] RARITIES = Rarity.values();
     private static final RandomCollection<Rarity> RANDOM_RARITIES = new RandomCollection<Rarity>();

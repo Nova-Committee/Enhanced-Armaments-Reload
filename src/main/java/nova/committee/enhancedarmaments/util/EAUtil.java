@@ -1,5 +1,6 @@
 package nova.committee.enhancedarmaments.util;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
@@ -15,23 +16,20 @@ import java.util.UUID;
 
 
 public class EAUtil {
-    public static boolean canEnhance(Item item) {
-        if (Static.config.onlyModdedItems)
-            if (item == Items.IRON_SWORD || item == Items.IRON_AXE || item == Items.IRON_HOE || item == Items.IRON_BOOTS || item == Items.IRON_CHESTPLATE || item == Items.IRON_HELMET || item == Items.IRON_LEGGINGS
-                    || item == Items.DIAMOND_AXE || item == Items.DIAMOND_HOE || item == Items.DIAMOND_SWORD || item == Items.DIAMOND_BOOTS || item == Items.DIAMOND_CHESTPLATE || item == Items.DIAMOND_HELMET || item == Items.DIAMOND_LEGGINGS
-                    || item == Items.GOLDEN_AXE || item == Items.GOLDEN_HOE || item == Items.GOLDEN_SWORD || item == Items.GOLDEN_BOOTS || item == Items.GOLDEN_CHESTPLATE || item == Items.GOLDEN_HELMET || item == Items.GOLDEN_LEGGINGS
-                    || item == Items.STONE_AXE || item == Items.STONE_HOE || item == Items.STONE_SWORD
-                    || item == Items.WOODEN_AXE || item == Items.WOODEN_HOE || item == Items.WOODEN_SWORD
-                    || item == Items.BOW || item == Items.CROSSBOW
-                    || item == Items.TRIDENT
-                    || item == Items.NETHERITE_AXE || item == Items.NETHERITE_HOE || item == Items.NETHERITE_SWORD || item == Items.NETHERITE_BOOTS || item == Items.NETHERITE_CHESTPLATE || item == Items.NETHERITE_HELMET || item == Items.NETHERITE_LEGGINGS
-                    || item == Items.CHAINMAIL_BOOTS || item == Items.CHAINMAIL_CHESTPLATE || item == Items.CHAINMAIL_HELMET || item == Items.CHAINMAIL_LEGGINGS)
-                return false;
+    public static final ImmutableList<Item> vanillaItems = ImmutableList.of(Items.IRON_SWORD, Items.IRON_AXE, Items.IRON_HOE, Items.IRON_BOOTS, Items.IRON_CHESTPLATE, Items.IRON_HELMET,
+            Items.IRON_LEGGINGS, Items.DIAMOND_AXE, Items.DIAMOND_HOE, Items.DIAMOND_SWORD, Items.DIAMOND_BOOTS, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_HELMET, Items.DIAMOND_LEGGINGS,
+            Items.GOLDEN_AXE, Items.GOLDEN_HOE, Items.GOLDEN_SWORD, Items.GOLDEN_BOOTS, Items.GOLDEN_CHESTPLATE, Items.GOLDEN_HELMET, Items.GOLDEN_LEGGINGS,
+            Items.STONE_AXE, Items.STONE_HOE, Items.STONE_SWORD, Items.WOODEN_AXE, Items.WOODEN_HOE, Items.WOODEN_SWORD, Items.BOW, Items.CROSSBOW, Items.TRIDENT,
+            Items.NETHERITE_AXE, Items.NETHERITE_HOE, Items.NETHERITE_SWORD, Items.NETHERITE_BOOTS, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_HELMET, Items.NETHERITE_LEGGINGS,
+            Items.CHAINMAIL_BOOTS, Items.CHAINMAIL_CHESTPLATE, Items.CHAINMAIL_HELMET, Items.CHAINMAIL_LEGGINGS);
 
-        if (Static.config.extraItems.size() != 0) {
+    public static boolean canEnhance(Item item) {
+        if (Static.configHandler.getConfig().isOnlyModdedItems() && vanillaItems.contains(item)) return false;
+
+        if (Static.configHandler.getConfig().getExtraItems().size() != 0) {
             boolean allowed = false;
-            for (int k = 0; k < Static.config.extraItems.size(); k++)
-                if (Objects.equals(Registry.ITEM.getKey(Static.config.extraItems.get(k)), Registry.ITEM.getKey(item)))
+            for (int k = 0; k < Static.configHandler.getConfig().getExtraItems().size(); k++)
+                if (Objects.equals(Registry.ITEM.getKey(Static.configHandler.getConfig().getExtraItems().get(k)), Registry.ITEM.getKey(item)))
                     allowed = true;
             return allowed || item instanceof SwordItem || item instanceof AxeItem || item instanceof HoeItem || item instanceof BowItem || item instanceof ArmorItem || item instanceof CrossbowItem || item instanceof TridentItem;
         } else

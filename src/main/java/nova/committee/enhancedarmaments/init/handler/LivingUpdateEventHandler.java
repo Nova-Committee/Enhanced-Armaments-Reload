@@ -23,58 +23,56 @@ public class LivingUpdateEventHandler {
     public static void onUpdate() {
         EntityEvents.LIVING_TICK.register((world, entity) ->{
             if (entity instanceof Player player) {
-                if (player != null) {
-                    NonNullList<ItemStack> main = player.getInventory().items;
+                NonNullList<ItemStack> main = player.getInventory().items;
 
-                    if (!player.level.isClientSide) {
-                        for (ItemStack stack : player.getInventory().armor) {
-                            if (stack != null && EAUtil.canEnhanceArmor(stack.getItem())) {
-                                CompoundTag nbt = NBTUtil.loadStackNBT(stack);
-                                float heal = Ability.REMEDIAL.getLevel(nbt);
-                                if (Ability.REMEDIAL.hasAbility(nbt))
-                                    if (count < 120) {
-                                        count++;
-                                    } else {
-                                        count = 0;
-                                        player.heal(heal);
-                                    }
-                            }
-                        }
-                        for (ItemStack stack : main) {
-                            if (stack != ItemStack.EMPTY) {
-                                Item item = stack.getItem();
-
-                                if (EAUtil.canEnhance(item)) {
-                                    CompoundTag nbt = NBTUtil.loadStackNBT(stack);
-                                    if (!Experience.isEnabled(nbt)) {
-                                        boolean okay = true;
-
-                                        for (int j = 0; j < Static.config.itemBlacklist.size(); j++) {
-                                            if (Objects.equals(Registry.ITEM.getKey(Static.config.itemBlacklist.get(j)), Registry.ITEM.getKey(stack.getItem())))
-                                                okay = false;
-                                        }
-
-                                        if (Static.config.itemWhitelist.size() != 0) {
-                                            okay = false;
-                                            for (int k = 0; k < Static.config.itemWhitelist.size(); k++)
-                                                if (Objects.equals(Registry.ITEM.getKey(Static.config.itemWhitelist.get(k)), Registry.ITEM.getKey(stack.getItem())))
-                                                    okay = true;
-                                        }
-
-                                        if (okay) {
-                                            Experience.enable(nbt, true);
-                                            Rarity rarity = Rarity.getRarity(nbt);
-                                            var rand = player.level.random;
-
-                                            if (rarity == Rarity.DEFAULT) {
-                                                rarity = Rarity.getRandomRarity(rand);
-                                                rarity.setRarity(nbt);
-                                                NBTUtil.saveStackNBT(stack, nbt);
-                                            }
-                                        }
-                                    }
-
+                if (!player.level.isClientSide) {
+                    for (ItemStack stack : player.getInventory().armor) {
+                        if (stack != null && EAUtil.canEnhanceArmor(stack.getItem())) {
+                            CompoundTag nbt = NBTUtil.loadStackNBT(stack);
+                            float heal = Ability.REMEDIAL.getLevel(nbt);
+                            if (Ability.REMEDIAL.hasAbility(nbt))
+                                if (count < 120) {
+                                    count++;
+                                } else {
+                                    count = 0;
+                                    player.heal(heal);
                                 }
+                        }
+                    }
+                    for (ItemStack stack : main) {
+                        if (stack != ItemStack.EMPTY) {
+                            Item item = stack.getItem();
+
+                            if (EAUtil.canEnhance(item)) {
+                                CompoundTag nbt = NBTUtil.loadStackNBT(stack);
+                                if (!Experience.isEnabled(nbt)) {
+                                    boolean okay = true;
+
+                                    for (int j = 0; j < Static.configHandler.getConfig().getItemBlacklist().size(); j++) {
+                                        if (Objects.equals(Registry.ITEM.getKey(Static.configHandler.getConfig().getItemBlacklist().get(j)), Registry.ITEM.getKey(stack.getItem())))
+                                            okay = false;
+                                    }
+
+                                    if (Static.configHandler.getConfig().getItemWhitelist().size() != 0) {
+                                        okay = false;
+                                        for (int k = 0; k < Static.configHandler.getConfig().getItemWhitelist().size(); k++)
+                                            if (Objects.equals(Registry.ITEM.getKey(Static.configHandler.getConfig().getItemWhitelist().get(k)), Registry.ITEM.getKey(stack.getItem())))
+                                                okay = true;
+                                    }
+
+                                    if (okay) {
+                                        Experience.enable(nbt, true);
+                                        Rarity rarity = Rarity.getRarity(nbt);
+                                        var rand = player.level.random;
+
+                                        if (rarity == Rarity.DEFAULT) {
+                                            rarity = Rarity.getRandomRarity(rand);
+                                            rarity.setRarity(nbt);
+                                            NBTUtil.saveStackNBT(stack, nbt);
+                                        }
+                                    }
+                                }
+
                             }
                         }
                     }

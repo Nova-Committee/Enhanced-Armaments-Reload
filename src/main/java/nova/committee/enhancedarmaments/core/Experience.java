@@ -13,11 +13,12 @@ public class Experience {
     public static int getNextLevel(Player player, ItemStack stack, CompoundTag nbt, int currentLevel, int experience) {
         int newLevel = currentLevel;
 
-        while (currentLevel < Static.config.maxLevel && experience >= Experience.getMaxLevelExp(currentLevel)) {
+        while (currentLevel < Static.configHandler.getConfig().getMaxLevel() && experience >= Experience.getMaxLevelExp(currentLevel)) {
             newLevel = currentLevel + 1;
             currentLevel++;
             Experience.setAbilityTokens(nbt, Experience.getAbilityTokens(nbt) + 1);
-            player.displayClientMessage(new TextComponent(stack.getDisplayName().getString() + ChatFormatting.GRAY + " " + new TranslatableComponent("enhancedarmaments.misc.level.leveledup").getString() + " " + ChatFormatting.GOLD + "" + newLevel + ChatFormatting.GRAY + "!"), true);
+            player.displayClientMessage(new TextComponent(stack.getDisplayName().getString() + ChatFormatting.GRAY +
+                    " " + new TranslatableComponent("enhancedarmaments.misc.level.leveledup").getString() + " " + ChatFormatting.GOLD + "" + newLevel + ChatFormatting.GRAY + "!"), true);
         }
 
         return newLevel;
@@ -28,7 +29,7 @@ public class Experience {
     }
 
     public static boolean canLevelUp(CompoundTag nbt) {
-        return getLevel(nbt) < Static.config.maxLevel;
+        return getLevel(nbt) < Static.configHandler.getConfig().getMaxLevel();
     }
 
     public static void setLevel(CompoundTag nbt, int level) {
@@ -58,9 +59,9 @@ public class Experience {
     }
 
     public static int getMaxLevelExp(int level) {
-        int maxLevelExp = Static.config.level1Experience;
+        int maxLevelExp = Static.configHandler.getConfig().getLevel1Experience();
         for (int i = 1; i < level; i++)
-            maxLevelExp *= Static.config.experienceMultiplier;
+            maxLevelExp *= Static.configHandler.getConfig().getExperienceMultiplier();
         return maxLevelExp;
     }
 
@@ -80,7 +81,7 @@ public class Experience {
     public static void enable(CompoundTag nbt, boolean value) {
         if (nbt != null) {
             if (value)
-                nbt.putBoolean("EA_ENABLED", value);
+                nbt.putBoolean("EA_ENABLED", true);
             else
                 nbt.remove("EA_ENABLED");
         }

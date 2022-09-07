@@ -13,10 +13,10 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "nova.committee.enhancedarmaments.client.EnhancedarmamentsClient"
+      "nova.committee.enhancedarmaments.client.EnhancedArmamentsClient"
     ],
     "main": [
-      "nova.committee.enhancedarmaments.Enhancedarmaments"
+      "nova.committee.enhancedarmaments.EnhancedArmaments"
     ]
   },
   "mixins": [

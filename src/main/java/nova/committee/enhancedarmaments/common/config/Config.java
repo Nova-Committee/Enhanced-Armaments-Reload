@@ -1,11 +1,8 @@
 package nova.committee.enhancedarmaments.common.config;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import nova.committee.enhancedarmaments.Static;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,113 +16,474 @@ import java.util.List;
 
 public class Config {
 
-    @SerializedName("maxLevel")
+    @Expose
     public int maxLevel = 10;
-    @SerializedName("level1Experience")
+    @Expose
     public int level1Experience = 100;
-    @SerializedName("experienceMultiplier")
+    @Expose
     public double experienceMultiplier = 1.8;
-    @SerializedName("showDurabilityInTooltip")
+    @Expose
     public boolean showDurabilityInTooltip = true;
-    @SerializedName("itemBlacklist")
+    @Expose
     public List<Item> itemBlacklist = new ArrayList<>();
-    @SerializedName("itemWhitelist")
+    @Expose
     public List<Item> itemWhitelist = new ArrayList<>();
-    @SerializedName("extraItems")
+    @Expose
     public List<Item> extraItems = new ArrayList<>();
-    @SerializedName("onlyModdedItems")
-    public boolean onlyModdedItems = true;
-    @SerializedName("fireAbility")
+    @Expose
+    public boolean onlyModdedItems = false;
+    @Expose
     public boolean fireAbility = true;
-    @SerializedName("frostAbility")
+    @Expose
     public boolean frostAbility = true;
-    @SerializedName("poisonAbility")
+    @Expose
     public boolean poisonAbility = true;
-    @SerializedName("innateAbility")
+    @Expose
     public boolean innateAbility = true;
-    @SerializedName("bombasticAbility")
+    @Expose
     public boolean bombasticAbility = true;
-    @SerializedName("criticalpointAbility")
+    @Expose
     public boolean criticalpointAbility = true;
-    @SerializedName("illuminationAbility")
+    @Expose
     public boolean illuminationAbility = true;
-    @SerializedName("etherealAbility")
+    @Expose
     public boolean etherealAbility = true;
-    @SerializedName("bloodthirstAbility")
+    @Expose
     public boolean bloodthirstAbility = true;
-    @SerializedName("moltenAbility")
+    @Expose
     public boolean moltenAbility = true;
-    @SerializedName("frozenAbility")
+    @Expose
     public boolean frozenAbility = true;
-    @SerializedName("toxicAbility")
+    @Expose
     public boolean toxicAbility = true;
-    @SerializedName("adrenalineAbility")
+    @Expose
     public boolean adrenalineAbility = true;
-    @SerializedName("beastialAbility")
+    @Expose
     public boolean beastialAbility = true;
-    @SerializedName("remedialAbility")
+    @Expose
     public boolean remedialAbility = true;
-    @SerializedName("hardenedAbility")
+    @Expose
     public boolean hardenedAbility = true;
-    @SerializedName("firechance")
+    @Expose
     public double firechance = 4d;
-    @SerializedName("frostchance")
+    @Expose
     public double frostchance = 4d;
-    @SerializedName("poisonchance")
+    @Expose
     public double poisonchance = 4d;
-    @SerializedName("innatechance")
+    @Expose
     public double innatechance = 4d;
-    @SerializedName("bombasticchance")
+    @Expose
     public double bombasticchance = 4d;
-    @SerializedName("criticalpointchance")
+    @Expose
     public double criticalpointchance = 4d;
-    @SerializedName("moltenchance")
+    @Expose
     public double moltenchance = 4d;
-    @SerializedName("frozenchance")
+    @Expose
     public double frozenchance = 4d;
-    @SerializedName("toxicchance")
+    @Expose
     public double toxicchance = 4d;
-    @SerializedName("adrenalinechance")
+    @Expose
     public double adrenalinechance = 4d;
-    @SerializedName("hardenedchance")
+    @Expose
     public double hardenedchance = 4d;
-    @SerializedName("basicChance")
+    @Expose
     public double basicChance = 0.5;
-    @SerializedName("uncommonChance")
+    @Expose
     public double uncommonChance = 0.18;
-    @SerializedName("rareChance")
+    @Expose
     public double rareChance = 0.1;
-    @SerializedName("ultraRareChance")
+    @Expose
     public double ultraRareChance = 0.05;
-    @SerializedName("legendaryChance")
+    @Expose
     public double legendaryChance = 0.02;
-    @SerializedName("archaicChance")
+    @Expose
     public double archaicChance = 0.01;
-    @SerializedName("basicDamage")
+    @Expose
     public double basicDamage = 0D;
-    @SerializedName("uncommonDamage")
+    @Expose
     public double uncommonDamage = 0.155;
-    @SerializedName("rareDamage")
+    @Expose
     public double rareDamage = 0.155;
-    @SerializedName("ultraRareDamage")
+    @Expose
     public double ultraRareDamage = 0.38;
-    @SerializedName("legendaryDamage")
+    @Expose
     public double legendaryDamage = 0.57;
-    @SerializedName("archaicDamage")
+    @Expose
     public double archaicDamage = 0.9;
 
-    private static List<Item> parseItemList(List<String> lst) {
-        List<Item> exp = new ArrayList<>(lst.size());
-        for (String s : lst) {
-            Item i = Registry.ITEM.get(new ResourceLocation(s));
-            if (i == Items.AIR) {
-                Static.LOGGER.error("Invalid config entry {} will be ignored from blacklist.", s);
-                continue;
-            }
-            exp.add(i);
-        }
-        return exp;
+    public int getMaxLevel() {
+        return maxLevel;
     }
 
+    public void setMaxLevel(int maxLevel) {
+        this.maxLevel = maxLevel;
+    }
 
+    public int getLevel1Experience() {
+        return level1Experience;
+    }
+
+    public void setLevel1Experience(int level1Experience) {
+        this.level1Experience = level1Experience;
+    }
+
+    public double getExperienceMultiplier() {
+        return experienceMultiplier;
+    }
+
+    public void setExperienceMultiplier(double experienceMultiplier) {
+        this.experienceMultiplier = experienceMultiplier;
+    }
+
+    public boolean isShowDurabilityInTooltip() {
+        return showDurabilityInTooltip;
+    }
+
+    public void setShowDurabilityInTooltip(boolean showDurabilityInTooltip) {
+        this.showDurabilityInTooltip = showDurabilityInTooltip;
+    }
+
+    public List<Item> getItemBlacklist() {
+        return itemBlacklist;
+    }
+
+    public void setItemBlacklist(List<Item> itemBlacklist) {
+        this.itemBlacklist = itemBlacklist;
+    }
+
+    public List<Item> getItemWhitelist() {
+        return itemWhitelist;
+    }
+
+    public void setItemWhitelist(List<Item> itemWhitelist) {
+        this.itemWhitelist = itemWhitelist;
+    }
+
+    public List<Item> getExtraItems() {
+        return extraItems;
+    }
+
+    public void setExtraItems(List<Item> extraItems) {
+        this.extraItems = extraItems;
+    }
+
+    public boolean isOnlyModdedItems() {
+        return onlyModdedItems;
+    }
+
+    public void setOnlyModdedItems(boolean onlyModdedItems) {
+        this.onlyModdedItems = onlyModdedItems;
+    }
+
+    public boolean isFireAbility() {
+        return fireAbility;
+    }
+
+    public void setFireAbility(boolean fireAbility) {
+        this.fireAbility = fireAbility;
+    }
+
+    public boolean isFrostAbility() {
+        return frostAbility;
+    }
+
+    public void setFrostAbility(boolean frostAbility) {
+        this.frostAbility = frostAbility;
+    }
+
+    public boolean isPoisonAbility() {
+        return poisonAbility;
+    }
+
+    public void setPoisonAbility(boolean poisonAbility) {
+        this.poisonAbility = poisonAbility;
+    }
+
+    public boolean isInnateAbility() {
+        return innateAbility;
+    }
+
+    public void setInnateAbility(boolean innateAbility) {
+        this.innateAbility = innateAbility;
+    }
+
+    public boolean isBombasticAbility() {
+        return bombasticAbility;
+    }
+
+    public void setBombasticAbility(boolean bombasticAbility) {
+        this.bombasticAbility = bombasticAbility;
+    }
+
+    public boolean isCriticalpointAbility() {
+        return criticalpointAbility;
+    }
+
+    public void setCriticalpointAbility(boolean criticalpointAbility) {
+        this.criticalpointAbility = criticalpointAbility;
+    }
+
+    public boolean isIlluminationAbility() {
+        return illuminationAbility;
+    }
+
+    public void setIlluminationAbility(boolean illuminationAbility) {
+        this.illuminationAbility = illuminationAbility;
+    }
+
+    public boolean isEtherealAbility() {
+        return etherealAbility;
+    }
+
+    public void setEtherealAbility(boolean etherealAbility) {
+        this.etherealAbility = etherealAbility;
+    }
+
+    public boolean isBloodthirstAbility() {
+        return bloodthirstAbility;
+    }
+
+    public void setBloodthirstAbility(boolean bloodthirstAbility) {
+        this.bloodthirstAbility = bloodthirstAbility;
+    }
+
+    public boolean isMoltenAbility() {
+        return moltenAbility;
+    }
+
+    public void setMoltenAbility(boolean moltenAbility) {
+        this.moltenAbility = moltenAbility;
+    }
+
+    public boolean isFrozenAbility() {
+        return frozenAbility;
+    }
+
+    public void setFrozenAbility(boolean frozenAbility) {
+        this.frozenAbility = frozenAbility;
+    }
+
+    public boolean isToxicAbility() {
+        return toxicAbility;
+    }
+
+    public void setToxicAbility(boolean toxicAbility) {
+        this.toxicAbility = toxicAbility;
+    }
+
+    public boolean isAdrenalineAbility() {
+        return adrenalineAbility;
+    }
+
+    public void setAdrenalineAbility(boolean adrenalineAbility) {
+        this.adrenalineAbility = adrenalineAbility;
+    }
+
+    public boolean isBeastialAbility() {
+        return beastialAbility;
+    }
+
+    public void setBeastialAbility(boolean beastialAbility) {
+        this.beastialAbility = beastialAbility;
+    }
+
+    public boolean isRemedialAbility() {
+        return remedialAbility;
+    }
+
+    public void setRemedialAbility(boolean remedialAbility) {
+        this.remedialAbility = remedialAbility;
+    }
+
+    public boolean isHardenedAbility() {
+        return hardenedAbility;
+    }
+
+    public void setHardenedAbility(boolean hardenedAbility) {
+        this.hardenedAbility = hardenedAbility;
+    }
+
+    public double getFirechance() {
+        return firechance;
+    }
+
+    public void setFirechance(double firechance) {
+        this.firechance = firechance;
+    }
+
+    public double getFrostchance() {
+        return frostchance;
+    }
+
+    public void setFrostchance(double frostchance) {
+        this.frostchance = frostchance;
+    }
+
+    public double getPoisonchance() {
+        return poisonchance;
+    }
+
+    public void setPoisonchance(double poisonchance) {
+        this.poisonchance = poisonchance;
+    }
+
+    public double getInnatechance() {
+        return innatechance;
+    }
+
+    public void setInnatechance(double innatechance) {
+        this.innatechance = innatechance;
+    }
+
+    public double getBombasticchance() {
+        return bombasticchance;
+    }
+
+    public void setBombasticchance(double bombasticchance) {
+        this.bombasticchance = bombasticchance;
+    }
+
+    public double getCriticalpointchance() {
+        return criticalpointchance;
+    }
+
+    public void setCriticalpointchance(double criticalpointchance) {
+        this.criticalpointchance = criticalpointchance;
+    }
+
+    public double getMoltenchance() {
+        return moltenchance;
+    }
+
+    public void setMoltenchance(double moltenchance) {
+        this.moltenchance = moltenchance;
+    }
+
+    public double getFrozenchance() {
+        return frozenchance;
+    }
+
+    public void setFrozenchance(double frozenchance) {
+        this.frozenchance = frozenchance;
+    }
+
+    public double getToxicchance() {
+        return toxicchance;
+    }
+
+    public void setToxicchance(double toxicchance) {
+        this.toxicchance = toxicchance;
+    }
+
+    public double getAdrenalinechance() {
+        return adrenalinechance;
+    }
+
+    public void setAdrenalinechance(double adrenalinechance) {
+        this.adrenalinechance = adrenalinechance;
+    }
+
+    public double getHardenedchance() {
+        return hardenedchance;
+    }
+
+    public void setHardenedchance(double hardenedchance) {
+        this.hardenedchance = hardenedchance;
+    }
+
+    public double getBasicChance() {
+        return basicChance;
+    }
+
+    public void setBasicChance(double basicChance) {
+        this.basicChance = basicChance;
+    }
+
+    public double getUncommonChance() {
+        return uncommonChance;
+    }
+
+    public void setUncommonChance(double uncommonChance) {
+        this.uncommonChance = uncommonChance;
+    }
+
+    public double getRareChance() {
+        return rareChance;
+    }
+
+    public void setRareChance(double rareChance) {
+        this.rareChance = rareChance;
+    }
+
+    public double getUltraRareChance() {
+        return ultraRareChance;
+    }
+
+    public void setUltraRareChance(double ultraRareChance) {
+        this.ultraRareChance = ultraRareChance;
+    }
+
+    public double getLegendaryChance() {
+        return legendaryChance;
+    }
+
+    public void setLegendaryChance(double legendaryChance) {
+        this.legendaryChance = legendaryChance;
+    }
+
+    public double getArchaicChance() {
+        return archaicChance;
+    }
+
+    public void setArchaicChance(double archaicChance) {
+        this.archaicChance = archaicChance;
+    }
+
+    public double getBasicDamage() {
+        return basicDamage;
+    }
+
+    public void setBasicDamage(double basicDamage) {
+        this.basicDamage = basicDamage;
+    }
+
+    public double getUncommonDamage() {
+        return uncommonDamage;
+    }
+
+    public void setUncommonDamage(double uncommonDamage) {
+        this.uncommonDamage = uncommonDamage;
+    }
+
+    public double getRareDamage() {
+        return rareDamage;
+    }
+
+    public void setRareDamage(double rareDamage) {
+        this.rareDamage = rareDamage;
+    }
+
+    public double getUltraRareDamage() {
+        return ultraRareDamage;
+    }
+
+    public void setUltraRareDamage(double ultraRareDamage) {
+        this.ultraRareDamage = ultraRareDamage;
+    }
+
+    public double getLegendaryDamage() {
+        return legendaryDamage;
+    }
+
+    public void setLegendaryDamage(double legendaryDamage) {
+        this.legendaryDamage = legendaryDamage;
+    }
+
+    public double getArchaicDamage() {
+        return archaicDamage;
+    }
+
+    public void setArchaicDamage(double archaicDamage) {
+        this.archaicDamage = archaicDamage;
+    }
 }

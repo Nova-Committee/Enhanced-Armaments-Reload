@@ -1,6 +1,6 @@
 package nova.committee.enhancedarmaments;
 
-import nova.committee.enhancedarmaments.common.config.Config;
+import nova.committee.enhancedarmaments.init.handler.ConfigHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,9 +14,7 @@ public class Static {
     public static final String MOD_ID = "enhancedarmaments";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
-
-
-    public static Config config = new Config();
+    public static ConfigHandler configHandler;
 
 
 }

@@ -3,11 +3,13 @@ package nova.committee.enhancedarmaments.client.gui;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -137,7 +139,7 @@ public class AbilitySelectionGui extends Screen {
 
     @Environment(EnvType.CLIENT)
     private void actionPerformed(Button button) {
-        Player player = minecraft.player;
+        var player = minecraft.player;
 
         if (player != null) {
             ItemStack stack = player.getInventory().getSelected();
@@ -148,9 +150,9 @@ public class AbilitySelectionGui extends Screen {
                 {
                     if (Experience.getAbilityTokens(nbt) > 0 || player.experienceLevel > 1 || player.isCreative()) {
                         if (EAUtil.canEnhanceWeapon(stack.getItem())) {
-                            sendPacket(button, (ServerPlayer) player, weaponAbilities);
+                            sendPacket(button, weaponAbilities);
                         } else if (EAUtil.canEnhanceArmor(stack.getItem())) {
-                            sendPacket(button, (ServerPlayer) player, armorAbilities);
+                            sendPacket(button, armorAbilities);
                         }
                     }
                 }
@@ -158,12 +160,12 @@ public class AbilitySelectionGui extends Screen {
         }
     }
 
-    private void sendPacket(Button button, ServerPlayer player, Button[] armorAbilities) {
-        for (int i = 0; i < armorAbilities.length; i++) {
-            if (button == armorAbilities[i]) {
+    private void sendPacket(Button button, Button[] abilities) {
+        for (int i = 0; i < abilities.length; i++) {
+            if (button == abilities[i]) {
                 FriendlyByteBuf buf = PacketByteBufs.create();
                 buf.writeInt(i);
-                ServerPlayNetworking.send(player, new ResourceLocation(Static.MOD_ID, "main"), buf);
+                ClientPlayNetworking.send(new ResourceLocation(Static.MOD_ID, "main"), buf);
             }
         }
     }
@@ -187,7 +189,7 @@ public class AbilitySelectionGui extends Screen {
         drawCenteredString(poseStack, font, ChatFormatting.BOLD + I18n.get("enhancedarmaments.ability.type.active"), width / 2 + 75, 120, 0xFFFFFF);
         drawCenteredString(poseStack, font, ChatFormatting.BOLD + I18n.get("enhancedarmaments.ability.type.passive"), width / 2 + 150, 120, 0xFFFFFF);
 
-        if (Experience.getLevel(nbt) == Static.config.maxLevel) {
+        if (Experience.getLevel(nbt) == Static.configHandler.getConfig().getMaxLevel()) {
             drawString(poseStack, font, I18n.get("enhancedarmaments.misc.level") + ": " + Experience.getLevel(nbt) + ChatFormatting.DARK_RED + " (" + I18n.get("enhancedarmaments.misc.max") + ")", width / 2 - 50, 50, 0xFFFFFF);
             drawString(poseStack, font, I18n.get("enhancedarmaments.misc.experience") + ": " + Experience.getExperience(nbt), width / 2 - 50, 60, 0xFFFFFF);
         } else {
@@ -250,9 +252,9 @@ public class AbilitySelectionGui extends Screen {
                 if (EAUtil.canEnhanceWeapon(stack.getItem())) {
                     if (i == 0)//FIRE
                     {
-                        float chance = (float) (1.0 / (Static.config.firechance)) * 100;
-                        float currentduration = (Ability.FIRE.getLevel(nbt) + Ability.FIRE.getLevel(nbt) * 4) / 4;
-                        float nextlevelduration = (Ability.FIRE.getLevel(nbt) + 1 + (Ability.FIRE.getLevel(nbt) + 1) * 4) / 4;
+                        float chance = (float) (1.0 / (Static.configHandler.getConfig().getFirechance())) * 100;
+                        float currentduration = (Ability.FIRE.getLevel(nbt) + Ability.FIRE.getLevel(nbt) * 4) / 4F;
+                        float nextlevelduration = (Ability.FIRE.getLevel(nbt) + 1 + (Ability.FIRE.getLevel(nbt) + 1) * 4) / 4F;
                         int c = (int) chance;
 
                         if (!(Ability.FIRE.hasAbility(nbt))) {
@@ -275,9 +277,9 @@ public class AbilitySelectionGui extends Screen {
                     }
                     if (i == 1)//FROST
                     {
-                        float chance = (float) (1.0 / (Static.config.frostchance)) * 100;
-                        float currentduration = (Ability.FROST.getLevel(nbt) + Ability.FROST.getLevel(nbt) * 4) / 3;
-                        float nextlevelduration = (Ability.FROST.getLevel(nbt) + 1 + (Ability.FROST.getLevel(nbt) + 1) * 4) / 3;
+                        float chance = (float) (1.0 / (Static.configHandler.getConfig().getFrostchance())) * 100;
+                        float currentduration = (Ability.FROST.getLevel(nbt) + Ability.FROST.getLevel(nbt) * 4) / 3F;
+                        float nextlevelduration = (Ability.FROST.getLevel(nbt) + 1 + (Ability.FROST.getLevel(nbt) + 1) * 4) / 3F;
                         int c = (int) chance;
 
                         if (!(Ability.FROST.hasAbility(nbt))) {
@@ -300,9 +302,9 @@ public class AbilitySelectionGui extends Screen {
                     }
                     if (i == 2)//POISON
                     {
-                        float chance = (float) (1.0 / (Static.config.poisonchance)) * 100;
-                        float currentduration = (Ability.POISON.getLevel(nbt) + Ability.POISON.getLevel(nbt) * 4) / 2;
-                        float nextlevelduration = (Ability.POISON.getLevel(nbt) + 1 + (Ability.POISON.getLevel(nbt) + 1) * 4) / 2;
+                        float chance = (float) (1.0 / (Static.configHandler.getConfig().getPoisonchance())) * 100;
+                        float currentduration = (Ability.POISON.getLevel(nbt) + Ability.POISON.getLevel(nbt) * 4) / 2F;
+                        float nextlevelduration = (Ability.POISON.getLevel(nbt) + 1 + (Ability.POISON.getLevel(nbt) + 1) * 4) / 2F;
                         int c = (int) chance;
 
                         if (!(Ability.POISON.hasAbility(nbt))) {
@@ -325,9 +327,9 @@ public class AbilitySelectionGui extends Screen {
                     }
                     if (i == 3)//INNATE
                     {
-                        float chance = (float) ((1.0 / (Static.config.innatechance)) * 100);
-                        float currentduration = (Ability.INNATE.getLevel(nbt) + Ability.INNATE.getLevel(nbt) * 4) / 3;
-                        float nextlevelduration = (Ability.INNATE.getLevel(nbt) + 1 + (Ability.INNATE.getLevel(nbt) + 1) * 4) / 3;
+                        float chance = (float) ((1.0 / (Static.configHandler.getConfig().getInnatechance())) * 100);
+                        float currentduration = (Ability.INNATE.getLevel(nbt) + Ability.INNATE.getLevel(nbt) * 4) / 3F;
+                        float nextlevelduration = (Ability.INNATE.getLevel(nbt) + 1 + (Ability.INNATE.getLevel(nbt) + 1) * 4) / 3F;
                         float currentbleedingspeed = (Ability.INNATE.getLevel(nbt));
                         float nextlevelbleedingspeed = (Ability.INNATE.getLevel(nbt) + 1);
                         int c = (int) chance;
@@ -355,7 +357,7 @@ public class AbilitySelectionGui extends Screen {
                     }
                     if (i == 4)//BOMBASTIC
                     {
-                        float chance = (float) ((1.0 / (Static.config.bombasticchance)) * 100);
+                        float chance = (float) ((1.0 / (Static.configHandler.getConfig().getBombasticchance())) * 100);
                         float currentexplosionintensity = (Ability.BOMBASTIC.getLevel(nbt));
                         float nextlevelexplosionintensity = (Ability.BOMBASTIC.getLevel(nbt) + 1);
                         int c = (int) chance;
@@ -380,7 +382,7 @@ public class AbilitySelectionGui extends Screen {
                     }
                     if (i == 5)//CRITICAL_POINT
                     {
-                        float chance = (float) ((1.0 / (Static.config.criticalpointchance)) * 100);
+                        float chance = (float) ((1.0 / (Static.configHandler.getConfig().getCriticalpointchance())) * 100);
                         float currentdamage = (Ability.CRITICAL_POINT.getLevel(nbt) * 17);
                         float nextleveldamage = ((Ability.CRITICAL_POINT.getLevel(nbt) + 1) * 17);
                         int c = (int) chance;
@@ -459,9 +461,9 @@ public class AbilitySelectionGui extends Screen {
                 } else if (EAUtil.canEnhanceArmor(stack.getItem())) {
                     if (i == 0)//MOLTEN
                     {
-                        float chance = (float) (1.0 / (Static.config.moltenchance)) * 100;
-                        float currentduration = (Ability.MOLTEN.getLevel(nbt) + Ability.MOLTEN.getLevel(nbt) * 5) / 4;
-                        float nextlevelduration = (Ability.MOLTEN.getLevel(nbt) + 1 + (Ability.MOLTEN.getLevel(nbt) + 1) * 5) / 4;
+                        float chance = (float) (1.0 / (Static.configHandler.getConfig().getMoltenchance())) * 100;
+                        float currentduration = (Ability.MOLTEN.getLevel(nbt) + Ability.MOLTEN.getLevel(nbt) * 5) / 4f;
+                        float nextlevelduration = (Ability.MOLTEN.getLevel(nbt) + 1 + (Ability.MOLTEN.getLevel(nbt) + 1) * 5) / 4f;
                         int c = (int) chance;
 
                         if (!(Ability.MOLTEN.hasAbility(nbt))) {
@@ -484,9 +486,9 @@ public class AbilitySelectionGui extends Screen {
                     }
                     if (i == 1)//FROZEN
                     {
-                        float chance = (float) (1.0 / (Static.config.frozenchance)) * 100;
-                        float currentduration = (Ability.FROZEN.getLevel(nbt) + Ability.FROZEN.getLevel(nbt) * 5) / 6;
-                        float nextlevelduration = (Ability.FROZEN.getLevel(nbt) + 1 + (Ability.FROZEN.getLevel(nbt) + 1) * 5) / 6;
+                        float chance = (float) (1.0 / (Static.configHandler.getConfig().getFrozenchance())) * 100;
+                        float currentduration = (Ability.FROZEN.getLevel(nbt) + Ability.FROZEN.getLevel(nbt) * 5) / 6f;
+                        float nextlevelduration = (Ability.FROZEN.getLevel(nbt) + 1 + (Ability.FROZEN.getLevel(nbt) + 1) * 5) / 6f;
                         int c = (int) chance;
 
                         if (!(Ability.FROZEN.hasAbility(nbt))) {
@@ -509,9 +511,9 @@ public class AbilitySelectionGui extends Screen {
                     }
                     if (i == 2)//TOXIC
                     {
-                        float chance = (float) (1.0 / (Static.config.toxicchance)) * 100;
-                        float currentduration = (Ability.TOXIC.getLevel(nbt) + Ability.TOXIC.getLevel(nbt) * 4) / 4;
-                        float nextlevelduration = (Ability.TOXIC.getLevel(nbt) + 1 + (Ability.TOXIC.getLevel(nbt) + 1) * 4) / 4;
+                        float chance = (float) (1.0 / (Static.configHandler.getConfig().getToxicchance())) * 100;
+                        float currentduration = (Ability.TOXIC.getLevel(nbt) + Ability.TOXIC.getLevel(nbt) * 4) / 4f;
+                        float nextlevelduration = (Ability.TOXIC.getLevel(nbt) + 1 + (Ability.TOXIC.getLevel(nbt) + 1) * 4) / 4f;
                         int c = (int) chance;
 
                         if (!(Ability.TOXIC.hasAbility(nbt))) {
@@ -565,7 +567,7 @@ public class AbilitySelectionGui extends Screen {
                     }
                     if (i == 5)//HARDENED
                     {
-                        float chance = (float) ((1.0 / (Static.config.hardenedchance)) * 100);
+                        float chance = (float) ((1.0 / (Static.configHandler.getConfig().getHardenedchance())) * 100);
 
                         if (!(Ability.HARDENED.hasAbility(nbt))) {
                             if (buttons[i].isActive()) {
@@ -580,9 +582,9 @@ public class AbilitySelectionGui extends Screen {
                     }
                     if (i == 6)//ADRENALINE
                     {
-                        float chance = (float) (1.0 / (Static.config.adrenalinechance)) * 100;
-                        float currentduration = (Ability.ADRENALINE.getLevel(nbt) + Ability.ADRENALINE.getLevel(nbt) * 5) / 3;
-                        float nextlevelduration = (Ability.ADRENALINE.getLevel(nbt) + 1 + (Ability.ADRENALINE.getLevel(nbt) + 1) * 5) / 3;
+                        float chance = (float) (1.0 / (Static.configHandler.getConfig().getAdrenalinechance())) * 100;
+                        float currentduration = (Ability.ADRENALINE.getLevel(nbt) + Ability.ADRENALINE.getLevel(nbt) * 5) / 3f;
+                        float nextlevelduration = (Ability.ADRENALINE.getLevel(nbt) + 1 + (Ability.ADRENALINE.getLevel(nbt) + 1) * 5) / 3f;
                         int c = (int) chance;
 
                         if (!(Ability.ADRENALINE.hasAbility(nbt))) {

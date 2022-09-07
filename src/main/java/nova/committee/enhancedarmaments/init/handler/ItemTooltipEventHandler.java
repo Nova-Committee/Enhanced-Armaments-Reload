@@ -51,19 +51,19 @@ public class ItemTooltipEventHandler {
                     // add tooltips
 
                     // level
-                    if (level >= Static.config.maxLevel)
+                    if (level >= Static.configHandler.getConfig().getMaxLevel())
                         list.add(new TextComponent(I18n.get("enhancedarmaments.misc.level") + ": " + ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max")));
                     else
                         list.add(new TextComponent(I18n.get("enhancedarmaments.misc.level") + ": " + ChatFormatting.WHITE + level));
 
                     // experience
-                    if (level >= Static.config.maxLevel)
+                    if (level >= Static.configHandler.getConfig().getMaxLevel())
                         list.add(new TextComponent(I18n.get("enhancedarmaments.misc.experience") + ": " + I18n.get("enhancedarmaments.misc.max")));
                     else
                         list.add(new TextComponent(I18n.get("enhancedarmaments.misc.experience") + ": " + experience + " / " + maxExperience));
 
                     // durability
-                    if (Static.config.showDurabilityInTooltip) {
+                    if (Static.configHandler.getConfig().isShowDurabilityInTooltip()) {
                         list.add(new TextComponent(I18n.get("enhancedarmaments.misc.durability") + ": " + (itemStack.getMaxDamage() - itemStack.getDamageValue()) + " / " + itemStack.getMaxDamage()));
                     }
 

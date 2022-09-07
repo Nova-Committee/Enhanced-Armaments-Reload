@@ -16,8 +16,8 @@ import javax.annotation.Nonnull;
  */
 public class PlayerEvents {
 
-    public static final Event<PlayerEvents.Arrow_Loose> ON_ARROW_LOOSE = EventFactory.createArrayBacked(PlayerEvents.Arrow_Loose.class, callbacks -> (player, bow, world, charge, hasAmmo) -> {
-        for (PlayerEvents.Arrow_Loose callback : callbacks) {
+    public static final Event<Arrow_Loose> ON_ARROW_LOOSE = EventFactory.createArrayBacked(Arrow_Loose.class, callbacks -> (player, bow, world, charge, hasAmmo) -> {
+        for (Arrow_Loose callback : callbacks) {
             int newCharge = callback.onArrowLoose(player, bow, world, charge, hasAmmo);
             if (newCharge != charge) {
                 return newCharge;
