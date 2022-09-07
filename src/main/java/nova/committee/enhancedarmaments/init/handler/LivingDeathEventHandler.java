@@ -85,11 +85,12 @@ public class LivingDeathEventHandler {
                 else if (entity.getMaxHealth() > 19 && entity.getMaxHealth() < 50) bonusExperience = 15;
                 else if (entity.getMaxHealth() > 49 && entity.getMaxHealth() < 100) bonusExperience = 50;
                 else if (entity.getMaxHealth() > 99) bonusExperience = 70;
-
                 Experience.setExperience(nbt, Experience.getExperience(nbt) + bonusExperience);
-                player.sendSystemMessage(Component.literal(stack.getDisplayName().getString() + ChatFormatting.GRAY + " " +
-                        Component.translatable("enhancedarmaments.misc.exp.get").getString() + " " +
-                        ChatFormatting.BLUE + "" + bonusExperience + ChatFormatting.GRAY + "!"));
+                if (Static.configHandler.getConfig().isShowExpGetInChat())
+                    player.sendSystemMessage(Component.literal(stack.getDisplayName().getString() + ChatFormatting.GRAY + " " +
+                            Component.translatable("enhancedarmaments.misc.exp.get").getString() + " " +
+                            ChatFormatting.BLUE + "" + bonusExperience + ChatFormatting.GRAY + "!"));
+
 
             }
         }

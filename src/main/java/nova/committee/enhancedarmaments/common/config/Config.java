@@ -24,6 +24,9 @@ public class Config {
     public double experienceMultiplier = 1.8;
     @Expose
     public boolean showDurabilityInTooltip = true;
+
+    @Expose
+    public boolean showExpGetInChat = true;
     @Expose
     public List<Item> itemBlacklist = new ArrayList<>();
     @Expose
@@ -141,6 +144,10 @@ public class Config {
 
     public void setShowDurabilityInTooltip(boolean showDurabilityInTooltip) {
         this.showDurabilityInTooltip = showDurabilityInTooltip;
+    }
+
+    public boolean isShowExpGetInChat() {
+        return showExpGetInChat;
     }
 
     public List<Item> getItemBlacklist() {
