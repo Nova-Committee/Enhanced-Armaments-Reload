@@ -1,6 +1,7 @@
 package nova.committee.enhancedarmaments.init.handler;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -16,6 +17,8 @@ import nova.committee.enhancedarmaments.core.Experience;
 import nova.committee.enhancedarmaments.init.callback.EntityEvents;
 import nova.committee.enhancedarmaments.util.EAUtil;
 import nova.committee.enhancedarmaments.util.NBTUtil;
+
+import java.util.UUID;
 
 /**
  * 使用有效武器杀死目标时更新武器信息。用于更新经验、等级、能力等
@@ -87,9 +90,9 @@ public class LivingDeathEventHandler {
                 else if (entity.getMaxHealth() > 99) bonusExperience = 70;
 
                 Experience.setExperience(nbt, Experience.getExperience(nbt) + bonusExperience);
-                player.displayClientMessage(new TextComponent(stack.getDisplayName().getString() + ChatFormatting.GRAY + " " +
+                player.sendMessage(new TextComponent(stack.getDisplayName().getString() + ChatFormatting.GRAY + " " +
                         new TranslatableComponent("enhancedarmaments.misc.exp.get").getString() + " " +
-                        ChatFormatting.BLUE + "" + bonusExperience + ChatFormatting.GRAY + "!"), true);
+                        ChatFormatting.BLUE + "" + bonusExperience + ChatFormatting.GRAY + "!"), Util.NIL_UUID);
 
             }
         }

@@ -29,6 +29,9 @@ public class InputEventHandler {
                                 if (stack.getOrCreateTag().contains("EA_ENABLED"))
                                     mc.setScreen(new AbilitySelectionGui());
                         }
+                        else {
+                            break;
+                        }
                     }
                 }
             }

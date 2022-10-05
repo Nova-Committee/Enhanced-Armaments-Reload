@@ -1,6 +1,7 @@
 package nova.committee.enhancedarmaments.core;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -8,6 +9,8 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import nova.committee.enhancedarmaments.Static;
+
+import java.util.UUID;
 
 public class Experience {
     public static int getNextLevel(Player player, ItemStack stack, CompoundTag nbt, int currentLevel, int experience) {
@@ -17,8 +20,8 @@ public class Experience {
             newLevel = currentLevel + 1;
             currentLevel++;
             Experience.setAbilityTokens(nbt, Experience.getAbilityTokens(nbt) + 1);
-            player.displayClientMessage(new TextComponent(stack.getDisplayName().getString() + ChatFormatting.GRAY +
-                    " " + new TranslatableComponent("enhancedarmaments.misc.level.leveledup").getString() + " " + ChatFormatting.GOLD + "" + newLevel + ChatFormatting.GRAY + "!"), true);
+            player.sendMessage(new TextComponent(stack.getDisplayName().getString() + ChatFormatting.GRAY +
+                    " " + new TranslatableComponent("enhancedarmaments.misc.level.leveledup").getString() + " " + ChatFormatting.GOLD + "" + newLevel + ChatFormatting.GRAY + "!"), Util.NIL_UUID);
         }
 
         return newLevel;
