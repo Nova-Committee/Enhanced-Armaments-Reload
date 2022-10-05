@@ -74,7 +74,7 @@ public enum Rarity {
     }
 
     public String getName() {
-        return this.toString();
+        return this.toString().toLowerCase();
     }
 
     public String getColor() {
