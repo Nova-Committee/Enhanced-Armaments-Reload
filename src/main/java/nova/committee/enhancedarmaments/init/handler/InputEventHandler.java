@@ -4,7 +4,6 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import nova.committee.enhancedarmaments.client.EnhancedArmamentsClient;
 import nova.committee.enhancedarmaments.client.gui.AbilitySelectionGui;
 import nova.committee.enhancedarmaments.init.callback.KeyInputCallback;
 import nova.committee.enhancedarmaments.util.EAUtil;
