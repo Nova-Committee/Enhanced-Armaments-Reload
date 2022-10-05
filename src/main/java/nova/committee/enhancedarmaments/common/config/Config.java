@@ -1,7 +1,6 @@
 package nova.committee.enhancedarmaments.common.config;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 import net.minecraft.world.item.Item;
 
 import java.util.ArrayList;

@@ -40,7 +40,7 @@ public class LivingHurtEventHandler {
             final var owner = arrow.getOwner();
             if (!(owner instanceof Player player)) return false;
             if (hit == null) bowfriendlyhand = player.getUsedItemHand();
-            return true;
+            return false;
         });
 
     }
@@ -56,7 +56,7 @@ public class LivingHurtEventHandler {
     public static void onHurt() {
         EntityEvents.ON_LIVING_DAMAGE_CALC.register((world, entity, damageSource, damageAmount) -> {
 
-            if (damageSource.getDirectEntity() instanceof Player player && !(damageSource.getDirectEntity() instanceof FakePlayer))
+            if (damageSource.getEntity() instanceof Player player && !(damageSource.getDirectEntity() instanceof FakePlayer))
             //PLAYER IS ATTACKER
             {
                 LivingEntity target = (LivingEntity) entity;

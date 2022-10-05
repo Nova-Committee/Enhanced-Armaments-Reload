@@ -5,7 +5,6 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
@@ -18,16 +17,18 @@ import nova.committee.enhancedarmaments.util.NBTUtil;
 public class AddLevelCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("addlevel")
-                .requires(cmd -> cmd.hasPermission(3))
-                .then(Commands.argument("level", IntegerArgumentType.integer()))
-                .executes(cmd -> addLevel(cmd.getSource(), cmd.getSource().getPlayerOrException(), IntegerArgumentType.getInteger(cmd, "level"))));
+                .requires(cmd -> cmd.hasPermission(2))
+                .then(Commands.argument("level", IntegerArgumentType.integer())
+                        .executes(cmd -> addLevel(cmd.getSource(), cmd.getSource().getPlayerOrException(), cmd.getArgument("level", Integer.class)))
+                    )
+                );
     }
 
     private static int addLevel(CommandSourceStack cmd, Player player, int count) {
-        if (count < 1) cmd.sendSuccess(new TextComponent("Level count must be bigger than 0!"), true);
+        if (count < 1) cmd.sendSuccess(new TranslatableComponent("enhancedarmaments.misc.info.level_bigger"), true);
         else {
             if (!EAUtil.canEnhance(player.getMainHandItem().getItem()))
-                cmd.sendSuccess(new TextComponent("Hold a weapon or an armor in your mainhand!"), true);
+                cmd.sendSuccess(new TranslatableComponent("enhancedarmaments.misc.info.mainhand"), true);
             else {
                 ItemStack item = player.getMainHandItem();
                 CompoundTag nbt = NBTUtil.loadStackNBT(item);
@@ -41,8 +42,9 @@ public class AddLevelCommand {
                 NBTUtil.saveStackNBT(item, nbt);
                 player.setItemInHand(InteractionHand.MAIN_HAND, item);
                 cmd.sendSuccess(new TranslatableComponent("enhancedarmaments.command.success"), true);
+                return 0;
             }
         }
-        return 0;
+        return 1;
     }
 }
