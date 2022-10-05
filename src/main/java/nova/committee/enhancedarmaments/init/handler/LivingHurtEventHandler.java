@@ -56,7 +56,9 @@ public class LivingHurtEventHandler {
     public static void onHurt() {
         EntityEvents.ON_LIVING_DAMAGE_CALC.register((world, entity, damageSource, damageAmount) -> {
 
-            if (damageSource.getEntity() instanceof Player player && !(damageSource.getDirectEntity() instanceof FakePlayer))
+            if (damageSource.getEntity() instanceof Player player
+                    //&& !(damageSource.getDirectEntity() instanceof FakePlayer)
+            )
             //PLAYER IS ATTACKER
             {
                 LivingEntity target = (LivingEntity) entity;
@@ -69,32 +71,33 @@ public class LivingHurtEventHandler {
                 if (stack != ItemStack.EMPTY && EAUtil.canEnhanceWeapon(stack.getItem())) {
                     CompoundTag nbt = NBTUtil.loadStackNBT(stack);
                     if (nbt.contains("EA_ENABLED")) {
-                        updateExperience(nbt, damageAmount);
-                        updateLevel(player, stack, nbt);
                         float damage1 =  useRarity(damageAmount, stack, nbt);
+                        updateExperience(nbt, damage1);
+                        updateLevel(player, stack, nbt);
                         return useWeaponAbilities(damage1, player, target, nbt);
                     }
                 }
-            } else if (entity instanceof Player player) {//PLAYER IS GETTING HURT
+            }
+            else if (entity instanceof Player player) {//PLAYER IS GETTING HURT
                 Entity target = damageSource.getEntity();
 
                 for (ItemStack stack : player.getInventory().armor) {
-                    if (stack != null) {
-                        if (EAUtil.canEnhanceArmor(stack.getItem())) {
+                    if (stack != null && EAUtil.canEnhanceArmor(stack.getItem())) {
                             CompoundTag nbt = NBTUtil.loadStackNBT(stack);
 
                             if (nbt.contains("EA_ENABLED")) {
+                                float damage1 =  useRarity(damageAmount, stack, nbt);
+
                                 if (EAUtil.isDamageSourceAllowed(damageSource)) {
-                                    if (damageAmount < (player.getMaxHealth() + player.getArmorValue()))
-                                        updateExperience(nbt, damageAmount);
+                                    if (damage1 < (player.getMaxHealth() + player.getArmorValue()))
+                                        updateExperience(nbt, damage1);
                                     else
                                         updateExperience(nbt, 1);
                                     updateLevel(player, stack, nbt);
                                 }
-                                float damage1 = useRarity(damageAmount, stack, nbt);
                                 return useArmorAbilities(damage1, player, target, nbt);
                             }
-                        }
+
                     }
                 }
             }

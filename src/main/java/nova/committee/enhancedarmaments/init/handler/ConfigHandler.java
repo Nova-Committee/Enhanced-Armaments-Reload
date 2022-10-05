@@ -29,7 +29,7 @@ public class ConfigHandler {
     public Config getConfig() {
         return config;
     }
-    private File file;
+    private final File file;
     private final Executor executor = Executors.newSingleThreadExecutor();
 
     public Gson GSON;
