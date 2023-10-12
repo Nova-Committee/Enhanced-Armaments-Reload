@@ -13,6 +13,8 @@ import nova.committee.enhancedarmaments.core.Rarity;
 import nova.committee.enhancedarmaments.util.EAUtil;
 import nova.committee.enhancedarmaments.util.NBTUtil;
 
+import java.util.function.Supplier;
+
 public class RarityCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -25,17 +27,17 @@ public class RarityCommand {
 
     public static int changeRarity(CommandSourceStack src, Player player, int rarityid) {
         if ((rarityid < 1) || (rarityid > 6))
-            src.sendSuccess(Component.literal("Rarity ID must be 1, 2, 3, 4, 5 or 6!"), true);
+            src.sendSuccess((Supplier<Component>) Component.literal("Rarity ID must be 1, 2, 3, 4, 5 or 6!"), true);
         else {
             if (!EAUtil.canEnhance(player.getMainHandItem().getItem()))
-                src.sendSuccess(Component.literal("Hold a weapon or an armor in your mainhand!"), true);
+                src.sendSuccess((Supplier<Component>) Component.literal("Hold a weapon or an armor in your mainhand!"), true);
             else {
                 ItemStack item = player.getMainHandItem();
                 CompoundTag nbt = NBTUtil.loadStackNBT(item);
                 Rarity.setRarity(nbt, String.valueOf(rarityid));
                 NBTUtil.saveStackNBT(item, nbt);
                 player.setItemInHand(InteractionHand.MAIN_HAND, item);
-                src.sendSuccess(Component.translatable("enhancedarmaments.command.success"), true);
+                src.sendSuccess((Supplier<Component>) Component.translatable("enhancedarmaments.command.success"), true);
             }
         }
         return 0;

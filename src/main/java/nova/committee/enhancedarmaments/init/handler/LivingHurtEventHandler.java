@@ -15,8 +15,8 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -165,10 +165,10 @@ public class LivingHurtEventHandler {
             if (Ability.BOMBASTIC.hasAbility(nbt) && (int) (Math.random() * Config.bombasticchance) == 0) {
                 double multiplierD = (Ability.BOMBASTIC.getLevel(nbt) + Ability.BOMBASTIC.getLevel(nbt) * 4) / 4.0;
                 float multiplier = (float) multiplierD;
-                Level world = target.getLevel();
+                Level world = target.level();
 
                 if (!(target instanceof Animal)) {
-                    world.explode(target, target.getX(), target.getY(), target.getZ(), multiplier, Explosion.BlockInteraction.NONE);
+                    world.explode(target, target.getX(), target.getY(), target.getZ(), multiplier, ExplosionInteraction.NONE);
                 }
             }
 

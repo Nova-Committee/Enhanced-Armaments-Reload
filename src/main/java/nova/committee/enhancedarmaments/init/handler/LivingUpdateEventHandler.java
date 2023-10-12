@@ -18,7 +18,6 @@ import nova.committee.enhancedarmaments.core.Experience;
 import nova.committee.enhancedarmaments.core.Rarity;
 import nova.committee.enhancedarmaments.util.EAUtil;
 import nova.committee.enhancedarmaments.util.NBTUtil;
-
 import java.util.Objects;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -30,8 +29,7 @@ public class LivingUpdateEventHandler {
         if (event.getEntity() instanceof Player player) {
 
             NonNullList<ItemStack> main = player.getInventory().items;
-
-            if (!player.level.isClientSide) {
+            if (!player.level().isClientSide()) {
                 for (ItemStack stack : player.getInventory().armor) {
                     if (stack != null && EAUtil.canEnhanceArmor(stack.getItem())) {
                         CompoundTag nbt = NBTUtil.loadStackNBT(stack);
@@ -49,7 +47,7 @@ public class LivingUpdateEventHandler {
                         //寒霜行者
                         if (Ability.FROSTWALKER.hasAbility(nbt) && (int) (Math.random() * Config.frostwalkerchance) == 0) {
                             int multiplier = Ability.FROSTWALKER.getLevel(nbt);
-                            FrostWalkerEnchantment.onEntityMoved(player, player.level, player.blockPosition(), multiplier);
+                            FrostWalkerEnchantment.onEntityMoved(player, player.level(), player.blockPosition(), multiplier);
                         }
 
                     }
@@ -70,7 +68,7 @@ public class LivingUpdateEventHandler {
                                 }
 
                                 //白名单检测
-                                if (Config.itemWhitelist.size() != 0) {
+                                if (!Config.itemWhitelist.isEmpty()) {
                                     okay = false;
                                     for (int k = 0; k < Config.itemWhitelist.size(); k++)
                                         if (Objects.equals(ForgeRegistries.ITEMS.getKey(Config.itemWhitelist.get(k)), ForgeRegistries.ITEMS.getKey(stack.getItem())))
@@ -81,8 +79,7 @@ public class LivingUpdateEventHandler {
                                     //添加随机稀有度词条
                                     Experience.enable(nbt, true);
                                     Rarity rarity = Rarity.getRarity(nbt);
-                                    RandomSource rand = player.level.random;
-
+                                    RandomSource rand = player.level().random;
                                     if (rarity == Rarity.DEFAULT) {
                                         rarity = Rarity.getRandomRarity(rand);
                                         rarity.setRarity(nbt);

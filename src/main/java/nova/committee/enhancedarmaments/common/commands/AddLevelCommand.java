@@ -13,6 +13,8 @@ import nova.committee.enhancedarmaments.core.Experience;
 import nova.committee.enhancedarmaments.util.EAUtil;
 import nova.committee.enhancedarmaments.util.NBTUtil;
 
+import java.util.function.Supplier;
+
 public class AddLevelCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("addlevel")
@@ -23,10 +25,10 @@ public class AddLevelCommand {
     }
 
     private static int addLevel(CommandSourceStack cmd, Player player, int count) {
-        if (count < 1) cmd.sendSuccess(Component.literal("Level count must be bigger than 0!"), true);
+        if (count < 1) cmd.sendSuccess((Supplier<Component>) Component.literal("Level count must be bigger than 0!"), true);
         else {
             if (!EAUtil.canEnhance(player.getMainHandItem().getItem()))
-                cmd.sendSuccess(Component.literal("Hold a weapon or an armor in your mainhand!"), true);
+                cmd.sendSuccess((Supplier<Component>) Component.literal("Hold a weapon or an armor in your mainhand!"), true);
             else {
                 ItemStack item = player.getMainHandItem();
                 CompoundTag nbt = NBTUtil.loadStackNBT(item);
@@ -39,7 +41,7 @@ public class AddLevelCommand {
                 }
                 NBTUtil.saveStackNBT(item, nbt);
                 player.setItemInHand(InteractionHand.MAIN_HAND, item);
-                cmd.sendSuccess(Component.translatable("enhancedarmaments.command.success"), true);
+                cmd.sendSuccess((Supplier<Component>) Component.translatable("enhancedarmaments.command.success"), true);
             }
         }
         return 0;
