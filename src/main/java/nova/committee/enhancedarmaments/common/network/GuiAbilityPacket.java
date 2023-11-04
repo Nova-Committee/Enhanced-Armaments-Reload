@@ -1,8 +1,6 @@
 package nova.committee.enhancedarmaments.common.network;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 import nova.committee.enhancedarmaments.core.Ability;
@@ -32,13 +30,13 @@ public class GuiAbilityPacket extends IPacket {
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork
                 (() -> {
-                    Player player = ctx.get().getSender();
+                    var player = ctx.get().getSender();
 
                     if (player != null) {
-                        ItemStack stack = player.getInventory().getSelected();
+                        var stack = player.getInventory().getSelected();
 
                         if (stack != ItemStack.EMPTY) {
-                            CompoundTag nbt = NBTUtil.loadStackNBT(stack);
+                            var nbt = NBTUtil.loadStackNBT(stack);
 
                             if (EAUtil.canEnhanceWeapon(stack.getItem())) {
                                 if (Ability.WEAPON_ABILITIES.get(index).hasAbility(nbt)) {

@@ -2,6 +2,7 @@ package nova.committee.enhancedarmaments.common.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.nbt.CompoundTag;
@@ -20,11 +21,11 @@ public class RarityCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("changerarity")
                 .requires(cmd -> cmd.hasPermission(2))
-                .then(Commands.argument("rarityid", IntegerArgumentType.integer())
-                        .executes(cmd -> changeRarity(cmd.getSource(), cmd.getSource().getPlayerOrException(), cmd.getArgument("rarityid", Integer.class))))
+                .then(Commands.argument("rarityName", StringArgumentType.greedyString())
+                        .executes(cmd -> changeRarity(cmd.getSource(), cmd.getSource().getPlayerOrException(), cmd.getArgument("rarityName", String.class))))
         );
     }
-
+  
     public static int changeRarity(CommandSourceStack src, Player player, int rarityid) {
         if ((rarityid < 1) || (rarityid > 6))
             src.sendSuccess((Supplier<Component>) Component.literal("Rarity ID must be 1, 2, 3, 4, 5 or 6!"), true);
@@ -34,12 +35,12 @@ public class RarityCommand {
             else {
                 ItemStack item = player.getMainHandItem();
                 CompoundTag nbt = NBTUtil.loadStackNBT(item);
-                Rarity.setRarity(nbt, String.valueOf(rarityid));
+                Rarity.setRarity(nbt, rarityName);
                 NBTUtil.saveStackNBT(item, nbt);
                 player.setItemInHand(InteractionHand.MAIN_HAND, item);
                 src.sendSuccess((Supplier<Component>) Component.translatable("enhancedarmaments.command.success"), true);
             }
-        }
+
         return 0;
     }
 }

@@ -1,38 +1,32 @@
 package nova.committee.enhancedarmaments.core;
 
+import com.google.gson.JsonObject;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.util.RandomSource;
-import nova.committee.enhancedarmaments.common.config.Config;
 import nova.committee.enhancedarmaments.util.RandomCollection;
 
-public enum Rarity {
-    DEFAULT("", 0, 0.0, 0.0),
-    BASIC(ChatFormatting.WHITE, 0xFFFFFF, Config.basicChance, Config.basicDamage),
-    UNCOMMON(ChatFormatting.DARK_GREEN, 0x00AA00, Config.uncommonChance, Config.uncommonDamage),
-    RARE(ChatFormatting.AQUA, 0x55FFFF, Config.rareChance, Config.rareDamage),
-    ULTRA_RARE(ChatFormatting.DARK_PURPLE, 0xAA00AA, Config.ultraRareChance, Config.ultraRareDamage),
-    LEGENDARY(ChatFormatting.GOLD, 0xFFAA00, Config.legendaryChance, Config.legendaryDamage),
-    ARCHAIC(ChatFormatting.LIGHT_PURPLE, 0xFF55FF, Config.archaicChance, Config.archaicDamage);
+import java.util.ArrayList;
+import java.util.List;
 
-    private static final Rarity[] RARITIES = Rarity.values();
-    private static final RandomCollection<Rarity> RANDOM_RARITIES = new RandomCollection<Rarity>();
+public class Rarity {
 
-    static {
-        for (Rarity rarity : RARITIES) {
-            if (rarity.weight > 0.0D) {
-                RANDOM_RARITIES.add(rarity.weight, rarity);
-            }
-        }
-    }
+    public static Rarity DEFAULT = new Rarity("default", "", 0, 0, 0);
 
-    private final String color;
+    public static final List<Rarity> RARITIES = new ArrayList<>();
+    public static final RandomCollection<Rarity> RANDOM_RARITIES = new RandomCollection<Rarity>();
+
+    private final String name;
+    private final ChatFormatting color;
     private final int hex;
     private final double weight;
     private final double effect;
+    private boolean enabled = true;
 
-    Rarity(Object color, int hex, double weight, double effect) {
-        this.color = color.toString();
+    Rarity(String name, String color, int hex, double weight, double effect) {
+        this.name = name;
+        this.color = ChatFormatting.getByName(color);
         this.hex = hex;
         this.weight = weight;
         this.effect = effect;
@@ -48,6 +42,16 @@ public enum Rarity {
         return RANDOM_RARITIES.next(random);
     }
 
+    private static Rarity getByName(CompoundTag nbt){
+        final Rarity[] rarity1 = new Rarity[1];
+        RARITIES.stream()
+                .filter(rarity -> rarity.getName().equalsIgnoreCase(nbt.getString("RARITY")))
+                .findFirst()
+                .ifPresent(
+                        rarity -> rarity1[0] = rarity);
+        return rarity1[0];
+    }
+
     /**
      * 检索应用的稀有度。
      *
@@ -55,25 +59,22 @@ public enum Rarity {
      * @return
      */
     public static Rarity getRarity(CompoundTag nbt) {
-        return nbt != null && nbt.contains("RARITY") ? RARITIES[nbt.getInt("RARITY")] : DEFAULT;
+        return nbt != null && nbt.contains("RARITY") ? getByName(nbt) : DEFAULT;
     }
 
     public static void setRarity(CompoundTag nbt, String rarityName) {
-        int rarity = Integer.parseInt(rarityName);
-        nbt.putInt("RARITY", rarity);
+        nbt.putString("RARITY", rarityName);
     }
 
     public void setRarity(CompoundTag nbt) {
-
-        nbt.putInt("RARITY", ordinal());
-
+        nbt.putString("RARITY", name);
     }
 
     public String getName() {
-        return this.toString();
+        return name;
     }
 
-    public String getColor() {
+    public ChatFormatting getColor() {
         return color;
     }
 
@@ -83,5 +84,32 @@ public enum Rarity {
 
     public double getEffect() {
         return effect;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+    public static Rarity loadFromJson(JsonObject json) {
+        var name1 = GsonHelper.getAsString(json, "name");
+        var color1 = GsonHelper.getAsString(json, "color");
+        var hex1 = GsonHelper.getAsInt(json, "hex");
+        var weight1 = GsonHelper.getAsDouble(json, "weight", 0.25D);
+        var effect1 = GsonHelper.getAsDouble(json, "effect", 0.3D);
+
+        var rarity = new Rarity(name1, color1, hex1, weight1, effect1);
+
+        var enabled = GsonHelper.getAsBoolean(json, "enabled", true);
+
+        rarity.setEnabled(enabled);
+
+        return rarity;
     }
 }

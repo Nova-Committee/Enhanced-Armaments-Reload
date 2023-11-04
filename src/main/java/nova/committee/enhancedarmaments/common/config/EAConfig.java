@@ -5,13 +5,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
-import nova.committee.enhancedarmaments.EnhancedArmaments;
+import nova.committee.enhancedarmaments.Static;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Config {
+public class EAConfig {
     public static final CFile CONFIG;
     public static final ForgeConfigSpec SPEC;
     public static int maxLevel;
@@ -51,18 +51,7 @@ public class Config {
     public static double toxicchance;
     public static double adrenalinechance;
     public static double hardenedchance;
-    public static double basicChance;
-    public static double uncommonChance;
-    public static double rareChance;
-    public static double ultraRareChance;
-    public static double legendaryChance;
-    public static double archaicChance;
-    public static double basicDamage;
-    public static double uncommonDamage;
-    public static double rareDamage;
-    public static double ultraRareDamage;
-    public static double legendaryDamage;
-    public static double archaicDamage;
+
 
     static {
         final Pair<CFile, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(CFile::new);
@@ -113,19 +102,7 @@ public class Config {
         adrenalinechance = CONFIG.adrenalinechance.get();
         hardenedchance = CONFIG.hardenedchance.get();
 
-        basicChance = CONFIG.basicChance.get();
-        uncommonChance = CONFIG.uncommonChance.get();
-        rareChance = CONFIG.rareChance.get();
-        ultraRareChance = CONFIG.ultraRareChance.get();
-        legendaryChance = CONFIG.legendaryChance.get();
-        archaicChance = CONFIG.archaicChance.get();
 
-        basicDamage = CONFIG.basicDamage.get();
-        uncommonDamage = CONFIG.uncommonDamage.get();
-        rareDamage = CONFIG.rareDamage.get();
-        ultraRareDamage = CONFIG.ultraRareDamage.get();
-        legendaryDamage = CONFIG.legendaryDamage.get();
-        archaicDamage = CONFIG.archaicDamage.get();
     }
 
     private static List<Item> parseItemList(List<String> lst) {
@@ -133,7 +110,7 @@ public class Config {
         for (String s : lst) {
             Item i = ForgeRegistries.ITEMS.getValue(new ResourceLocation(s));
             if (i == null || i == Items.AIR) {
-                EnhancedArmaments.LOGGER.error("Invalid config entry {} will be ignored from blacklist.", s);
+                Static.LOGGER.error("Invalid config entry {} will be ignored from blacklist.", s);
                 continue;
             }
             exp.add(i);
@@ -186,27 +163,13 @@ public class Config {
         public ForgeConfigSpec.ConfigValue<Double> adrenalinechance;
         public ForgeConfigSpec.ConfigValue<Double> hardenedchance;
 
-        public ForgeConfigSpec.ConfigValue<Double> basicChance;
-        public ForgeConfigSpec.ConfigValue<Double> uncommonChance;
-        public ForgeConfigSpec.ConfigValue<Double> rareChance;
-        public ForgeConfigSpec.ConfigValue<Double> ultraRareChance;
-        public ForgeConfigSpec.ConfigValue<Double> legendaryChance;
-        public ForgeConfigSpec.ConfigValue<Double> archaicChance;
 
-        public ForgeConfigSpec.ConfigValue<Double> basicDamage;
-        public ForgeConfigSpec.ConfigValue<Double> uncommonDamage;
-        public ForgeConfigSpec.ConfigValue<Double> rareDamage;
-        public ForgeConfigSpec.ConfigValue<Double> ultraRareDamage;
-        public ForgeConfigSpec.ConfigValue<Double> legendaryDamage;
-        public ForgeConfigSpec.ConfigValue<Double> archaicDamage;
 
         public CFile(ForgeConfigSpec.Builder builder) {
             buildMain(builder);
             buildMisc(builder);
             buildAbilities(builder);
             buildAbilityChance(builder);
-            buildRarities(builder);
-            buildMultiplier(builder);
         }
 
         private void buildMain(ForgeConfigSpec.Builder builder) {
@@ -387,64 +350,5 @@ public class Config {
             builder.pop();
         }
 
-        private void buildRarities(ForgeConfigSpec.Builder builder) {
-            builder.push("rarities");
-
-            basicChance = builder
-                    .comment("Sets the chance the given rarity will be applied. Default: 0.5")
-                    .define("basicChance", 0.5);
-
-            uncommonChance = builder
-                    .comment("Sets the chance the given rarity will be applied. Default: 0.18")
-                    .define("uncommonChance", 0.18);
-
-            rareChance = builder
-                    .comment("Sets the chance the given rarity will be applied. Default: 0.1")
-                    .define("rareChance", 0.1);
-
-            ultraRareChance = builder
-                    .comment("Sets the chance the given rarity will be applied. Default: 0.05")
-                    .define("ultraRareChance", 0.05);
-
-            legendaryChance = builder
-                    .comment("Sets the chance the given rarity will be applied. Default: 0.02")
-                    .define("legendaryChance", 0.02);
-
-            archaicChance = builder
-                    .comment("Sets the chance the given rarity will be applied. Default: 0.01")
-                    .define("archaicChance", 0.01);
-
-            builder.pop();
-        }
-
-        private void buildMultiplier(ForgeConfigSpec.Builder builder) {
-            builder.push("multiplier");
-
-            basicDamage = builder
-                    .comment("Sets the effectiveness for the given rarity. Default: 0")
-                    .define("basicDamage", 0D);
-
-            uncommonDamage = builder
-                    .comment("Sets the effectiveness for the given rarity. Default: 0.155")
-                    .define("uncommonDamage", 0.155);
-
-            rareDamage = builder
-                    .comment("Sets the effectiveness for the given rarity. Default: 0.305")
-                    .define("rareDamage", 0.305);
-
-            ultraRareDamage = builder
-                    .comment("Sets the effectiveness for the given rarity. Default: 0.38")
-                    .define("ultraRareDamage", 0.38);
-
-            legendaryDamage = builder
-                    .comment("Sets the effectiveness for the given rarity. Default: 0.57")
-                    .define("legendaryDamage", 0.57);
-
-            archaicDamage = builder
-                    .comment("Sets the effectiveness for the given rarity. Default: 0.81")
-                    .define("archaicDamage", 0.81);
-
-            builder.pop();
-        }
     }
 }

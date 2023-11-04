@@ -19,7 +19,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import nova.committee.enhancedarmaments.common.config.Config;
+import nova.committee.enhancedarmaments.common.config.EAConfig;
 import nova.committee.enhancedarmaments.core.Ability;
 import nova.committee.enhancedarmaments.core.Experience;
 import nova.committee.enhancedarmaments.core.Rarity;
@@ -60,19 +60,19 @@ public class ItemTooltipEventHandler {
                 // add tooltips
 
                 // level
-                if (level >= Config.maxLevel)
+                if (level >= EAConfig.maxLevel)
                     tooltip.add(Component.literal(I18n.get("enhancedarmaments.misc.level") + ": " + ChatFormatting.RED + I18n.get("enhancedarmaments.misc.max")));
                 else
                     tooltip.add(Component.literal(I18n.get("enhancedarmaments.misc.level") + ": " + ChatFormatting.WHITE + level));
 
                 // experience
-                if (level >= Config.maxLevel)
+                if (level >= EAConfig.maxLevel)
                     tooltip.add(Component.literal(I18n.get("enhancedarmaments.misc.experience") + ": " + I18n.get("enhancedarmaments.misc.max")));
                 else
                     tooltip.add(Component.literal(I18n.get("enhancedarmaments.misc.experience") + ": " + experience + " / " + maxExperience));
 
                 // durability
-                if (Config.showDurabilityInTooltip) {
+                if (EAConfig.showDurabilityInTooltip) {
                     tooltip.add(Component.literal(I18n.get("enhancedarmaments.misc.durability") + ": " + (stack.getMaxDamage() - stack.getDamageValue()) + " / " + stack.getMaxDamage()));
                 }
 

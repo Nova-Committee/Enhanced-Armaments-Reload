@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import nova.committee.enhancedarmaments.EnhancedArmaments;
+import nova.committee.enhancedarmaments.Static;
 import nova.committee.enhancedarmaments.client.widgets.ScreenRect;
 import org.lwjgl.opengl.GL11;
 
@@ -20,11 +21,11 @@ public class ScreenHelper {
     private static final Minecraft mc = Minecraft.getInstance();
 
     public static void bindGuiTextures() {
-        mc.getTextureManager().bindForSetup(new ResourceLocation(EnhancedArmaments.MODID + ":textures/gui/gui_textures.png"));
+        mc.getTextureManager().bindForSetup(new ResourceLocation(Static.MODID + ":textures/gui/gui_textures.png"));
     }
 
     public static void bindTexture(String name) {
-        mc.getTextureManager().bindForSetup(new ResourceLocation(EnhancedArmaments.MODID + ":textures/gui/" + name + ".png"));
+        mc.getTextureManager().bindForSetup(new ResourceLocation(Static.MODID + ":textures/gui/" + name + ".png"));
     }
 
     public static void drawHoveringTextBox(GuiGraphics graphics, int mouseX, int mouseY, int zLevel, ScreenRect rect, String... text) {

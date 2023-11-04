@@ -6,7 +6,7 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.ForgeRegistries;
-import nova.committee.enhancedarmaments.common.config.Config;
+import nova.committee.enhancedarmaments.common.config.EAConfig;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class EAUtil {
     public static boolean canEnhance(Item item) {
-        if (Config.onlyModdedItems)
+        if (EAConfig.onlyModdedItems)
             if (item == Items.IRON_SWORD || item == Items.IRON_AXE || item == Items.IRON_HOE || item == Items.IRON_BOOTS || item == Items.IRON_CHESTPLATE || item == Items.IRON_HELMET || item == Items.IRON_LEGGINGS
                     || item == Items.DIAMOND_AXE || item == Items.DIAMOND_HOE || item == Items.DIAMOND_SWORD || item == Items.DIAMOND_BOOTS || item == Items.DIAMOND_CHESTPLATE || item == Items.DIAMOND_HELMET || item == Items.DIAMOND_LEGGINGS
                     || item == Items.GOLDEN_AXE || item == Items.GOLDEN_HOE || item == Items.GOLDEN_SWORD || item == Items.GOLDEN_BOOTS || item == Items.GOLDEN_CHESTPLATE || item == Items.GOLDEN_HELMET || item == Items.GOLDEN_LEGGINGS
@@ -28,8 +28,8 @@ public class EAUtil {
 
         if (!Config.extraItems.isEmpty()) {
             boolean allowed = false;
-            for (int k = 0; k < Config.extraItems.size(); k++)
-                if (Objects.equals(ForgeRegistries.ITEMS.getKey(Config.extraItems.get(k)), ForgeRegistries.ITEMS.getKey(item)))
+            for (int k = 0; k < EAConfig.extraItems.size(); k++)
+                if (Objects.equals(ForgeRegistries.ITEMS.getKey(EAConfig.extraItems.get(k)), ForgeRegistries.ITEMS.getKey(item)))
                     allowed = true;
             return allowed || item instanceof SwordItem || item instanceof AxeItem || item instanceof HoeItem || item instanceof BowItem || item instanceof ArmorItem || item instanceof CrossbowItem || item instanceof TridentItem;
         } else
