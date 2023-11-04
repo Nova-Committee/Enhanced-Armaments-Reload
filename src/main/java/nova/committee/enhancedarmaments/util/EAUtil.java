@@ -2,6 +2,7 @@ package nova.committee.enhancedarmaments.util;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,7 +26,7 @@ public class EAUtil {
                     || item == Items.CHAINMAIL_BOOTS || item == Items.CHAINMAIL_CHESTPLATE || item == Items.CHAINMAIL_HELMET || item == Items.CHAINMAIL_LEGGINGS)
                 return false;
 
-        if (EAConfig.extraItems.size() != 0) {
+        if (!Config.extraItems.isEmpty()) {
             boolean allowed = false;
             for (int k = 0; k < EAConfig.extraItems.size(); k++)
                 if (Objects.equals(ForgeRegistries.ITEMS.getKey(EAConfig.extraItems.get(k)), ForgeRegistries.ITEMS.getKey(item)))
@@ -43,8 +44,8 @@ public class EAUtil {
     /**
      * 近战
      *
-     * @param item
-     * @return
+     * @param item 物品
+     * @return 物品可以得到近战增强
      */
     public static boolean canEnhanceMelee(Item item) {
         return canEnhance(item) && !(item instanceof ArmorItem) && !(item instanceof BowItem) && !(item instanceof CrossbowItem);
@@ -53,8 +54,8 @@ public class EAUtil {
     /**
      * 远程
      *
-     * @param item
-     * @return
+     * @param item 物品
+     * @return 物品可以得到远程增强
      */
     public static boolean canEnhanceRanged(Item item) {
         return canEnhance(item) && (item instanceof BowItem || item instanceof CrossbowItem || item instanceof TridentItem);
@@ -65,19 +66,19 @@ public class EAUtil {
     }
 
     public static boolean isDamageSourceAllowed(DamageSource damageSource) {
-        return !(damageSource == DamageSource.FALL ||
-                damageSource == DamageSource.DROWN ||
-                damageSource == DamageSource.CACTUS ||
-                damageSource == DamageSource.STARVE ||
-                damageSource == DamageSource.IN_WALL ||
-                damageSource == DamageSource.IN_FIRE ||
-                damageSource == DamageSource.OUT_OF_WORLD) ||
+        return !(damageSource.is(DamageTypes.FALL) ||
+                damageSource.is(DamageTypes.DROWN )||
+                damageSource.is(DamageTypes.CACTUS )||
+                damageSource.is(DamageTypes.STARVE )||
+                damageSource.is(DamageTypes.IN_WALL )||
+                damageSource.is(DamageTypes.IN_FIRE )||
+                damageSource.is(DamageTypes.FELL_OUT_OF_WORLD)) ||
                 damageSource.getEntity() instanceof LivingEntity;
     }
 
 
     public static boolean containsString(List<Component> tooltip, String string) {
-        if (tooltip.size() <= 0) return false;
+        if (tooltip.isEmpty()) return false;
 
         for (Component component : tooltip) {
             if (component.getString().equals(string))
@@ -87,7 +88,7 @@ public class EAUtil {
     }
 
     public static int lineContainsString(List<Component> tooltip, String string) {
-        if (tooltip.size() <= 0) return -1;
+        if (tooltip.isEmpty()) return -1;
 
         for (int i = 0; i < tooltip.size(); i++) {
             if (tooltip.get(i).getString().equals(string))

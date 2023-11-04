@@ -1,9 +1,10 @@
 package nova.committee.enhancedarmaments.client.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -95,9 +96,9 @@ public class AbilitySelectionGui extends Screen {
     }
 
     @Override
-    public void render(@NotNull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(poseStack);
-        super.render(poseStack, mouseX, mouseY, partialTicks);
+    public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(graphics);
+        super.render(graphics, mouseX, mouseY, partialTicks);
 
         Player player = this.minecraft.player;
 
@@ -110,13 +111,14 @@ public class AbilitySelectionGui extends Screen {
 
                     {
                         if (EAUtil.canEnhanceWeapon(stack.getItem())) {
-                            drawStrings(poseStack, stack, Ability.WEAPON_ABILITIES, nbt);
-                            displayButtons(poseStack, weaponAbilities, Ability.WEAPON_ABILITIES, nbt, player);
-                            drawTooltips(poseStack, weaponAbilities, Ability.WEAPON_ABILITIES, mouseX, mouseY);
+
+                            drawStrings(graphics, stack, Ability.WEAPON_ABILITIES, nbt);
+                            displayButtons(graphics, weaponAbilities, Ability.WEAPON_ABILITIES, nbt, player);
+                            drawTooltips(graphics, weaponAbilities, Ability.WEAPON_ABILITIES, mouseX, mouseY);
                         } else if (EAUtil.canEnhanceArmor(stack.getItem())) {
-                            drawStrings(poseStack, stack, Ability.ARMOR_ABILITIES, nbt);
-                            displayButtons(poseStack, armorAbilities, Ability.ARMOR_ABILITIES, nbt, player);
-                            drawTooltips(poseStack, armorAbilities, Ability.ARMOR_ABILITIES, mouseX, mouseY);
+                            drawStrings(graphics, stack, Ability.ARMOR_ABILITIES, nbt);
+                            displayButtons(graphics, armorAbilities, Ability.ARMOR_ABILITIES, nbt, player);
+                            drawTooltips(graphics, armorAbilities, Ability.ARMOR_ABILITIES, mouseX, mouseY);
                         }
                     }
                 }
@@ -163,24 +165,24 @@ public class AbilitySelectionGui extends Screen {
      * @param abilities
      * @param nbt
      */
-    private void drawStrings(PoseStack poseStack, ItemStack stack, ArrayList<Ability> abilities, CompoundTag nbt) {
+    private void drawStrings(GuiGraphics graphics, ItemStack stack, ArrayList<Ability> abilities, CompoundTag nbt) {
         Rarity rarity = Rarity.getRarity(nbt);
 
-        drawCenteredString(poseStack, font, stack.getDisplayName().getString(), width / 2, 20, 0xFFFFFF);
-        drawString(poseStack, font, I18n.get("enhancedarmaments.misc.rarity") + ": ", width / 2 - 50, 40, 0xFFFFFF);
-        drawString(poseStack, font, I18n.get("enhancedarmaments.rarity." + rarity.getName()), width / 2 - 15, 40, rarity.getHex());
-        drawCenteredString(poseStack, font, ChatFormatting.ITALIC + I18n.get("enhancedarmaments.misc.abilities"), width / 2 - 100, 73, 0xFFFFFF);
-        drawCenteredString(poseStack, font, ChatFormatting.GRAY + I18n.get("enhancedarmaments.misc.abilities.tokens") + ": " + ChatFormatting.DARK_GREEN + Experience.getAbilityTokens(nbt), width / 2 - 100, 86, 0xFFFFFF);
-        drawCenteredString(poseStack, font, ChatFormatting.GOLD + I18n.get("enhancedarmaments.misc.abilities.purchased"), width / 2 + 112, 100, 0xFFFFFF);
-        drawCenteredString(poseStack, font, ChatFormatting.BOLD + I18n.get("enhancedarmaments.ability.type.active"), width / 2 + 75, 120, 0xFFFFFF);
-        drawCenteredString(poseStack, font, ChatFormatting.BOLD + I18n.get("enhancedarmaments.ability.type.passive"), width / 2 + 150, 120, 0xFFFFFF);
+        graphics.drawCenteredString(font, stack.getDisplayName(), width / 2, 20, 0xFFFFFF);
+        graphics.drawString(font, I18n.get("enhancedarmaments.misc.rarity") + ": ", width / 2 - 50, 40, 0xFFFFFF);
+        graphics.drawString(font, I18n.get("enhancedarmaments.rarity." + rarity.getName()), width / 2 - 15, 40, rarity.getHex());
+        graphics.drawCenteredString(font, ChatFormatting.ITALIC + I18n.get("enhancedarmaments.misc.abilities"), width / 2 - 100, 73, 0xFFFFFF);
+        graphics.drawCenteredString(font, ChatFormatting.GRAY + I18n.get("enhancedarmaments.misc.abilities.tokens") + ": " + ChatFormatting.DARK_GREEN + Experience.getAbilityTokens(nbt), width / 2 - 100, 86, 0xFFFFFF);
+        graphics.drawCenteredString(font, ChatFormatting.GOLD + I18n.get("enhancedarmaments.misc.abilities.purchased"), width / 2 + 112, 100, 0xFFFFFF);
+        graphics.drawCenteredString(font, ChatFormatting.BOLD + I18n.get("enhancedarmaments.ability.type.active"), width / 2 + 75, 120, 0xFFFFFF);
+        graphics.drawCenteredString(font, ChatFormatting.BOLD + I18n.get("enhancedarmaments.ability.type.passive"), width / 2 + 150, 120, 0xFFFFFF);
 
-        if (Experience.getLevel(nbt) == EAConfig.maxLevel) {
-            drawString(poseStack, font, I18n.get("enhancedarmaments.misc.level") + ": " + Experience.getLevel(nbt) + ChatFormatting.DARK_RED + " (" + I18n.get("enhancedarmaments.misc.max") + ")", width / 2 - 50, 50, 0xFFFFFF);
-            drawString(poseStack, font, I18n.get("enhancedarmaments.misc.experience") + ": " + Experience.getExperience(nbt), width / 2 - 50, 60, 0xFFFFFF);
+        if (Experience.getLevel(nbt) == Config.maxLevel) {
+            graphics.drawString(font, I18n.get("enhancedarmaments.misc.level") + ": " + Experience.getLevel(nbt) + ChatFormatting.DARK_RED + " (" + I18n.get("enhancedarmaments.misc.max") + ")", width / 2 - 50, 50, 0xFFFFFF);
+            graphics.drawString(font, I18n.get("enhancedarmaments.misc.experience") + ": " + Experience.getExperience(nbt), width / 2 - 50, 60, 0xFFFFFF);
         } else {
-            drawString(poseStack, font, I18n.get("enhancedarmaments.misc.level") + ": " + Experience.getLevel(nbt), width / 2 - 50, 50, 0xFFFFFF);
-            drawString(poseStack, font, I18n.get("enhancedarmaments.misc.experience") + ": " + Experience.getExperience(nbt) + " / " + Experience.getMaxLevelExp(Experience.getLevel(nbt)), width / 2 - 50, 60, 0xFFFFFF);
+            graphics.drawString(font, I18n.get("enhancedarmaments.misc.level") + ": " + Experience.getLevel(nbt), width / 2 - 50, 50, 0xFFFFFF);
+            graphics.drawString(font, I18n.get("enhancedarmaments.misc.experience") + ": " + Experience.getExperience(nbt) + " / " + Experience.getMaxLevelExp(Experience.getLevel(nbt)), width / 2 - 50, 60, 0xFFFFFF);
         }
 
         int j = -1;
@@ -190,10 +192,10 @@ public class AbilitySelectionGui extends Screen {
             if (ability.hasAbility(nbt)) {
                 if (ability.getType().equals("active")) {
                     j++;
-                    drawCenteredString(poseStack, font, I18n.get(ability.getName(nbt)), width / 2 + 75, 135 + (j * 12), ability.getHex());
+                    graphics.drawCenteredString(font, I18n.get(ability.getName(nbt)), width / 2 + 75, 135 + (j * 12), ability.getHex());
                 } else if (ability.getType().equals("passive")) {
                     k++;
-                    drawCenteredString(poseStack, font, ability.getName(nbt), width / 2 + 150, 135 + (k * 12), ability.getHex());
+                    graphics.drawCenteredString(font, ability.getName(nbt), width / 2 + 150, 135 + (k * 12), ability.getHex());
                 }
             }
         }
@@ -206,7 +208,7 @@ public class AbilitySelectionGui extends Screen {
      * @param abilities
      * @param nbt
      */
-    private void displayButtons(PoseStack poseStack, Button[] buttons, ArrayList<Ability> abilities, CompoundTag nbt, Player player) {
+    private void displayButtons(GuiGraphics graphics, Button[] buttons, ArrayList<Ability> abilities, CompoundTag nbt, Player player) {
         for (Button button : buttons) {
             button.active = false;
         }
@@ -223,7 +225,12 @@ public class AbilitySelectionGui extends Screen {
         }
     }
 
-    private void drawTooltips(PoseStack poseStack, Button[] buttons, ArrayList<Ability> abilities, int mouseX, int mouseY) {
+
+    public void renderComponentTooltip(GuiGraphics graphics,Font font, List<Component> text, int mouseX, int mouseY) {
+        graphics.renderComponentTooltip(font, text, mouseX, mouseY);
+    }
+
+    private void drawTooltips(GuiGraphics graphics, Button[] buttons, ArrayList<Ability> abilities, int mouseX, int mouseY) {
         Player player = this.minecraft.player;
         ItemStack stack = player.getInventory().getSelected();
         CompoundTag nbt = stack.getOrCreateTag();
@@ -610,10 +617,12 @@ public class AbilitySelectionGui extends Screen {
 
                 }
                 //System.out.println(list);
-                this.renderComponentTooltip(poseStack, ComponentUtil.stringToComponent(list), mouseX + 3, mouseY + 3);
+                this.renderComponentTooltip(graphics, font, ComponentUtil.stringToComponent(list), mouseX + 3, mouseY + 3);
             }
         }
     }
+
+
 
     @Override
     public boolean isPauseScreen() {

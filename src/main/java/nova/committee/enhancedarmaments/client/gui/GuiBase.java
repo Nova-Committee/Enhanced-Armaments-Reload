@@ -1,7 +1,7 @@
 package nova.committee.enhancedarmaments.client.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import nova.committee.enhancedarmaments.util.ScreenHelper;
 
@@ -27,12 +27,12 @@ public abstract class GuiBase extends Screen {
     /**
      * Used to render anything in the background layer.
      */
-    protected abstract void drawGuiBackground(PoseStack matrixStack, int mouseX, int mouseY);
+    protected abstract void drawGuiBackground(GuiGraphics graphics, int mouseX, int mouseY);
 
     /**
      * Used to render anything in the foreground layer.
      */
-    protected abstract void drawGuiForeground(PoseStack matrixStack, int mouseX, int mouseY);
+    protected abstract void drawGuiForeground(GuiGraphics graphics, int mouseX, int mouseY);
 
     /**
      * Used to determine the width of the GUI.
@@ -64,18 +64,18 @@ public abstract class GuiBase extends Screen {
      * The base render method. Handles ALL rendering.
      */
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float f1) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float f1) {
 
-        renderBackground(matrixStack);
-
+        renderBackground(graphics);
+        
         if (getGuiTextureName() != null) {
             ScreenHelper.bindTexture(getGuiTextureName());
-            ScreenHelper.drawRect(matrixStack, getScreenX(), getScreenY(), 0, 0, 0, getGuiSizeX(), getGuiSizeY());
+            ScreenHelper.drawRect(graphics, getScreenX(), getScreenY(), 0, 0, 0, getGuiSizeX(), getGuiSizeY());
         }
-
-        drawGuiBackground(matrixStack, mouseX, mouseY);
-        super.render(matrixStack, mouseX, mouseY, f1);
-        drawGuiForeground(matrixStack, mouseX, mouseY);
+        
+        drawGuiBackground(graphics, mouseX, mouseY);
+        super.render(graphics, mouseX, mouseY, f1);
+        drawGuiForeground(graphics, mouseX, mouseY);
     }
 
 

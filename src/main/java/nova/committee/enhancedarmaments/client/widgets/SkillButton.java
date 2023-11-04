@@ -1,7 +1,7 @@
 package nova.committee.enhancedarmaments.client.widgets;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -21,8 +21,9 @@ public class SkillButton extends Button {
     private String[] tooltip;
 
     public SkillButton(int marketListIndex, int x, int y, ResourceLocation img, OnPress press) {
-        super(x, y, 16, 16, Component.literal(""), press);
-        this.rect = new ScreenRect(this.x, this.y, width, height);
+        super(x, y, 16, 16, Component.literal(""), press, Button.DEFAULT_NARRATION);
+
+        this.rect = new ScreenRect(x, y, width, height);
         this.res = img;
         this.marketListIndex = marketListIndex;
     }
@@ -34,16 +35,16 @@ public class SkillButton extends Button {
 
     public void setRect(ScreenRect rect) {
         this.rect = rect;
-        this.x = rect.x;
-        this.y = rect.y;
+        this.setX(rect.x);
+        this.setY(rect.y);
         this.width = rect.width;
         this.height = rect.height;
     }
 
-    public void renderSelectionBox(PoseStack poseStack) {
+    public void renderSelectionBox(GuiGraphics graphics) {
         if (this.visible && this.active) {
             ScreenHelper.bindGuiTextures();
-            ScreenHelper.drawRect(poseStack, rect.x - 1, rect.y - 1, 0, 91, 0, 19, 19);
+            ScreenHelper.drawRect(graphics, rect.x - 1, rect.y - 1, 0, 91, 0, 19, 19);
         }
     }
 
@@ -52,7 +53,7 @@ public class SkillButton extends Button {
     }
 
     @Override
-    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
         isHovered = rect.contains(mouseX, mouseY);
 
@@ -60,10 +61,11 @@ public class SkillButton extends Button {
         RenderSystem.setShaderTexture(0, this.res);
 
         RenderSystem.enableDepthTest();
-        blit(matrixStack, x, y, 0, 0, 16, 16);
+
+        graphics.blit(this.res, this.getX(), this.getY(), 0,0, 16, 16);
 
         if (this.visible && this.active) {
-            ScreenHelper.drawHoveringTextBox(matrixStack, mouseX, mouseY, 150, rect, tooltip);
+            ScreenHelper.drawHoveringTextBox(graphics, mouseX, mouseY, 150, rect, tooltip);
         }
 
     }

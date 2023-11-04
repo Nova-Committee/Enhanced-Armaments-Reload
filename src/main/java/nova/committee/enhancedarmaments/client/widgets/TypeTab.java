@@ -1,6 +1,6 @@
 package nova.committee.enhancedarmaments.client.widgets;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.resources.ResourceLocation;
 import nova.committee.enhancedarmaments.util.ScreenHelper;
@@ -76,13 +76,13 @@ public class TypeTab {
         }
     }
 
-    public void renderTab(PoseStack matrixStack) {
-        ScreenHelper.drawCenteredString(matrixStack, name, rect.x + rect.width / 2, rect.y, 0, 0xFFFFFF);
+    public void renderTab(GuiGraphics graphics) {
+        ScreenHelper.drawCenteredString(graphics, name, rect.x + rect.width / 2, rect.y, 0, 0xFFFFFF);
     }
 
-    public void renderSelectedTab(PoseStack matrixStack) {
+    public void renderSelectedTab(GuiGraphics graphics) {
         ScreenHelper.bindGuiTextures();
-        ScreenHelper.drawRect(matrixStack, rect.x, rect.y + 9, 0, 0, 100, rect.width - 1, 1);
+        ScreenHelper.drawRect(graphics, rect.x, rect.y + 9, 0, 0, 100, rect.width - 1, 1);
     }
 
 }

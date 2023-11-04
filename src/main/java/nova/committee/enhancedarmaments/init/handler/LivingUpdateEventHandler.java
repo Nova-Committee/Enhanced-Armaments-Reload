@@ -15,7 +15,6 @@ import nova.committee.enhancedarmaments.core.Experience;
 import nova.committee.enhancedarmaments.core.Rarity;
 import nova.committee.enhancedarmaments.util.EAUtil;
 import nova.committee.enhancedarmaments.util.NBTUtil;
-
 import java.util.Objects;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -25,10 +24,8 @@ public class LivingUpdateEventHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onUpdate(LivingEvent.LivingTickEvent event) {
         if (event.getEntity() instanceof Player player) {
-
-            var main = player.getInventory().items;
-
-            if (!player.level.isClientSide) {
+            NonNullList<ItemStack> main = player.getInventory().items;
+            if (!player.level().isClientSide()) {
                 for (ItemStack stack : player.getInventory().armor) {
                     if (stack != null && EAUtil.canEnhanceArmor(stack.getItem())) {
                         var nbt = NBTUtil.loadStackNBT(stack);
@@ -46,7 +43,7 @@ public class LivingUpdateEventHandler {
                         //寒霜行者
                         if (Ability.FROSTWALKER.hasAbility(nbt) && (int) (Math.random() * EAConfig.frostwalkerchance) == 0) {
                             int multiplier = Ability.FROSTWALKER.getLevel(nbt);
-                            FrostWalkerEnchantment.onEntityMoved(player, player.level, player.blockPosition(), multiplier);
+                            FrostWalkerEnchantment.onEntityMoved(player, player.level(), player.blockPosition(), multiplier);
                         }
 
                     }
@@ -67,7 +64,7 @@ public class LivingUpdateEventHandler {
                                 }
 
                                 //白名单检测
-                                if (EAConfig.itemWhitelist.size() != 0) {
+                                if (!Config.itemWhitelist.isEmpty()) {
                                     okay = false;
                                     for (int k = 0; k < EAConfig.itemWhitelist.size(); k++)
                                         if (Objects.equals(ForgeRegistries.ITEMS.getKey(EAConfig.itemWhitelist.get(k)), ForgeRegistries.ITEMS.getKey(stack.getItem())))
@@ -77,9 +74,8 @@ public class LivingUpdateEventHandler {
                                 if (okay) {
                                     //添加随机稀有度词条
                                     Experience.enable(nbt, true);
-                                    var rarity = Rarity.getRarity(nbt);
-                                    var rand = player.level.random;
-
+                                    Rarity rarity = Rarity.getRarity(nbt);
+                                    RandomSource rand = player.level().random;
                                     if (rarity == Rarity.DEFAULT) {
                                         rarity = Rarity.getRandomRarity(rand);
                                         rarity.setRarity(nbt);
