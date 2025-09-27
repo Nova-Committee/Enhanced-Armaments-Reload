@@ -108,12 +108,16 @@ public class ItemTooltipEventHandler {
         if (EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.mainHand")) && !(stack.getItem() instanceof BowItem)) {
             Multimap<Attribute, AttributeModifier> map = stack.getItem().getAttributeModifiers(EquipmentSlot.MAINHAND, stack);
             Collection<AttributeModifier> damageCollection = map.get(Attributes.ATTACK_DAMAGE);
-            AttributeModifier damageModifier = (AttributeModifier) damageCollection.toArray()[0];
-            double damage = ((damageModifier.getAmount() + 1) * rarity.getEffect()) + damageModifier.getAmount() + 1;
-            String d = String.format("%.1f", damage);
-
-            if (rarity.getEffect() != 0)
-                tooltip.set(EAUtil.lineContainsString(tooltip, I18n.get("enhancedarmaments.misc.pos.mainHand")) + 2, Component.literal(rarity.getColor() + " " + d + ChatFormatting.GRAY + " " + I18n.get("enhancedarmaments.misc.tooltip.attackdamage")));
+            
+            // Add this check
+            if (!damageCollection.isEmpty()) {
+                AttributeModifier damageModifier = (AttributeModifier) damageCollection.toArray()[0];
+                double damage = ((damageModifier.getAmount() + 1) * rarity.getEffect()) + damageModifier.getAmount() + 1;
+                String d = String.format("%.1f", damage);
+        
+                if (rarity.getEffect() != 0)
+                    tooltip.set(EAUtil.lineContainsString(tooltip, I18n.get("enhancedarmaments.misc.pos.mainHand")) + 2, Component.literal(rarity.getColor() + " " + d + ChatFormatting.GRAY + " " + I18n.get("enhancedarmaments.misc.tooltip.attackdamage")));
+            }
         }
 
         if (EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.head")) || EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.body")) || EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.legs")) || EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.feet"))) {
