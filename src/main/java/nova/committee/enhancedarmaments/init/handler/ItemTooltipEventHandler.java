@@ -103,17 +103,31 @@ public class ItemTooltipEventHandler {
 
     private static void changeTooltips(List<Component> tooltip, ItemStack stack, Rarity rarity) {
         // rarity after the name
-        tooltip.set(0, Component.literal(stack.getDisplayName().getString() + rarity.getColor() + " (" + ChatFormatting.ITALIC + I18n.get("enhancedarmaments.rarity." + rarity.getName()) + ")"));
-
+        // Fix: Check if tooltip list is empty before attempting to set index 0
+        if (!tooltip.isEmpty()) {
+            tooltip.set(0, Component.literal(stack.getDisplayName().getString() + rarity.getColor() + " (" + ChatFormatting.ITALIC + I18n.get("enhancedarmaments.rarity." + rarity.getName()) + ")"));
+        }
+        
         if (EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.mainHand")) && !(stack.getItem() instanceof BowItem)) {
             Multimap<Attribute, AttributeModifier> map = stack.getItem().getAttributeModifiers(EquipmentSlot.MAINHAND, stack);
             Collection<AttributeModifier> damageCollection = map.get(Attributes.ATTACK_DAMAGE);
-            AttributeModifier damageModifier = (AttributeModifier) damageCollection.toArray()[0];
-            double damage = ((damageModifier.getAmount() + 1) * rarity.getEffect()) + damageModifier.getAmount() + 1;
-            String d = String.format("%.1f", damage);
 
-            if (rarity.getEffect() != 0)
-                tooltip.set(EAUtil.lineContainsString(tooltip, I18n.get("enhancedarmaments.misc.pos.mainHand")) + 2, Component.literal(rarity.getColor() + " " + d + ChatFormatting.GRAY + " " + I18n.get("enhancedarmaments.misc.tooltip.attackdamage")));
+            // Fix: Check if damageCollection is empty before accessing first element
+            if (!damageCollection.isEmpty()) {
+                AttributeModifier damageModifier = (AttributeModifier) damageCollection.toArray()[0];
+                double damage = ((damageModifier.getAmount() + 1) * rarity.getEffect()) + damageModifier.getAmount() + 1;
+                String d = String.format("%.1f", damage);
+              
+                // Fix: Check if calculated index is within bounds before using set()
+                if (rarity.getEffect() != 0) {
+                    int targetIndex = EAUtil.lineContainsString(tooltip, I18n.get("enhancedarmaments.misc.pos.mainHand")) + 2;
+                    if (targetIndex < tooltip.size()) {
+                        tooltip.set(targetIndex, Component.literal(rarity.getColor() + " " + d + ChatFormatting.GRAY + " " + I18n.get("enhancedarmaments.misc.tooltip.attackdamage")));
+                    } else {
+                        tooltip.add(Component.literal(rarity.getColor() + " " + d + ChatFormatting.GRAY + " " + I18n.get("enhancedarmaments.misc.tooltip.attackdamage")));
+                    }
+                }
+            }
         }
 
         if (EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.head")) || EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.body")) || EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.legs")) || EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.feet"))) {
@@ -128,13 +142,27 @@ public class ItemTooltipEventHandler {
                 line = EAUtil.lineContainsString(tooltip, I18n.get("enhancedarmaments.misc.pos.legs"));
             if (EAUtil.containsString(tooltip, I18n.get("enhancedarmaments.misc.pos.feet")))
                 line = EAUtil.lineContainsString(tooltip, I18n.get("enhancedarmaments.misc.pos.feet"));
-            if (percentage != 0)
-                tooltip.add(line + 1, Component.literal(" " + ChatFormatting.BLUE + "+" + rarity.getColor() + percentage + ChatFormatting.BLUE + "% " + I18n.get("enhancedarmaments.misc.rarity.armorreduction")));
+            
+            // Fix: Check bounds before adding to specific index in armor section
+            if (percentage != 0) {
+                int targetIndex = line + 1;
+                if (targetIndex <= tooltip.size()) {
+                    tooltip.add(targetIndex, Component.literal(" " + ChatFormatting.BLUE + "+" + rarity.getColor() + percentage + ChatFormatting.BLUE + "% " + I18n.get("enhancedarmaments.misc.rarity.armorreduction")));
+                } else {
+                    tooltip.add(Component.literal(" " + ChatFormatting.BLUE + "+" + rarity.getColor() + percentage + ChatFormatting.BLUE + "% " + I18n.get("enhancedarmaments.misc.rarity.armorreduction")));
+                }
+            }
         }
 
         if (EAUtil.canEnhanceRanged(stack.getItem()) && rarity.getEffect() != 0) {
             String b = String.format("%.1f", rarity.getEffect() / 3 * 100);
-            tooltip.add(1, Component.literal(I18n.get("enhancedarmaments.misc.rarity.arrowpercentage") + " " + rarity.getColor() + "+" + b + "%"));
+
+            // Fix: Check if tooltip has enough elements before inserting at index 1
+            if (tooltip.size() > 1) {
+                tooltip.add(1, Component.literal(I18n.get("enhancedarmaments.misc.rarity.arrowpercentage") + " " + rarity.getColor() + "+" + b + "%"));
+            } else {
+                tooltip.add(Component.literal(I18n.get("enhancedarmaments.misc.rarity.arrowpercentage") + " " + rarity.getColor() + "+" + b + "%"));
+            }
         }
     }
 }
