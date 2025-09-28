@@ -165,6 +165,7 @@ public class AbilitySelectionGui extends Screen {
      */
     private void drawStrings(PoseStack poseStack, ItemStack stack, ArrayList<Ability> abilities, CompoundTag nbt) {
         Rarity rarity = Rarity.getRarity(nbt);
+        if (rarity == null) { return; }
 
         drawCenteredString(poseStack, font, stack.getDisplayName().getString(), width / 2, 20, 0xFFFFFF);
         drawString(poseStack, font, I18n.get("enhancedarmaments.misc.rarity") + ": ", width / 2 - 50, 40, 0xFFFFFF);
