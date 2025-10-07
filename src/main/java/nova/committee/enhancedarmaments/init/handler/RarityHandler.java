@@ -40,7 +40,8 @@ public class RarityHandler {
 
         clear();
 
-        if (!dir.mkdirs() && dir.isDirectory()) {
+        dir.mkdirs(); // Create if doesn't exist
+        if (dir.exists() && dir.isDirectory()) {
             this.loadFiles();
         }
 
@@ -148,8 +149,7 @@ public class RarityHandler {
         }
 
     }
-    public void clear(){
+    public void clear() {
         Rarity.RARITIES.clear();
-    }
-
+    }  
 }

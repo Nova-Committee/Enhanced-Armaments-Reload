@@ -16,6 +16,7 @@ import nova.committee.enhancedarmaments.core.Ability;
 import nova.committee.enhancedarmaments.core.Experience;
 import nova.committee.enhancedarmaments.util.EAUtil;
 import nova.committee.enhancedarmaments.util.NBTUtil;
+import net.minecraft.world.InteractionHand;
 
 /**
  * 使用有效武器杀死目标时更新武器信息。用于更新经验、等级、能力等
@@ -27,27 +28,27 @@ public class LivingDeathEventHandler {
         if (event.getSource().getDirectEntity() instanceof Player player && !(event.getSource().getDirectEntity() instanceof FakePlayer)) {
 
             ItemStack stack;
-            if (LivingHurtEventHandler.bowfriendlyhand == null)
-                stack = player.getItemInHand(player.getUsedItemHand());
-            else
-                stack = player.getItemInHand(LivingHurtEventHandler.bowfriendlyhand);
+            InteractionHand hand = LivingHurtEventHandler.bowHandMap.getOrDefault(player, player.getUsedItemHand());
+            stack = player.getItemInHand(hand);
 
-            if (stack != ItemStack.EMPTY && EAUtil.canEnhanceMelee(stack.getItem())) {
+            if (!stack.isEmpty() && EAUtil.canEnhanceMelee(stack.getItem())) {
                 CompoundTag nbt = NBTUtil.loadStackNBT(stack);
                 if (nbt.contains("EA_ENABLED")) {
                     if (Ability.ETHEREAL.hasAbility(nbt)) {
-                        player.getInventory().getSelected().setDamageValue((player.getInventory().getSelected().getDamageValue() - (Ability.ETHEREAL.getLevel(nbt) * 2)));
+                        int newDamage = Math.max(0, player.getInventory().getSelected().getDamageValue() - (Ability.ETHEREAL.getLevel(nbt) * 2));
+                        player.getInventory().getSelected().setDamageValue(newDamage);
                     }
                     addBonusExperience(event, player, stack, nbt);
                     updateLevel(player, stack, nbt);
                     NBTUtil.saveStackNBT(stack, nbt);
                 }
-            } else if (stack != ItemStack.EMPTY && EAUtil.canEnhanceRanged(stack.getItem())) {
+            } else if (!stack.isEmpty() && EAUtil.canEnhanceRanged(stack.getItem())) {
                 CompoundTag nbt = NBTUtil.loadStackNBT(stack);
 
                 if (nbt.contains("EA_ENABLED")) {
                     if (Ability.ETHEREAL.hasAbility(nbt)) {
-                        player.getInventory().getSelected().setDamageValue((player.getInventory().getSelected().getDamageValue() - (Ability.ETHEREAL.getLevel(nbt) * 2 + 1)));
+                        int newDamage = Math.max(0, player.getInventory().getSelected().getDamageValue() - (Ability.ETHEREAL.getLevel(nbt) * 2 + 1));
+                        player.getInventory().getSelected().setDamageValue(newDamage);
                     }
                     addBonusExperience(event, player, stack, nbt);
                     updateLevel(player, stack, nbt);
@@ -58,7 +59,7 @@ public class LivingDeathEventHandler {
             if (event.getSource().getEntity() instanceof Player player && event.getSource().getEntity() != null) {
                 ItemStack stack = player.getInventory().getSelected();
 
-                if (stack != ItemStack.EMPTY) {
+                if (!stack.isEmpty()) {
                     CompoundTag nbt = NBTUtil.loadStackNBT(stack);
                     addBonusExperience(event, player, stack, nbt);
                     updateLevel(player, stack, nbt);

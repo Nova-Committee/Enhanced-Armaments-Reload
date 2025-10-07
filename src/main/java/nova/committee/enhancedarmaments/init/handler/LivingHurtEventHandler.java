@@ -34,19 +34,26 @@ import java.util.Collection;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class LivingHurtEventHandler {
-    //this needs to be a player capability or this will be really random in Multiplayer!
-    public static InteractionHand bowfriendlyhand;
+    // Use a WeakHashMap to track bow hand per player for thread safety in multiplayer
+    static final java.util.WeakHashMap<Player, InteractionHand> bowHandMap = new java.util.WeakHashMap<>();
+
+    public static InteractionHand getBowHand(Player player) {
+        return bowHandMap.getOrDefault(player, player.getUsedItemHand());
+    }
+
+    private static final float LOW_HEALTH_THRESHOLD = 0.2F;
 
     @SubscribeEvent
     public static void onArrowHit(ProjectileImpactEvent event) {
-        if (!(event.getProjectile() instanceof Arrow)) return;
         if (!(event.getEntity() instanceof Player player)) return;
-        if (event.getRayTraceResult() == null) bowfriendlyhand = player.getUsedItemHand();
+        if (event.getRayTraceResult() == null) {
+            bowHandMap.put(player, player.getUsedItemHand());
+        }
     }
 
     @SubscribeEvent
     public static void onArrowShoot(ArrowLooseEvent event) {
-        bowfriendlyhand = event.getEntity().getUsedItemHand();
+        bowHandMap.put(event.getEntity(), event.getEntity().getUsedItemHand());
     }
 
     @SubscribeEvent
@@ -56,14 +63,11 @@ public class LivingHurtEventHandler {
         {
             LivingEntity target = event.getEntity();
             ItemStack stack;
-            if (bowfriendlyhand == null)
-                stack = player.getItemInHand(player.getUsedItemHand());
-            else
-                stack = player.getItemInHand(bowfriendlyhand);
+            InteractionHand hand = bowHandMap.getOrDefault(player, player.getUsedItemHand());
+            stack = player.getItemInHand(hand);
 
-            if (stack != ItemStack.EMPTY && EAUtil.canEnhanceWeapon(stack.getItem())) {
+            if (!stack.isEmpty() && EAUtil.canEnhanceWeapon(stack.getItem())) {
                 CompoundTag nbt = NBTUtil.loadStackNBT(stack);
-
 
                 if (nbt.contains("EA_ENABLED")) {
                     updateExperience(nbt, event.getAmount());
@@ -76,7 +80,7 @@ public class LivingHurtEventHandler {
             Entity target = event.getSource().getEntity();
 
             for (ItemStack stack : player.getInventory().armor) {
-                if (stack != null) {
+                if (!stack.isEmpty()) {
                     if (EAUtil.canEnhanceArmor(stack.getItem())) {
                         CompoundTag nbt = NBTUtil.loadStackNBT(stack);
 
@@ -104,7 +108,7 @@ public class LivingHurtEventHandler {
      */
     private static void updateExperience(CompoundTag nbt, float dealedDamage) {
         if (Experience.getLevel(nbt) < EAConfig.maxLevel) {
-            Experience.setExperience(nbt, Experience.getExperience(nbt) + 1 + (int) dealedDamage / 4);
+            Experience.setExperience(nbt, Experience.getExperience(nbt) + 1 + ((int) dealedDamage / 4));
         }
     }
 
@@ -116,19 +120,28 @@ public class LivingHurtEventHandler {
      */
     private static void useRarity(LivingHurtEvent event, ItemStack stack, CompoundTag nbt) {
         Rarity rarity = Rarity.getRarity(nbt);
-
-        if (rarity != Rarity.DEFAULT)
-            if (EAUtil.canEnhanceMelee(stack.getItem())) {
-                Multimap<Attribute, AttributeModifier> map = stack.getItem().getAttributeModifiers(EquipmentSlot.MAINHAND, stack);
-                Collection<AttributeModifier> damageCollection = map.get(Attributes.ATTACK_DAMAGE);
-                AttributeModifier damageModifier = (AttributeModifier) damageCollection.toArray()[0];
+        
+        // Fix: Add null check
+        if (rarity == null || rarity == Rarity.DEFAULT) {
+            return; // Skip if no rarity data or default rarity
+        }
+        
+        if (EAUtil.canEnhanceMelee(stack.getItem())) {
+            Multimap<Attribute, AttributeModifier> map = stack.getItem().getAttributeModifiers(EquipmentSlot.MAINHAND, stack);
+            Collection<AttributeModifier> damageCollection = map.get(Attributes.ATTACK_DAMAGE);
+            
+            // Fix: Check if collection is empty (same issue as before!)
+            if (!damageCollection.isEmpty()) {
+                AttributeModifier damageModifier = damageCollection.iterator().next();
                 double damage = damageModifier.getAmount();
                 event.setAmount((float) (event.getAmount() + damage * rarity.getEffect()));
-            } else if (EAUtil.canEnhanceRanged(stack.getItem())) {
-                float newdamage = (float) (event.getAmount() + (event.getAmount() * rarity.getEffect() / 3));
-                event.setAmount(newdamage);
-            } else if (EAUtil.canEnhanceArmor(stack.getItem()))
-                event.setAmount((float) (event.getAmount() / (1.0F + (rarity.getEffect() / 5F))));
+            }
+        } else if (EAUtil.canEnhanceRanged(stack.getItem())) {
+            float newdamage = (float) (event.getAmount() + (event.getAmount() * rarity.getEffect() / 3));
+            event.setAmount(newdamage);
+        } else if (EAUtil.canEnhanceArmor(stack.getItem())) {
+            event.setAmount((float) (event.getAmount() / (1.0F + (rarity.getEffect() / 5F))));
+        }
     }
 
     /**
@@ -190,7 +203,7 @@ public class LivingHurtEventHandler {
 
             if (Ability.BLOODTHIRST.hasAbility(nbt)) {
                 float addition = event.getAmount() * (Ability.BLOODTHIRST.getLevel(nbt) * 12) / 100;
-                player.setHealth(player.getHealth() + addition);
+                player.setHealth(Math.min(player.getHealth() + addition, player.getMaxHealth()));
             }
         }
     }
@@ -220,7 +233,7 @@ public class LivingHurtEventHandler {
 
             // passive
             if (Ability.BEASTIAL.hasAbility(nbt)) {
-                if (player.getHealth() <= (player.getMaxHealth() * 0.2F))
+                if (player.getHealth() <= (player.getMaxHealth() * LOW_HEALTH_THRESHOLD))
                     player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20 * 7, 0));
             }
 

@@ -20,7 +20,7 @@ import java.util.Objects;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class LivingUpdateEventHandler {
-    private static int count = 0;
+    private static final java.util.Map<Player, Integer> healingTimers = new java.util.WeakHashMap<>();
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onUpdate(LivingEvent.LivingTickEvent event) {
@@ -30,16 +30,17 @@ public class LivingUpdateEventHandler {
 
             if (!player.level.isClientSide) {
                 for (ItemStack stack : player.getInventory().armor) {
-                    if (stack != null && EAUtil.canEnhanceArmor(stack.getItem())) {
+                    if (!stack.isEmpty() && EAUtil.canEnhanceArmor(stack.getItem())) {
                         var nbt = NBTUtil.loadStackNBT(stack);
 
                         //盔甲治愈
                         if (Ability.REMEDIAL.hasAbility(nbt)) {
                             float heal = Ability.REMEDIAL.getLevel(nbt);
-                            if (count < 120) {
-                                count++;
+                            int currentCount = healingTimers.getOrDefault(player, 0);
+                            if (currentCount < 120) {
+                                healingTimers.put(player, currentCount + 1);
                             } else {
-                                count = 0;
+                                healingTimers.put(player, 0);
                                 player.heal(heal);
                             }
                         }
@@ -52,7 +53,7 @@ public class LivingUpdateEventHandler {
                     }
                 }
                 for (ItemStack stack : main) {
-                    if (stack != ItemStack.EMPTY) {
+                    if (!stack.isEmpty()) {
                         var item = stack.getItem();
 
                         if (EAUtil.canEnhance(item)) {
